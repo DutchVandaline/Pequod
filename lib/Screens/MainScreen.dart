@@ -13,11 +13,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: [
           ShopScreen(),
@@ -27,26 +28,27 @@ class _MainScreenState extends State<MainScreen> {
           SettingsScreen(),
         ][currentPageIndex],
         bottomNavigationBar: NavigationBar(
-          indicatorColor: Colors.transparent,
+          indicatorColor: Theme.of(context).hoverColor,
           destinations: const [
             NavigationDestination(
-                icon: Icon(Icons.shopping_bag_outlined), label: "Shop"),
+                icon: Icon(Icons.shopping_bag_outlined, size: 30.0), label: "Shop"),
             NavigationDestination(
-                icon: Icon(Icons.list), label: "Habit"),
+                icon: Icon(Icons.list, size: 30.0), label: "Habit"),
             NavigationDestination(
-                icon: Icon(Icons.home_outlined), label: "Home"),
+                icon: Icon(Icons.directions_boat_filled_outlined, size: 30.0), label: "Home"),
             NavigationDestination(
-                icon: Icon(Icons.sports_score), label: "Score"),
+                icon: Icon(Icons.leaderboard_outlined, size: 30.0), label: "Score"),
             NavigationDestination(
-                icon: Icon(Icons.settings_outlined), label: "Settings"),
+                icon: Icon(Icons.settings_outlined, size: 30.0), label: "Settings"),
           ],
           selectedIndex: currentPageIndex,
+
           onDestinationSelected: (int index) {
             setState(() {
               currentPageIndex = index;
             });
           },
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0.5,
         ),
