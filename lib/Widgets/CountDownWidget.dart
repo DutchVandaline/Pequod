@@ -18,11 +18,11 @@ class _CountDownWidgetState extends State<CountDownWidget> {
   void initState() {
     super.initState();
     timeLeft = widget.deadline.difference(DateTime.now());
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         timeLeft = widget.deadline.difference(DateTime.now());
         if(timeLeft.isNegative){
-          timeLeft = Duration(days: 0, hours: 0, seconds: 0, minutes: 0, milliseconds: 0, microseconds: 0,);
+          timeLeft = const Duration(days: 0, hours: 0, seconds: 0, minutes: 0, milliseconds: 0, microseconds: 0,);
         }
       });
     });
@@ -38,20 +38,20 @@ class _CountDownWidgetState extends State<CountDownWidget> {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: 'FjallaOne',
               fontWeight: FontWeight.bold,
               color: Colors.white),
           children: [
             TextSpan(
                 text: timeLeft.inDays.toString().padLeft(2, '0'),
-                style: TextStyle(fontSize: 40.0)),
-            TextSpan(text: " Days ", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
+                style: const TextStyle(fontSize: 40.0)),
+            const TextSpan(text: " Days ", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
             TextSpan(
                 text: "${(timeLeft.inHours % 24).toString().padLeft(2, '0')}:"
                     "${(timeLeft.inMinutes % 60).toInt().toString().padLeft(2, '0')}:"
                     "${(timeLeft.inSeconds % 60).toInt().toString().padLeft(2, '0')}",
-                style: TextStyle(fontSize: 40.0)),
+                style: const TextStyle(fontSize: 40.0)),
           ]),
     );
   }
