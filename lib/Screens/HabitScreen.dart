@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/HabitDateWidget.dart';
-import 'package:pequod/Widgets/HabitWidget.dart';
+import 'package:pequod/Widgets/HabitWidgetTile.dart';
 import 'package:intl/intl.dart';
 
 class HabitScreen extends StatefulWidget {
@@ -55,14 +55,23 @@ class _HabitScreenState extends State<HabitScreen> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days: 2))),
-                      HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days:1))),
-                      HabitDateWidget(inputDate: DateTime.now()),
-                      HabitDateWidget(inputDate: DateTime.now().add(const Duration(days: 1))),
-                      HabitDateWidget(inputDate: DateTime.now().add(const Duration(days: 2))),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days: 4))),
+                        HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days:3))),
+                        HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days: 2))),
+                        HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days: 1))),
+                        Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                            child: HabitDateWidget(inputDate: DateTime.now())),
+                      ],
+                    ),
                   )
                 ],
               ),
