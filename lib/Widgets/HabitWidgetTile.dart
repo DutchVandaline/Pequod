@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/Screens/VerificationScreen.dart';
 import 'package:pequod/Widgets/HabitTrackWidget.dart';
 
-class HabitWidget extends StatefulWidget {
+class HabitWidgetTile extends StatefulWidget {
   String habitName;
 
-  HabitWidget({super.key, required this.habitName});
+  HabitWidgetTile({super.key, required this.habitName});
 
   @override
-  State<HabitWidget> createState() => _HabitWidgetState();
+  State<HabitWidgetTile> createState() => _HabitWidgetTileState();
 }
 
-class _HabitWidgetState extends State<HabitWidget> {
+class _HabitWidgetTileState extends State<HabitWidgetTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: GestureDetector(
-        onTap: (){},
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => VerificationScreen()));
+        },
         child: Container(
           height: MediaQuery.of(context).size.height * 0.14,
           width: MediaQuery.of(context).size.width,
@@ -25,6 +29,7 @@ class _HabitWidgetState extends State<HabitWidget> {
               borderRadius: BorderRadius.circular(5.0)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,8 +38,7 @@ class _HabitWidgetState extends State<HabitWidget> {
                     padding: EdgeInsets.only(left: 8.0),
                     child: Text(
                       "50%",
-                      style:
-                          TextStyle(fontSize: 20.0),
+                      style: TextStyle(fontSize: 20.0),
                     ),
                   ),
                   Row(
@@ -48,11 +52,11 @@ class _HabitWidgetState extends State<HabitWidget> {
                   )
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "Use Tumbler rather than un-recyclable cups.",
-                  style: TextStyle(
+                  widget.habitName,
+                  style: const TextStyle(
                     fontFamily: 'ClimateCrisis',
                     fontSize: 15.0,
                   ),

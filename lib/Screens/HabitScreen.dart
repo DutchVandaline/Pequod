@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 class HabitScreen extends StatefulWidget {
   const HabitScreen({super.key});
 
+
   @override
   State<HabitScreen> createState() => _HabitScreenState();
 }
@@ -81,8 +82,8 @@ class _HabitScreenState extends State<HabitScreen> {
               child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
-                    return HabitWidget(
-                      habitName: "Data",
+                    return HabitWidgetTile(
+                      habitName: "Use Tumbler rather than un-recyclable cups.",
                     );
                   }),
             )

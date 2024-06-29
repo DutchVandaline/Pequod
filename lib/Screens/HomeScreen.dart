@@ -22,10 +22,55 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const QuizScreen()));
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ClimateChangeTextWidget("Quiz"),
+                              const Text(
+                                "You can solve Environment Quiz to earn additional points and time.",
+                                style: TextStyle(fontSize: 18.0),
+                                textAlign: TextAlign.center,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const QuizScreen()));
+                                  },
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      color: Theme.of(context).primaryColorDark,
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      "Solve Quiz to earn points",
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          fontSize: 22.0),
+                                    )),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ));
+                    });
               },
               icon: const Padding(
                 padding: EdgeInsets.only(right: 8.0),
