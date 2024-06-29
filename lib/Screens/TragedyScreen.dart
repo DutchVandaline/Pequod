@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 
-class LeaderBoardScreen extends StatefulWidget {
-  const LeaderBoardScreen({super.key});
+class TragedyScreen extends StatefulWidget {
+  const TragedyScreen({super.key});
 
   @override
-  State<LeaderBoardScreen> createState() => _LeaderBoardScreenState();
+  State<TragedyScreen> createState() => _TragedyScreenState();
 }
 
-class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
+class _TragedyScreenState extends State<TragedyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +17,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
         elevation: 0.0,
         shadowColor: Colors.transparent,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: ClimateChangeTextWidget("LeaderBoard"),
+        title: ClimateChangeTextWidget("Tragedy"),
       ),
     );
   }

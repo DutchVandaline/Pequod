@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'HabitScreen.dart';
-import 'LeaderBoardScreen.dart';
+import 'TragedyScreen.dart';
 import 'HomeScreen.dart';
 import 'SettingsScreen.dart';
 import 'ShopScreen.dart';
@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
         ShopScreen(),
         HabitScreen(),
         HomeScreen(),
-        LeaderBoardScreen(),
+        TragedyScreen(),
         SettingsScreen(),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/Screens/QuizScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/CountDownWidget.dart';
 
@@ -18,6 +19,23 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           centerTitle: false,
           title: ClimateChangeTextWidget("Home"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const QuizScreen()));
+              },
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: Icon(
+                  Icons.lightbulb_outline_rounded,
+                  size: 30.0,
+                ),
+              ),
+            ),
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -26,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Theme.of(context).primaryColorLight,
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(3.0),
                 child: RichText(
                   text: TextSpan(
                     text: " DEADLINE ",
@@ -55,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     gradient:
                         LinearGradient(colors: [Colors.red, Colors.amber])),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: CountDownWidget(deadline: DateTime(2024, 06, 30)),
                 )),
           ],

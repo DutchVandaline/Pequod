@@ -12,43 +12,64 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        scrolledUnderElevation: 0.0,
-        elevation: 0.0,
-        shadowColor: Colors.transparent,
-        centerTitle: false,
-        title: ClimateChangeTextWidget("Shop"),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            child: Text(
-              "🪙 230",
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-            ),
-          )
-        ],
-      ),
-      body: GridView.builder(
-        itemCount: 30,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1 / 1,
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          pinned: false,
+          snap: false,
+          floating: true,
+          centerTitle: false,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          scrolledUnderElevation: 0.0,
+          title: ClimateChangeTextWidget("Shop"),
+          expandedHeight: 90.0,
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: Text(
+                "🪙 120",
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+            )
+          ],
         ),
-        itemBuilder: (BuildContext context, int count) {
-          return Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: Theme.of(context).primaryColorLight)),
-              child: Center(
-                child: Text("data"),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 50,
+            child: Center(
+              child: Text(
+                'Buying things can affect others.\nThink about the effects before you buy.',
+                style: TextStyle(fontSize: 18.0),
+                textAlign: TextAlign.center,
               ),
             ),
-          );
-        },
-      ),
-    );
+          ),
+        ),
+        SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.center,
+                  color: Colors.teal[100 * (index % 9)],
+                  child: Text(
+                    'Grid Item ${index + 1}',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              );
+            },
+            childCount: 10,
+          ),
+        ),
+      ],
+    ));
   }
 }
