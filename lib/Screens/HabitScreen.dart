@@ -81,7 +81,7 @@ class _HabitScreenState extends State<HabitScreen> {
                   itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
                     return HabitWidgetTile(
-                      habitName: "Use Tumbler rather than un-recyclable cups.",
+                      habitName: "Use laptop and code",
                     );
                   }),
             )

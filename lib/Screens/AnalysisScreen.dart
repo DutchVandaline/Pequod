@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:pequod/API/Gemini_API_KEY.dart';
 import 'package:pequod/Screens/MainScreen.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 String apiKey = Constants.apikey;
 
@@ -120,19 +121,30 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               ),
               Center(
                 child: _isLoading
-                    ? const CircularProgressIndicator()
+                    ? CircularProgressIndicator(
+                  color: Theme.of(context).primaryColorLight,
+                )
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_imageBytes != null)
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                height: MediaQuery.of(context).size.width * 0.6,
-                                child: Image.memory(_imageBytes!)),
+                            Center(
+                              child: ClipRRect(
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.9,
+                                  height: MediaQuery.of(context).size.width * 0.8,
+                                  child: FittedBox(
+                                      fit: BoxFit.cover,
+                                      child: Image.memory(_imageBytes!)),
+                                ),
+                              ),
+                            ),
+                          const SizedBox(height: 20.0,),
                           Text(
-                            _analysisResult,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18),
+                            " $_analysisResult",
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(fontSize: 18, fontFamily: 'FjallaOne'),
                           ),
                         ],
                       ),
