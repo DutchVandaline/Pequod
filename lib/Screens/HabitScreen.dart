@@ -61,8 +61,6 @@ class _HabitScreenState extends State<HabitScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days: 4))),
-                        HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days:3))),
                         HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days: 2))),
                         HabitDateWidget(inputDate: DateTime.now().subtract(const Duration(days: 1))),
                         Container(
@@ -78,7 +76,7 @@ class _HabitScreenState extends State<HabitScreen> {
               ),
             ),
             Flexible(
-              flex: 15,
+              flex: 10,
               child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {

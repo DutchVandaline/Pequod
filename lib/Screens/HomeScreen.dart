@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:pequod/Screens/QuizScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/CountDownWidget.dart';
@@ -86,29 +87,19 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
+              height: 30.0,
               color: Theme.of(context).primaryColorLight,
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: RichText(
-                  text: TextSpan(
-                    text: " DEADLINE ",
+                  padding: const EdgeInsets.all(3.0),
+                  child: Marquee(
+                    text: "DEADLINE Your Character is Suffering... ",
                     style: TextStyle(
+                      fontFamily: 'FjallaOne',
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
                         color: Theme.of(context).primaryColor),
-                    children: [
-                      TextSpan(
-                        text: "YOUR CHARACTER IS SUFFERING...",
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 18.0,
-                            color: Theme.of(context).primaryColor),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                  )),
             ),
             Container(
                 height: MediaQuery.of(context).size.height * 0.07,

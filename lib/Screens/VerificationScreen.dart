@@ -1,12 +1,11 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:pequod/Screens/VerificationPreviewScreen.dart';
-import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  final String habitName;
+
+  const VerificationScreen({super.key, required this.habitName});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -59,7 +58,8 @@ class _VerificationScreenState extends State<VerificationScreen>
       if (xFile.path.isNotEmpty) {
         navigator.push(
           MaterialPageRoute(
-            builder: (context) => VerificationPreviewScreen(imagePath: xFile.path),
+            builder: (context) =>
+                VerificationPreviewScreen(imagePath: xFile.path, habitName: widget.habitName),
           ),
         );
       }
@@ -69,41 +69,71 @@ class _VerificationScreenState extends State<VerificationScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      backgroundColor: const Color(0xFF202023),
+      appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          centerTitle: false,
-          title: ClimateChangeTextWidget("Verify your Habit"),
-        ),
-        body: _isCameraInitialized
-            ? Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            CameraPreview(_controller!),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: GestureDetector(
-                onTap: _onTakePhotoPressed,
-                child: Container(
-                  width: 80.0,
-                  height: 80.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.0),
-                    color: Colors.white,
+          backgroundColor: const Color(0xFF202023),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new_outlined,
+                color: Color(0xFFe5e3d8),
+              )),
+          title: const Text(
+            "Verify your habit",
+            style: TextStyle(fontSize: 20.0, color: Color(0xFFe5e3d8)),
+          )),
+      body: _isCameraInitialized
+          ? SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.65,
+                      width: MediaQuery.of(context).size.width,
+                      child: CameraPreview(_controller!)),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    child: GestureDetector(
+                      onTap: _onTakePhotoPressed,
+                      child: Center(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: 80.0,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100.0),
+                                color: Colors.white,
+                              ),
+                            ),
+                            Container(
+                              width: 75.0,
+                              height: 75.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100.0),
+                                color: Colors.white,
+                                border: Border.all(color: Color(0xFF202023), width: 2.0)
+                              ),
+                            ),
+                          ]
+                        ),
+                      ),
+                    ),
                   ),
-                  child: const Icon(
-                    Icons.camera_alt,
-                    color: Colors.black,
-                    size: 30,
-                  ),
-                ),
+                ],
+              ),
+            )
+          : const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFFe5e3d8),
               ),
             ),
-          ],
-        )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ));
+    );
   }
 
   Future<void> onNewCameraSelected(CameraDescription description) async {
@@ -116,16 +146,13 @@ class _VerificationScreenState extends State<VerificationScreen>
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
-    // Initialize controller
     try {
       await cameraController.initialize();
     } on CameraException catch (e) {
       debugPrint('Error initializing camera: $e');
     }
-    // Dispose the previous controller
     await previousCameraController?.dispose();
 
-    // Replace with the new controller
     if (mounted) {
       setState(() {
         _controller = cameraController;
@@ -145,4 +172,3 @@ class _VerificationScreenState extends State<VerificationScreen>
     }
   }
 }
-

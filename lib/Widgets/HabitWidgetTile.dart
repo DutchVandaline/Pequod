@@ -19,7 +19,7 @@ class _HabitWidgetTileState extends State<HabitWidgetTile> {
       child: GestureDetector(
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => VerificationScreen()));
+              MaterialPageRoute(builder: (context) => VerificationScreen(habitName: widget.habitName,)));
         },
         child: Container(
           height: MediaQuery.of(context).size.height * 0.14,
@@ -43,8 +43,6 @@ class _HabitWidgetTileState extends State<HabitWidgetTile> {
                   ),
                   Row(
                     children: [
-                      HabitTrackWidget(completed: false),
-                      HabitTrackWidget(completed: true),
                       HabitTrackWidget(completed: false),
                       HabitTrackWidget(completed: true),
                       HabitTrackWidget(completed: true),
