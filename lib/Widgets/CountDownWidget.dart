@@ -17,13 +17,19 @@ class _CountDownWidgetState extends State<CountDownWidget> {
   @override
   void initState() {
     super.initState();
-    timeLeft = widget.deadline.difference(DateTime.now());
+    timeLeft = const Duration(days: 0, hours: 0, seconds: 0, minutes: 0, milliseconds: 0, microseconds: 0,);
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        timeLeft = widget.deadline.difference(DateTime.now());
-        if(timeLeft.isNegative){
-          timeLeft = const Duration(days: 0, hours: 0, seconds: 0, minutes: 0, milliseconds: 0, microseconds: 0,);
-        }
+        timeLeft = widget.deadline.isAfter(DateTime.now())
+            ? widget.deadline.difference(DateTime.now())
+            : const Duration(
+                days: 0,
+                hours: 0,
+                seconds: 0,
+                minutes: 0,
+                milliseconds: 0,
+                microseconds: 0,
+              );
       });
     });
   }
@@ -46,7 +52,10 @@ class _CountDownWidgetState extends State<CountDownWidget> {
             TextSpan(
                 text: timeLeft.inDays.toString().padLeft(2, '0'),
                 style: const TextStyle(fontSize: 40.0)),
-            const TextSpan(text: " Days ", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
+            const TextSpan(
+                text: " Days ",
+                style:
+                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
             TextSpan(
                 text: "${(timeLeft.inHours % 24).toString().padLeft(2, '0')}:"
                     "${(timeLeft.inMinutes % 60).toInt().toString().padLeft(2, '0')}:"

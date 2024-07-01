@@ -20,11 +20,11 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        ShopScreen(),
-        HabitScreen(),
-        HomeScreen(),
-        TragedyScreen(),
-        SettingsScreen(),
+        const ShopScreen(),
+        const HabitScreen(),
+        const HomeScreen(),
+        const TragedyScreen(),
+        const SettingsScreen(),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         indicatorColor: Theme.of(context).hoverColor,
@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
               label: "Home"),
           NavigationDestination(
               icon: Icon(
-                Icons.leaderboard_outlined,
+                Icons.groups,
                 size: 30.0,
                 color: Theme.of(context).primaryColorLight,
               ),

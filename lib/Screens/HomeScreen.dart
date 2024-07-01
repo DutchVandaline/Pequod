@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         LinearGradient(colors: [Colors.red, Colors.amber])),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: CountDownWidget(deadline: DateTime(2024, 06, 30)),
+                  child: CountDownWidget(deadline: DateTime(2024, 07, 02)),
                 )),
           ],
         ));
