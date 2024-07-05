@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/Screens/HabitScreen2.dart';
-import 'HabitScreen.dart';
+import 'package:pequod/Screens/HabitScreen.dart';
 import 'TragedyScreen.dart';
 import 'HomeScreen.dart';
 import 'SettingsScreen.dart';
@@ -22,8 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: [
         const ShopScreen(),
-        //const HabitScreen(),
-        HabitScreen2(),
+        const HabitScreen(),
         const HomeScreen(),
         const TragedyScreen(),
         const SettingsScreen(),

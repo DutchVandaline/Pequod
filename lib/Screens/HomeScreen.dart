@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 50.0,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16.0),
-                                      color: Theme.of(context).primaryColorDark,
+                                      color: Theme.of(context).canvasColor,
                                     ),
                                     child: Center(
                                         child: Text(
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: MediaQuery.of(context).size.height * 0.5,
                           width: MediaQuery.of(context).size.width,
                           child: Image.asset(
-                            'assets/images/sea_turtle.png',
+                            'assets/images/death_screen.png',
                             alignment: Alignment.bottomCenter,
                           ),
                         ),
