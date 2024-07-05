@@ -16,15 +16,20 @@ class _HabitDateWidgetState extends State<HabitDateWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.09,
+        height: 100.0,
+        width: MediaQuery.of(context).size.width * 0.1,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.0),
+          border: Border.all(color: Theme.of(context).primaryColorLight)
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(DateFormat('EEE').format(widget.inputDate),
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
             Text(widget.inputDate.day.toString().padLeft(2, '0'),
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+            Text(DateFormat('EEE').format(widget.inputDate),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13.0)),
           ],
         ),
       ),

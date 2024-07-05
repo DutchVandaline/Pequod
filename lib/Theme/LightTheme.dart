@@ -5,6 +5,9 @@ class LightTheme {
       brightness: Brightness.light,
       primaryColor: Color(0xFFe5e3d8),
       scaffoldBackgroundColor: Color(0xFFe5e3d8),
+      canvasColor: Color(0xFF708387),
       primaryColorLight: Color(0xFF202023),
-      hoverColor: Color(0xFFf5f6f6));
+      hoverColor: Color(0xFFf5f6f6),
+      primaryColorDark: Colors.white
+  );
 }

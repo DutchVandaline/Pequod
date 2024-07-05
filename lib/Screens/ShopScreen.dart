@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
+import 'package:pequod/Widgets/ShopScreenWidget.dart';
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
@@ -41,35 +42,22 @@ class _ShopScreenState extends State<ShopScreen> {
             child: Center(
               child: Text(
                 'Buying things can affect others.\nThink about the effects before you buy.',
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(fontFamily: 'Pretendard',fontSize: 18.0,),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
         ),
-        SliverGrid(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
+        SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.center,
-                  color: Colors.teal[100 * (index % 9)],
-                  child: Text(
-                    'Grid Item ${index + 1}',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              );
+              return ShopScreenWidget(inputTitle: "food", inputWidget: "hello",);
             },
-            childCount: 10,
+            childCount: 3,
           ),
         ),
       ],
     ));
   }
 }
+

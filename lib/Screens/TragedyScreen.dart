@@ -51,6 +51,7 @@ class _TragedyScreenState extends State<TragedyScreen> {
           const BottleWidget(),
           const BottleWidget(),
           const BottleWidget(),
+          const BottleWidget(),
         ]),
       ),
     );

@@ -14,6 +14,7 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
   double _left = 0.0;
   double _top = 0.0;
   double _rotation = 0;
+  double _size = 20.0;
   final Random random = Random();
   bool _visible = true;
   late Timer _timer;
@@ -41,15 +42,16 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
   void _randomizePosition() {
     _left = random.nextDouble() * 300;
     _top = random.nextDouble() * 500;
+    _size = random.nextInt(130) + 50;
     _rotation = random.nextDouble() * 2 * pi;
   }
 
   void _checkVisibility() {
-      if (!_visible) {
-        _startTimer();
-      } else {
-        _timer.cancel();
-      }
+    if (!_visible) {
+      _startTimer();
+    } else {
+      _timer.cancel();
+    }
   }
 
   @override
@@ -77,9 +79,12 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
           child: Transform.rotate(
             angle: _rotation,
             child: Container(
-              width: 20.0,
-              height: 20.0,
-              color: Colors.red,
+              height: _size,
+              color: Colors.transparent,
+              child: AspectRatio(
+                  aspectRatio: 58 / 138,
+                  child: Center(
+                      child: Image.asset('assets/images/water_bottle.png'))),
             ),
           ),
         ),
