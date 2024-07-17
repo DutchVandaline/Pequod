@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/Screens/ArchiveScreen.dart';
 import 'package:pequod/Screens/HabitScreen.dart';
 import 'TragedyScreen.dart';
 import 'HomeScreen.dart';
@@ -8,7 +9,6 @@ import 'ShopScreen.dart';
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
-
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -16,16 +16,21 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 2;
 
+  final List<Widget> _pages = [
+    const ShopScreen(),
+    const HabitScreen(),
+    const HomeScreen(),
+    const TragedyScreen(),
+    const SettingsScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: [
-        const ShopScreen(),
-        const HabitScreen(),
-        const HomeScreen(),
-        const TragedyScreen(),
-        const SettingsScreen(),
-      ][currentPageIndex],
+      body: IndexedStack(
+        index: currentPageIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: NavigationBar(
         indicatorColor: Theme.of(context).hoverColor,
         selectedIndex: currentPageIndex,

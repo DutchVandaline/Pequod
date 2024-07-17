@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:pequod/API/Gemini_API_KEY.dart';
+import 'package:pequod/Constants//Constants.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 
 String apiKey = Constants.apikey;

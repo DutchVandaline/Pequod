@@ -3,7 +3,7 @@ import 'package:marquee/marquee.dart';
 import 'package:pequod/Screens/QuizScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/CountDownWidget.dart';
-import 'package:pequod/API/Gemini_API_KEY.dart';
+import 'package:pequod/Constants//Constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "Solve Quiz to earn points",
                                       style: TextStyle(
                                           color: Theme.of(context)
-                                              .scaffoldBackgroundColor,
+                                              .primaryColorLight,
                                           fontSize: 22.0),
                                     )),
                                   ),
@@ -159,10 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.5,
                           width: MediaQuery.of(context).size.width,
-                          child: Image.asset(
-                            'assets/images/death_screen.png',
-                            alignment: Alignment.bottomCenter,
-                          ),
+                          child: Image.asset('assets/images/death_screen.png', alignment: Alignment.bottomCenter,),
                         ),
                       ),
                     ],

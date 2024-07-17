@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/API/HabitRecommendation.dart';
+import 'package:pequod/Constants//HabitRecommendation.dart';
+import 'package:pequod/Screens/MainScreen.dart';
 
 String inputTodo = "";
 String memo = "";
@@ -68,11 +69,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                       height: 50.0,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: listInput.length,
+                        itemCount: listInputEnvrionment.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListViewWidget(
-                            inputText: listInput[index].inputTitle,
-                            inputMemo: listInput[index].inputDetail,
+                            inputText: listInputEnvrionment[index].inputTitle,
+                            inputMemo: listInputEnvrionment[index].inputDetail,
                             todoController: todoController,
                             memoController: memoController,
                           );
@@ -123,6 +124,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                       controller: memoController,
                       textInputAction: TextInputAction.done,
                       style: const TextStyle(fontSize: 20.0),
+                      maxLines: 10,
                       onChanged: (text) {
                         memo = text;
                       },
@@ -150,6 +152,10 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                   onTap: () {
                     setState(() {
                       //TODO Add post algorithm
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen()),
+                          (route) => false);
                     });
                   },
                   child: Container(
@@ -158,12 +164,10 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                     decoration: BoxDecoration(
                         color: Theme.of(context).canvasColor,
                         borderRadius: BorderRadius.circular(17.0)),
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "Add Habit",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 23.0),
+                      style: TextStyle(color: Colors.white, fontSize: 23.0),
                       textAlign: TextAlign.center,
                     )),
                   ),

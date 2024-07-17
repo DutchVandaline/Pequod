@@ -78,6 +78,12 @@ flutter:
     - assets/images/whale.png
     - assets/images/sea_turtle.png
     - assets/images/death_screen.png
+    - assets/images/MetalMedKit.png
+    - assets/images/MetalTumbler.png
+    - assets/images/PlasticBag.png
+    - assets/images/PlasticMedKit.png
+    - assets/images/PlasticWaterBottle.png
+    - assets/images/RecycleBag.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
