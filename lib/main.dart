@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/Screens/MainScreen.dart';
+import 'package:pequod/Screens/SplashScreen.dart';
 import 'package:pequod/Theme/LightTheme.dart';
 import 'package:pequod/Theme/DarkTheme.dart';
 
@@ -21,7 +21,13 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: LightTheme().theme,
       darkTheme: DarkTheme().theme,
-      home: MainScreen(),
+      home: SplashScreen(),
+      builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+          child: GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: child!,
+          )),
     );
   }
 }

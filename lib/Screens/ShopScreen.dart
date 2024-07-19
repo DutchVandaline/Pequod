@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/ShopScreenWidget.dart';
 
@@ -14,38 +15,38 @@ class _ShopScreenState extends State<ShopScreen> {
     {
       'name': 'Plastic Med-Kit',
       'point': '150 P',
-      'image': 'assets/images/PlasticMedKit.png',
-      'detail': '+ 30 min\n+ 20 Garbage'
+      'image': 'assets/images/items/PlasticMedKit.png',
+      'detail': '+ 20 min'
     },
     {
       'name': 'Metal Med-Kit',
-      'point': '500 P',
-      'image': 'assets/images/MetalMedKit.png',
-      'detail': '+ 30 min\n+ 20 Garbage'
+      'point': '300 P',
+      'image': 'assets/images/items/MetalMedKit.png',
+      'detail': '+ 50 min'
     },
     {
       'name': 'Single-use Cup',
       'point': '100 P',
-      'image': 'assets/images/PlasticWaterBottle.png',
-      'detail': '+ 30 min\n+ 20 Garbage'
+      'image': 'assets/images/items/PlasticWaterBottle.png',
+      'detail': '+ 40 min'
     },
     {
       'name': 'Reusable Water Bottle',
       'point': '500 P',
-      'image': 'assets/images/MetalTumbler.png',
-      'detail': '+ 30 min\n+ 20 Garbage'
+      'image': 'assets/images/items/MetalTumbler.png',
+      'detail': '+ 60 min'
     },
     {
       'name': 'Plastic Bag',
       'point': '200 P',
-      'image': 'assets/images/PlasticBag.png',
-      'detail': '+ 30 min\n+ 20 Garbage'
+      'image': 'assets/images/items/PlasticBag.png',
+      'detail': '+ 10 min'
     },
     {
       'name': 'Eco-friendly Bag',
       'point': '400 P',
-      'image': 'assets/images/RecycleBag.png',
-      'detail': '+ 30 min\n+ 20 Garbage'
+      'image': 'assets/images/items/RecycleBag.png',
+      'detail': '+ 50 min'
     },
   ];
 
@@ -88,14 +89,47 @@ class _ShopScreenState extends State<ShopScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
-                    child: Text(
-                      '220 P',
-                      style: TextStyle(
-                          fontFamily: 'FjallaOne',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          color: Theme.of(context).scaffoldBackgroundColor),
-                    ),
+                    child: FutureBuilder(
+                        future: ApiServices.getUser(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: Text(
+                                '0 P',
+                                style: TextStyle(
+                                    fontFamily: 'FjallaOne',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text(
+                                '',
+                                style: TextStyle(
+                                  fontFamily: 'FjallaOne',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                            );
+                          } else {
+                            Map<String, dynamic>? myPoint =
+                                snapshot.data as Map<String, dynamic>;
+                            return Text(
+                              "${myPoint['points'].toString()} P",
+                              style: TextStyle(
+                                  fontFamily: 'FjallaOne',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor),
+                            );
+                          }
+                        }),
                   ),
                 ],
               ),
@@ -107,16 +141,39 @@ class _ShopScreenState extends State<ShopScreen> {
             crossAxisCount: 2,
             mainAxisSpacing: 0.0,
             crossAxisSpacing: 0.0,
-            childAspectRatio: 0.65,
+            childAspectRatio: 0.7,
           ),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              return ShopScreenWidget(
-                inputPoint: gridItems[index]['point']!,
-                inputName: gridItems[index]['name']!,
-                inputImage: gridItems[index]['image']!,
-                inputDetail: gridItems[index]['detail']!,
-              );
+              return FutureBuilder(
+                  future: ApiServices.getShop(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: Theme.of(context).primaryColorLight,
+                      ));
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                        child: Text(
+                          "🏴‍☠️\nError Occurred",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
+                        ),
+                      );
+                    } else {
+                      List<dynamic> shopData = snapshot.data as List<dynamic>;
+                      return ShopScreenWidget(
+                        inputPoint:
+                            "${shopData[index]['cost_point'].toString()} P",
+                        inputName: shopData[index]['name'],
+                        inputImage: shopData[index]['description'],
+                        inputDetail:
+                            "+ ${shopData[index]['receive_time'].toString()}",
+                        //gridItems[index]['detail']!
+                      );
+                    }
+                  });
             },
             childCount: gridItems.length,
           ),

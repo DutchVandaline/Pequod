@@ -84,7 +84,7 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
               child: AspectRatio(
                   aspectRatio: 58 / 138,
                   child: Center(
-                      child: Image.asset('assets/images/water_bottle.png'))),
+                      child: Image.asset('assets/images/garbages/water_bottle.png'))),
             ),
           ),
         ),

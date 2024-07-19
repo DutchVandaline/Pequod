@@ -38,13 +38,6 @@ class _TragedyScreenState extends State<TragedyScreen> {
                 ],
               ),
             ),
-            child: const Center(
-              child: Text(
-                "85%",
-                style: TextStyle(
-                    fontFamily: 'FjallaOne', fontSize: 40.0, color: Colors.grey),
-              ),
-            ),
           ),
           CustomPaint(painter: CirclePainter(context: context)),
           const BottleWidget(),

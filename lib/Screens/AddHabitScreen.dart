@@ -54,6 +54,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                     width: double.infinity,
                     child: Text("Let's build some\nhabits!",
                         style: TextStyle(
+                          fontFamily: 'FjallaOne',
                           fontWeight: FontWeight.bold,
                           fontSize: 35.0,
                         )),

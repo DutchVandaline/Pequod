@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Screens/QuizScreen.dart';
+import 'package:pequod/Widgets/AnimalWidget.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/CountDownWidget.dart';
 import 'package:pequod/Constants//Constants.dart';
@@ -114,7 +116,48 @@ class _HomeScreenState extends State<HomeScreen> {
                             LinearGradient(colors: [Colors.red, Colors.amber])),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: CountDownWidget(deadline: DateTime(2024, 07, 02)),
+                      child: FutureBuilder(
+                        future: ApiServices.getUser(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return RichText(
+                              text: const TextSpan(
+                                  style: TextStyle(
+                                      fontFamily: 'FjallaOne',
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                  children: [
+                                    TextSpan(
+                                        text: "--",
+                                        style: TextStyle(fontSize: 40.0)),
+                                    TextSpan(
+                                        text: " Days ",
+                                        style:
+                                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
+                                    TextSpan(
+                                        text: "--:--:--",
+                                        style: TextStyle(fontSize: 40.0)),
+                                  ]),
+                            );
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text(
+                                '🏴‍☠️ Error Occurred Loading Deadline',
+                                style: TextStyle(
+                                  fontFamily: 'FjallaOne',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                            );
+                          } else {
+                            Map<String, dynamic>? myPoint = snapshot.data as Map<String, dynamic>;
+                            DateTime deadline = DateTime.parse(myPoint['animal_deadline']);
+                            return CountDownWidget(
+                                deadline: deadline);
+                          }
+                        }),
                     )),
               ],
             ),
@@ -130,10 +173,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(13.0),
                   ),
-                  child: Stack(
+                  child: const Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      const Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
@@ -145,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: 90.0),
                           ),
                           Text(
-                            "2024.07.04",
+                            "",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: 'FjallaOne',
@@ -154,14 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.5,
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset('assets/images/death_screen.png', alignment: Alignment.bottomCenter,),
-                        ),
-                      ),
+                      AnimalWidget(),
                     ],
                   ),
                 ),

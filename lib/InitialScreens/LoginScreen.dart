@@ -26,11 +26,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void createToken(String _enterEmail, String _enterPassword) async {
-    var url = Uri.https('sogak-api-nraiv.run.goorm.site', '/api/user/token/');
-    var response = await http.post(url, body: {
-      'email': _enterEmail,
-      'password': _enterPassword
-    });
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/user/token/');
+    var response = await http
+        .post(url, body: {'email': _enterEmail, 'password': _enterPassword});
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (response.statusCode == 200) {
       print(response.body);
@@ -38,9 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
       String token = jsonData['token'];
       userAuthorize(token);
       prefs.setString("UserToken", token);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-          builder: (context) => const MainScreen()), (
-          route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen()),
+          (route) => false);
     } else {
       print('Error: ${response.statusCode}');
       print('Error body: ${response.body}');
@@ -51,8 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void userAuthorize(String _userToken) async {
-    var url = Uri.https('sogak-api-nraiv.run.goorm.site', '/api/feeling/feelings/');
-    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+    var url =
+        Uri.https('pequod-api-dlyou.run.goorm.site', '/api/habit/habits/');
+    var response =
+        await http.get(url, headers: {'Authorization': 'Token $_userToken'});
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = json.decode(response.body);
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     setState(() {
       displayError = false;
@@ -89,31 +90,33 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             displayError
                 ? Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  color: Colors.red.shade100,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "없는 계정이거나 비밀번호가 일치하지 않습니다.",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-              ),
-            )
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Colors.red.shade100,
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            "없는 계정이거나 비밀번호가 일치하지 않습니다.",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 : const SizedBox(
-              height: 20.0,
-            ),
+                    height: 20.0,
+                  ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 5.0, horizontal: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(10.0)),
                 child: TextField(
                   controller: EmailController,
@@ -124,13 +127,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.transparent),
+                          borderSide:
+                              const BorderSide(color: Colors.transparent),
                           borderRadius: BorderRadius.circular(15.0)),
                       focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.transparent),
+                          borderSide:
+                              const BorderSide(color: Colors.transparent),
                           borderRadius: BorderRadius.circular(15.0)),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.transparent),
+                          borderSide:
+                              const BorderSide(color: Colors.transparent),
                           borderRadius: BorderRadius.circular(15.0)),
                       hintText: "Email을 입력하세요.",
                       hintStyle: const TextStyle(
@@ -145,13 +151,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 5.0, horizontal: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(10.0)),
                 child: TextField(
                   controller: PasswordController,
@@ -193,12 +197,9 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                 child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
+                  width: MediaQuery.of(context).size.width,
                   height: 60.0,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -206,10 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Center(
                     child: Text(
                       "로그인",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ),
@@ -217,8 +215,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => const SignUpScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpScreen()));
                   setState(() {
                     displayError = false;
                   });
@@ -226,20 +226,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: const Center(
                   child: Text.rich(
                     TextSpan(
-                      text: 'Sogak에 ',
-                      style: TextStyle(fontSize: 15.0),
+                      text: 'First time to ',
+                      style: TextStyle(
+                          fontSize: 15.0, decoration: TextDecoration.none),
                       children: <TextSpan>[
                         TextSpan(
-                            text: '처음이신가요',
+                            text: 'Pequod?',
                             style: TextStyle(
-                              decoration: TextDecoration.underline,
-                            )),
+                                decoration: TextDecoration.underline)),
                       ],
                     ),
                   ),
-                )
+                )),
+            const SizedBox(
+              height: 40.0,
             ),
-            const SizedBox(height: 40.0,),
           ],
         ),
       ),

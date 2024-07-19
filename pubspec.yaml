@@ -72,18 +72,26 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/water_bottle.png
-    - assets/images/penguin.png
-    - assets/images/polar_bear.png
-    - assets/images/whale.png
-    - assets/images/sea_turtle.png
-    - assets/images/death_screen.png
-    - assets/images/MetalMedKit.png
-    - assets/images/MetalTumbler.png
-    - assets/images/PlasticBag.png
-    - assets/images/PlasticMedKit.png
-    - assets/images/PlasticWaterBottle.png
-    - assets/images/RecycleBag.png
+    - assets/images/animals/penguin.png
+    - assets/images/animals/polar_bear.png
+    - assets/images/animals/whale.png
+    - assets/images/animals/sea_turtle.png
+    - assets/images/animals/death_screen.png
+    - assets/images/items/MetalMedKit.png
+    - assets/images/items/MetalTumbler.png
+    - assets/images/items/PlasticBag.png
+    - assets/images/items/PlasticMedKit.png
+    - assets/images/items/PlasticWaterBottle.png
+    - assets/images/items/RecycleBag.png
+    - assets/images/garbages/water_bottle.png
+    - assets/images/garbages/bottlebottom_noside.png
+    - assets/images/garbages/bottle_withblack.png
+    - assets/images/garbages/bottletop_noside.png
+    - assets/images/garbages/bottletop_withside.png
+    - assets/images/garbages/bottletop_blood.png
+    - assets/images/garbages/bottlebottom_blood.png
+    - assets/images/SeaSplash.jpg
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

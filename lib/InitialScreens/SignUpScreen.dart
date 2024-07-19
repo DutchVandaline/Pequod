@@ -29,7 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void createUser(
       String _enterEmail, String _enterPassword, String _enterName) async {
-    var url = Uri.https('sogak-api-nraiv.run.goorm.site', '/api/user/create/');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/user/create/');
     var response = await http.post(url, body: {
       'email': _enterEmail,
       'password': _enterPassword,
@@ -269,7 +269,7 @@ class ErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
