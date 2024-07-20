@@ -4,8 +4,9 @@ import 'package:pequod/Screens/VerificationPreviewScreen.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String habitName;
+  final int habitId;
 
-  const VerificationScreen({super.key, required this.habitName});
+  const VerificationScreen({super.key, required this.habitName, required this.habitId});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -59,7 +60,7 @@ class _VerificationScreenState extends State<VerificationScreen>
         navigator.push(
           MaterialPageRoute(
             builder: (context) =>
-                VerificationPreviewScreen(imagePath: xFile.path, habitName: widget.habitName),
+                VerificationPreviewScreen(imagePath: xFile.path, habitName: widget.habitName, habitId: widget.habitId),
           ),
         );
       }

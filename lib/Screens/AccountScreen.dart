@@ -150,7 +150,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             TextButton(
               onPressed: () async {
-                await ApiServices.EraseUser().then((value) =>
+                await ApiServices.eraseUser().then((value) =>
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

@@ -3,27 +3,58 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Screens/AddHabitScreen.dart';
+import 'package:pequod/Screens/DetailScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisCurrentDateWidget.dart';
-import 'VerificationScreen.dart';
 
-class HabitScreen extends StatelessWidget {
+class HabitScreen extends StatefulWidget {
   const HabitScreen({super.key});
+
+  @override
+  _HabitScreenState createState() => _HabitScreenState();
+}
+
+class _HabitScreenState extends State<HabitScreen> {
+  List<Habit> habits = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHabits();
+  }
+
+  Future<void> _loadHabits() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      List<Habit> fetchedHabits = await ApiServices.getHabit();
+      setState(() {
+        habits = fetchedHabits;
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void _onRefresh() {
+    _loadHabits();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme
-          .of(context)
-          .scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         centerTitle: false,
         elevation: 0.0,
         shadowColor: Colors.transparent,
-        backgroundColor: Theme
-            .of(context)
-            .scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           IconButton(
               onPressed: () {},
@@ -32,26 +63,35 @@ class HabitScreen extends StatelessWidget {
                 size: 35.0,
               )),
           IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddHabitScreen()));
-              },
-              icon: const Icon(
-                Icons.add,
-                size: 35.0,
-              )),
+            onPressed: _onRefresh, // Refresh button action
+            icon: const Icon(
+              Icons.refresh,
+              size: 35.0,
+            ),
+          ),
+          if (habits.length < 8)
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddHabitScreen()));
+                },
+                icon: const Icon(
+                  Icons.add,
+                  size: 35.0,
+                )),
         ],
         title: const ClimateCrisisCurrentDateWidget(),
       ),
-      body: GameWidget(
-          game: MyGame(
-              context: context,
-              scaffoldBackgroundColor:
-              Theme
-                  .of(context)
-                  .scaffoldBackgroundColor)),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColorLight,))
+          : GameWidget(
+        game: MyGame(
+            context: context,
+            scaffoldBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            habits: habits),
+      ),
     );
   }
 }
@@ -59,8 +99,9 @@ class HabitScreen extends StatelessWidget {
 class MyGame extends Forge2DGame {
   final BuildContext context;
   final Color scaffoldBackgroundColor;
+  final List<Habit> habits;
 
-  MyGame({required this.scaffoldBackgroundColor, required this.context})
+  MyGame({required this.scaffoldBackgroundColor, required this.context, required this.habits})
       : super(gravity: Vector2(0, 80));
 
   @override
@@ -74,102 +115,172 @@ class MyGame extends Forge2DGame {
     add(LeftWall(gameSize: gameSize));
     add(RightWall(gameSize: gameSize));
 
-    add(Circle(
-        radius: 80.0,
-        position: Vector2(170, -200),
-        color: Colors.teal,
-        text: 'Rectangle 2',
-        yVelocity: (Random().nextInt(60) - 30).toDouble(),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                  const VerificationScreen(
-                    habitName: "Habit 3",
-                  )));
-        }));
-    add(Circle(
-        radius: 100.0,
-        text: "Habit 3",
-        position: Vector2(100, 0),
-        color: Colors.red,
-        yVelocity: (Random().nextInt(60) - 30).toDouble(),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                  const VerificationScreen(
-                    habitName: "Habit 3",
-                  )));
-        }));
-    add(Rectangle(
-        position: Vector2(320, 0),
-        color: Colors.blue,
-        width: 180,
-        height: 180,
-        text: "Habit2",
-        yVelocity: (Random().nextInt(60) - 30).toDouble(),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                  const VerificationScreen(
-                    habitName: "Habit 2",
-                  )));
-        }));
-    add(Triangle(
-      position: Vector2(300, -200),
-      color: Colors.amber,
-      text: "Habit2",
-      yVelocity: (Random().nextInt(60) - 30).toDouble(),
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                const VerificationScreen(
-                  habitName: "Habit 2",
-                )));
-      },
-      borderRadius: 10.0,
-      size: 150.0,
-    ));
-    add(Triangle(
-      position: Vector2(100, -200),
-      color: Colors.deepPurple,
-      text: "Habit2",
-      yVelocity: (Random().nextInt(60) - 30).toDouble(),
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                const VerificationScreen(
-                  habitName: "Habit 2",
-                )));
-      },
-      borderRadius: 10.0,
-      size: 150.0,
-    ));
-    add(Rectangle(
-        position: Vector2(320, -300),
-        color: Colors.grey,
-        width: 130,
-        height: 130,
-        text: "Habit2",
-        yVelocity: (Random().nextInt(60) - 30).toDouble(),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                  const VerificationScreen(
-                    habitName: "Habit 2",
-                  )));
-        }));
+    // Maximum is 10
+    List<Habit> displayedHabits = habits.take(10).toList();
+
+    for (int i = 0; i < displayedHabits.length; i++) {
+      Habit habit = displayedHabits[i];
+      double yVelocity = (Random().nextInt(60) - 30).toDouble();
+      List<Vector2> position = [
+        Vector2(120, 120),
+        Vector2(320, 120),
+        Vector2(170, -50),
+        Vector2(310, -50),
+        Vector2(130, -140),
+        Vector2(320, -140),
+        Vector2(150, -220),
+        Vector2(300, -300),
+      ];
+      List<double> size = [
+        100.0, 180.0, 150.0, 80.0, 150.0, 150.0, 100.0, 90.0
+      ];
+      List<Color> color = [
+        Colors.red,
+        Colors.amber,
+        Colors.blue,
+        Colors.teal,
+        Colors.deepPurple,
+        Colors.grey,
+        Colors.orangeAccent,
+        Colors.indigo,
+      ];
+      if (i % 10 == 0) {
+        add(Circle(
+            radius: size[i],
+            position: position[i],
+            color: color[i],
+            text: habit.name,
+            yVelocity: yVelocity,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                        habitName: habit.name,
+                        habitId: habit.id,
+                      )));
+            }));
+      } else if (i % 10 == 1) {
+        add(Rectangle(
+            position: position[i],
+            color: color[i],
+            width: size[i],
+            height: size[i],
+            text: habit.name,
+            yVelocity: yVelocity,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                        habitName: habit.name,
+                        habitId: habit.id,
+                      )));
+            }));
+      } else if (i % 10 == 2) {
+        add(Triangle(
+          position: position[i],
+          color: color[i],
+          text: habit.name,
+          yVelocity: yVelocity,
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailScreen(
+                      habitName: habit.name,
+                      habitId: habit.id,
+                    )));
+          },
+          borderRadius: 10.0,
+          size: size[i],
+        ));
+      } else if (i % 10 == 3) {
+        add(Circle(
+            radius: size[i],
+            position: position[i],
+            color: color[i],
+            text: habit.name,
+            yVelocity: yVelocity,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                        habitName: habit.name,
+                        habitId: habit.id,
+                      )));
+            }));
+      } else if (i % 10 == 4) {
+        add(Rectangle(
+            position: position[i],
+            color: color[i],
+            width: size[i],
+            height: size[i],
+            text: habit.name,
+            yVelocity: yVelocity,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                        habitName: habit.name,
+                        habitId: habit.id,
+                      )));
+            }));
+      } else if (i % 10 == 5) {
+        add(Triangle(
+          position: position[i],
+          color: color[i],
+          text: habit.name,
+          yVelocity: yVelocity,
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailScreen(
+                      habitName: habit.name,
+                      habitId: habit.id,
+                    )));
+          },
+          borderRadius: 10.0,
+          size: size[i],
+        ));
+      } else if (i % 10 == 6) {
+        add(Rectangle(
+            position: position[i],
+            color: color[i],
+            width: size[i],
+            height: size[i],
+            text: habit.name,
+            yVelocity: yVelocity,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                        habitName: habit.name,
+                        habitId: habit.id,
+                      )));
+            }));
+      } else if (i % 10 == 7) {
+        add(Circle(
+            radius: size[i],
+            position: position[i],
+            color: color[i],
+            text: habit.name,
+            yVelocity: yVelocity,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                        habitName: habit.name,
+                        habitId: habit.id,
+                      )));
+            }));
+      }
+    }
   }
 }
 
@@ -393,7 +504,7 @@ class Triangle extends BodyComponent with TapCallbacks {
   }
 }
 
-//Restrictions Ground, Walls coming up.
+// Restrictions Ground, Walls coming up.
 class Ground extends BodyComponent {
   final Vector2 gameSize;
 

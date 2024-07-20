@@ -6,15 +6,15 @@ class InputList {
 }
 
 List listInputEnvrionment = [
-  InputList("🌿 Use Tumbler","Use tumbler rather than plastic cups."),
-  InputList("🥤 No Straws","Don't use straws if it's not necessary."),
-  InputList("💡 Save Energy", "Turn off lights and electronics when not in use."),
-  InputList("♻️ Recycle", "Separate waste and recycle properly."),
-  InputList("🛍️ Reusable Bags", "Use reusable bags for shopping."),
-  InputList("🚿 Shorter Showers", "Take shorter showers to save water."),
-  InputList("📄 Paperless", "Opt for digital receipts and documents."),
-  InputList("🛋️ Upcycle", "Repurpose old furniture and items."),
-  InputList("🏡 Local Produce", "Buy locally sourced and organic produce."),
+  InputList("Use Tumbler","Use tumbler rather than plastic cups."),
+  InputList("No Straws","Don't use straws if it's not necessary."),
+  InputList("Save Energy", "Turn off lights and electronics when not in use."),
+  InputList("Recycle", "Separate waste and recycle properly."),
+  InputList("Reusable Bags", "Use reusable bags for shopping."),
+  InputList("Shorter Shower", "Take shorter showers to save water."),
+  InputList("Paperless", "Opt for digital receipts and documents."),
+  InputList("Upcycle", "Repurpose old furniture and items."),
+  InputList("Local Produce", "Buy locally sourced and organic produce."),
 ];
 
 List listInputLifestyle = [

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Constants//HabitRecommendation.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 
 String inputTodo = "";
 String memo = "";
+bool _showError = true;
 
 class AddHabitScreen extends StatefulWidget {
   const AddHabitScreen({super.key});
@@ -152,11 +155,28 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      //TODO Add post algorithm
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => MainScreen()),
-                          (route) => false);
+                      print(DateFormat("YYYY-MM-DD").format(DateTime.now()).toString());
+                      //String _name, String _date, bool _completed,
+                      // int _receive_point, String _receive_time, String _description
+                      if (inputTodo == "" || inputTodo.isEmpty) {
+                        _showError = true;
+                      } else {
+                        _showError = false;
+                        ApiServices.postHabit(
+                            inputTodo,
+                            DateFormat("yyyy-MM-dd").format(DateTime.now()).toString(),
+                            "false",
+                            "10",
+                            const Duration(hours: 1).toString(),
+                            memo);
+                      }
+                      _showError
+                          ? ()
+                          : Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen()),
+                              (route) => false);
                     });
                   },
                   child: Container(
@@ -168,7 +188,9 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                     child: const Center(
                         child: Text(
                       "Add Habit",
-                      style: TextStyle(color: Colors.white, fontSize: 23.0),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 23.0),
                       textAlign: TextAlign.center,
                     )),
                   ),
@@ -213,6 +235,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
             widget.memoController.text = widget.inputMemo;
             inputTodo = widget.inputText;
             memo = widget.inputMemo;
+            _showError = false;
           });
         },
         child: Container(

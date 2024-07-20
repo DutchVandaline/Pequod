@@ -5,9 +5,10 @@ import 'package:pequod/Screens/AnalysisScreen.dart';
 class VerificationPreviewScreen extends StatefulWidget {
   final String? imagePath;
   final String habitName;
+  final int habitId;
 
   const VerificationPreviewScreen(
-      {super.key, required this.imagePath, required this.habitName});
+      {super.key, required this.imagePath, required this.habitName, required this.habitId});
 
   @override
   State<VerificationPreviewScreen> createState() =>
