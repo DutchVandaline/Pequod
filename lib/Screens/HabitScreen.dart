@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Screens/AddHabitScreen.dart';
+import 'package:pequod/Screens/ArchiveScreen.dart';
 import 'package:pequod/Screens/DetailScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisCurrentDateWidget.dart';
+import 'package:pequod/Constants/Constants.dart';
 
 class HabitScreen extends StatefulWidget {
   const HabitScreen({super.key});
@@ -57,7 +59,10 @@ class _HabitScreenState extends State<HabitScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ArchiveScreen()));
+              },
               icon: Icon(
                 Icons.book_outlined,
                 size: MediaQuery.of(context).size.width * 0.07,
@@ -88,13 +93,69 @@ class _HabitScreenState extends State<HabitScreen> {
         title: const ClimateCrisisCurrentDateWidget(),
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColorLight,))
-          : GameWidget(
-        game: MyGame(
-            context: context,
-            scaffoldBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            habits: habits),
-      ),
+          ? Center(
+              child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColorLight,
+            ))
+          : FutureBuilder(
+              future: ApiServices.getHabitStatus(
+                  Constants.changeDateFormat(DateTime.now())),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text(
+                      "Error",
+                      style: TextStyle(
+                        fontFamily: 'FjallaOne',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  );
+                } else if (snapshot.hasData) {
+                  List<dynamic>? archiveData = snapshot.data;
+                  if (archiveData != null && archiveData.isNotEmpty) {
+                    List<int> habitIds = archiveData
+                        .map<int>((item) => item['habit'] as int)
+                        .toList();
+                    return GameWidget(
+                      game: MyGame(
+                          context: context,
+                          scaffoldBackgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          habits: habits,
+                          habitIds: habitIds),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text(
+                        'No data available',
+                        style: TextStyle(
+                          fontFamily: 'FjallaOne',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    );
+                  }
+                } else {
+                  return const Center(
+                    child: Text(
+                      'No data available',
+                      style: TextStyle(
+                        fontFamily: 'FjallaOne',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
     );
   }
 }
@@ -103,8 +164,13 @@ class MyGame extends Forge2DGame {
   final BuildContext context;
   final Color scaffoldBackgroundColor;
   final List<Habit> habits;
+  final List<int> habitIds;
 
-  MyGame({required this.scaffoldBackgroundColor, required this.context, required this.habits})
+  MyGame(
+      {required this.scaffoldBackgroundColor,
+      required this.context,
+      required this.habits,
+      required this.habitIds})
       : super(gravity: Vector2(0, 80));
 
   @override
@@ -118,12 +184,19 @@ class MyGame extends Forge2DGame {
     add(LeftWall(gameSize: gameSize));
     add(RightWall(gameSize: gameSize));
 
-    // Maximum is 10
-    List<Habit> displayedHabits = habits.take(10).toList();
+    // Maximum is 8
+    List<Habit> displayedHabits = habits.take(8).toList();
 
     for (int i = 0; i < displayedHabits.length; i++) {
+      print(habitIds);
       Habit habit = displayedHabits[i];
+
+      if(habitIds.contains(habit.id)){
+        continue;
+      }
+
       double yVelocity = (Random().nextInt(60) - 30).toDouble();
+      int j = habit.id % 8;
       List<Vector2> position = [
         Vector2(120, 120),
         Vector2(320, 120),
@@ -136,13 +209,13 @@ class MyGame extends Forge2DGame {
       ];
       List<double> size = [
         MediaQuery.of(context).size.width * 0.25,
-        MediaQuery.of(context).size.width * 0.35,
         MediaQuery.of(context).size.width * 0.3,
-        MediaQuery.of(context).size.width * 0.2,
+        MediaQuery.of(context).size.width * 0.35,
+        MediaQuery.of(context).size.width * 0.25,
         MediaQuery.of(context).size.width * 0.25,
         MediaQuery.of(context).size.width * 0.3,
         MediaQuery.of(context).size.width * 0.3,
-        MediaQuery.of(context).size.width * 0.2,
+        MediaQuery.of(context).size.width * 0.25,
       ];
       List<Color> color = [
         Colors.red,
@@ -154,11 +227,11 @@ class MyGame extends Forge2DGame {
         Colors.orangeAccent,
         Colors.indigo,
       ];
-      if (i % 10 == 0) {
+      if (j == 0) {
         add(Circle(
-            radius: size[i],
+            radius: size[j],
             position: position[i],
-            color: color[i],
+            color: color[j],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -166,16 +239,16 @@ class MyGame extends Forge2DGame {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DetailScreen(
-                        habitName: habit.name,
-                        habitId: habit.id,
-                      )));
+                            habitName: habit.name,
+                            habitId: habit.id,
+                          )));
             }));
-      } else if (i % 10 == 1) {
+      } else if (j == 1) {
         add(Rectangle(
             position: position[i],
-            color: color[i],
-            width: size[i],
-            height: size[i],
+            color: color[j],
+            width: size[j],
+            height: size[j],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -183,14 +256,14 @@ class MyGame extends Forge2DGame {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DetailScreen(
-                        habitName: habit.name,
-                        habitId: habit.id,
-                      )));
+                            habitName: habit.name,
+                            habitId: habit.id,
+                          )));
             }));
-      } else if (i % 10 == 2) {
+      } else if (j == 2) {
         add(Triangle(
           position: position[i],
-          color: color[i],
+          color: color[j],
           text: habit.name,
           yVelocity: yVelocity,
           onTap: () {
@@ -198,18 +271,18 @@ class MyGame extends Forge2DGame {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DetailScreen(
-                      habitName: habit.name,
-                      habitId: habit.id,
-                    )));
+                          habitName: habit.name,
+                          habitId: habit.id,
+                        )));
           },
           borderRadius: 10.0,
           size: size[i],
         ));
-      } else if (i % 10 == 3) {
+      } else if (j == 3) {
         add(Circle(
-            radius: size[i],
+            radius: size[j],
             position: position[i],
-            color: color[i],
+            color: color[j],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -217,16 +290,16 @@ class MyGame extends Forge2DGame {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DetailScreen(
-                        habitName: habit.name,
-                        habitId: habit.id,
-                      )));
+                            habitName: habit.name,
+                            habitId: habit.id,
+                          )));
             }));
-      } else if (i % 10 == 4) {
+      } else if (j == 4) {
         add(Rectangle(
             position: position[i],
-            color: color[i],
-            width: size[i],
-            height: size[i],
+            color: color[j],
+            width: size[j],
+            height: size[j],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -234,14 +307,14 @@ class MyGame extends Forge2DGame {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DetailScreen(
-                        habitName: habit.name,
-                        habitId: habit.id,
-                      )));
+                            habitName: habit.name,
+                            habitId: habit.id,
+                          )));
             }));
-      } else if (i % 10 == 5) {
+      } else if (j == 5) {
         add(Triangle(
           position: position[i],
-          color: color[i],
+          color: color[j],
           text: habit.name,
           yVelocity: yVelocity,
           onTap: () {
@@ -249,19 +322,19 @@ class MyGame extends Forge2DGame {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DetailScreen(
-                      habitName: habit.name,
-                      habitId: habit.id,
-                    )));
+                          habitName: habit.name,
+                          habitId: habit.id,
+                        )));
           },
           borderRadius: 10.0,
           size: size[i],
         ));
-      } else if (i % 10 == 6) {
+      } else if (j == 6) {
         add(Rectangle(
             position: position[i],
-            color: color[i],
-            width: size[i],
-            height: size[i],
+            color: color[j],
+            width: size[j],
+            height: size[j],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -269,15 +342,15 @@ class MyGame extends Forge2DGame {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DetailScreen(
-                        habitName: habit.name,
-                        habitId: habit.id,
-                      )));
+                            habitName: habit.name,
+                            habitId: habit.id,
+                          )));
             }));
-      } else if (i % 10 == 7) {
+      } else if (j == 7) {
         add(Circle(
-            radius: size[i],
+            radius: size[j],
             position: position[i],
-            color: color[i],
+            color: color[j],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -285,9 +358,9 @@ class MyGame extends Forge2DGame {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DetailScreen(
-                        habitName: habit.name,
-                        habitId: habit.id,
-                      )));
+                            habitName: habit.name,
+                            habitId: habit.id,
+                          )));
             }));
       }
     }
@@ -304,14 +377,14 @@ class Circle extends BodyComponent with TapCallbacks {
   final double radius;
   final double yVelocity;
 
-  Circle({required this.radius,
+  Circle({
+    required this.radius,
     required this.text,
     required this.position,
     required Color color,
     required this.onTap,
     required this.yVelocity,
-  })
-      : paint = Paint() {
+  }) : paint = Paint() {
     paint.color = color;
     paint.style = PaintingStyle.fill;
   }
@@ -344,17 +417,15 @@ class Circle extends BodyComponent with TapCallbacks {
 
   @override
   Body createBody() {
-    final shape = CircleShape()
-      ..radius = radius;
+    final shape = CircleShape()..radius = radius;
     final fixtureDef =
-    FixtureDef(shape, density: 1.0, restitution: 0.7, friction: 0.5);
+        FixtureDef(shape, density: 1.0, restitution: 0.7, friction: 0.5);
 
     final bodyDef = BodyDef(
         position: position,
         type: BodyType.dynamic,
         linearVelocity: Vector2(yVelocity, 100));
-    return world.createBody(bodyDef)
-      ..createFixture(fixtureDef);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
   @override
@@ -373,13 +444,14 @@ class Rectangle extends BodyComponent with TapCallbacks {
   final String text;
   final double yVelocity;
 
-  Rectangle({required this.position,
-    required this.width,
-    required this.height,
-    required this.text,
-    required Color color,
-    required this.yVelocity,
-    required this.onTap})
+  Rectangle(
+      {required this.position,
+      required this.width,
+      required this.height,
+      required this.text,
+      required Color color,
+      required this.yVelocity,
+      required this.onTap})
       : paint = Paint() {
     paint.color = color;
     paint.style = PaintingStyle.fill;
@@ -419,14 +491,13 @@ class Rectangle extends BodyComponent with TapCallbacks {
     shape.setAsBox(halfWidth, halfHeight, Vector2.zero(), 0);
 
     final fixtureDef =
-    FixtureDef(shape, density: 1.0, restitution: 0.7, friction: 0.5);
+        FixtureDef(shape, density: 1.0, restitution: 0.7, friction: 0.5);
     final bodyDef = BodyDef(
         position: position,
         type: BodyType.dynamic,
         linearVelocity: Vector2(yVelocity, 30));
 
-    return world.createBody(bodyDef)
-      ..createFixture(fixtureDef);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
   @override
@@ -499,13 +570,12 @@ class Triangle extends BodyComponent with TapCallbacks {
     shape.set(vertices);
 
     final fixtureDef =
-    FixtureDef(shape, density: 0.2, restitution: .7, friction: 0.5);
+        FixtureDef(shape, density: 0.2, restitution: .7, friction: 0.5);
     final bodyDef = BodyDef(
         position: position,
         type: BodyType.dynamic,
         linearVelocity: Vector2(yVelocity, 70));
-    return world.createBody(bodyDef)
-      ..createFixture(fixtureDef);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
   @override
@@ -526,8 +596,7 @@ class Ground extends BodyComponent {
       ..set(Vector2(0, gameSize.y), Vector2(gameSize.x, gameSize.y));
     final fixtureDef = FixtureDef(shape, friction: 0.3);
     final bodyDef = BodyDef(userData: this, position: Vector2.zero());
-    return world.createBody(bodyDef)
-      ..createFixture(fixtureDef);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }
 
@@ -542,8 +611,7 @@ class RightWall extends BodyComponent {
       ..set(Vector2(gameSize.x, 0), Vector2(gameSize.x, gameSize.y));
     final fixtureDef = FixtureDef(shape, friction: 0.3);
     final bodyDef = BodyDef(userData: this, position: Vector2.zero());
-    return world.createBody(bodyDef)
-      ..createFixture(fixtureDef);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }
 
@@ -554,11 +622,9 @@ class LeftWall extends BodyComponent {
 
   @override
   Body createBody() {
-    final shape = EdgeShape()
-      ..set(Vector2(0, 0), Vector2(0, gameSize.y));
+    final shape = EdgeShape()..set(Vector2(0, 0), Vector2(0, gameSize.y));
     final fixtureDef = FixtureDef(shape, friction: 0.3);
     final bodyDef = BodyDef(userData: this, position: Vector2.zero());
-    return world.createBody(bodyDef)
-      ..createFixture(fixtureDef);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }

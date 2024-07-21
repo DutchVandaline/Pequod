@@ -58,8 +58,7 @@ class ApiServices {
   static Future<void> patchAddPoints(int points) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
-    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
-        '/api/user/me/');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/user/me/');
     var response = await http.patch(url, headers: {
       'Authorization': 'Token $_userToken'
     }, body: {
@@ -142,9 +141,7 @@ class ApiServices {
         '/api/habit/habits/$_inputId/complete_habit/');
     var response = await http.patch(url, headers: {
       'Authorization': 'Token $_userToken'
-    }, body: {
-      "completed": 'true',
-    });
+    }, body: {});
     if (response.statusCode == 200) {
       print(response.body);
     } else {
@@ -189,6 +186,49 @@ class ApiServices {
     }
   }
 
+  //Habit Status
+  static void postHabitStatus(String _habit_id, String _date, String _name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site', '/api/habitstatus/habitstatus/');
+    var response = await http.post(url, headers: {
+      'Authorization': 'Token $_userToken'
+    }, body: {
+      'habit': _habit_id,
+      'habit_name': _name,
+      'date': _date,
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+    }
+  }
+
+  static Future<List<dynamic>?> getHabitStatus(String _date) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site',
+        '/api/habitstatus/habitstatus/habit_status_by_date/',
+        {'date': _date}
+    );
+
+    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = json.decode(response.body);
+      return responseData;
+    } else {
+      throw Exception('Error: ${response.statusCode}, ${response.body}');
+    }
+  }
+
+
+
   //Shop
   static Future<List<dynamic>?>? getShop() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -228,7 +268,6 @@ class ApiServices {
   }
 }
 
-
 class Habit {
   final int id;
   final String name;
@@ -251,4 +290,3 @@ class Habit {
     );
   }
 }
-

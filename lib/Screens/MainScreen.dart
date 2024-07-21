@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/Screens/ArchiveScreen.dart';
 import 'package:pequod/Screens/HabitScreen.dart';
 import 'TragedyScreen.dart';
 import 'HomeScreen.dart';

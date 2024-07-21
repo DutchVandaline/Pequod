@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BottleWidget extends StatefulWidget {
-  const BottleWidget({super.key});
+  final VoidCallback onBottleTap; // Callback to notify when bottle is tapped
+
+  const BottleWidget({Key? key, required this.onBottleTap}) : super(key: key);
 
   @override
   State<BottleWidget> createState() => _PositionedBottleWidgetState();
@@ -54,6 +56,13 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
     }
   }
 
+  Future<void> _incrementBottleCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    int currentCount = prefs.getInt('bottle_count') ?? 0;
+    await prefs.setInt('bottle_count', currentCount + 1);
+    widget.onBottleTap(); // Notify the parent about the change
+  }
+
   @override
   void dispose() {
     _timer.cancel();
@@ -70,11 +79,12 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
         opacity: _visible ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 500),
         child: GestureDetector(
-          onTap: () {
+          onTap: () async {
             setState(() {
               _visible = false;
               _checkVisibility();
             });
+            await _incrementBottleCount();
           },
           child: Transform.rotate(
             angle: _rotation,

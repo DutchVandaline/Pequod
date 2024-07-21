@@ -15,7 +15,10 @@ class AnalysisScreen extends StatefulWidget {
   final int habitId;
 
   const AnalysisScreen(
-      {super.key, required this.habitName, required this.habitId, required this.imagePath});
+      {super.key,
+      required this.habitName,
+      required this.habitId,
+      required this.imagePath});
 
   @override
   _AnalysisScreenState createState() => _AnalysisScreenState();
@@ -124,8 +127,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               Center(
                 child: _isLoading
                     ? CircularProgressIndicator(
-                  color: Theme.of(context).primaryColorLight,
-                )
+                        color: Theme.of(context).primaryColorLight,
+                      )
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,19 +137,24 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                             Center(
                               child: ClipRRect(
                                 child: SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.9,
-                                  height: MediaQuery.of(context).size.width * 0.8,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.8,
                                   child: FittedBox(
                                       fit: BoxFit.cover,
                                       child: Image.memory(_imageBytes!)),
                                 ),
                               ),
                             ),
-                          const SizedBox(height: 20.0,),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
                           Text(
                             " $_analysisResult",
                             textAlign: TextAlign.start,
-                            style: const TextStyle(fontSize: 18, fontFamily: 'FjallaOne'),
+                            style: const TextStyle(
+                                fontSize: 18, fontFamily: 'FjallaOne'),
                           ),
                         ],
                       ),
@@ -154,18 +162,23 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               GestureDetector(
                 onTap: () async {
                   setState(() {
-                    if(_analysisResult.contains("true")){
+                    if (_analysisResult.contains("true")) {
                       receivePoint = true;
-                    } else{
+                    } else {
                       receivePoint = false;
                     }
                   });
-                  if(receivePoint){
+                  if (receivePoint) {
+                    ApiServices.postHabitStatus(
+                        widget.habitId.toString(),
+                        Constants.changeDateFormat(DateTime.now()).toString(),
+                        widget.habitName);
                     await ApiServices.patchHabitCompleted(widget.habitId);
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainScreen()), (route) => false);
-                  }else{
-
-                  }
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainScreen()),
+                        (route) => false);
+                  } else {}
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pequod/Widgets/BottleWidget.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TragedyScreen extends StatefulWidget {
   const TragedyScreen({super.key});
@@ -10,6 +11,28 @@ class TragedyScreen extends StatefulWidget {
 }
 
 class _TragedyScreenState extends State<TragedyScreen> {
+  int _bottleCount = 0;
+
+  Future<void> _loadBottleCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _bottleCount = prefs.getInt('bottle_count') ?? 0;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBottleCount();
+  }
+
+  void _refreshBottleCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _bottleCount = prefs.getInt('bottle_count') ?? 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,13 +61,23 @@ class _TragedyScreenState extends State<TragedyScreen> {
                 ],
               ),
             ),
+            child: Center(
+              child: Text(
+                _bottleCount.toString(),
+                style: TextStyle(
+                    fontFamily: "FjallaOne",
+                    fontSize: 50.0,
+                    color: Theme.of(context).primaryColor
+                ),
+              ),
+            ),
           ),
           CustomPaint(painter: CirclePainter(context: context)),
-          const BottleWidget(),
-          const BottleWidget(),
-          const BottleWidget(),
-          const BottleWidget(),
-          const BottleWidget(),
+          BottleWidget(onBottleTap: _refreshBottleCount),
+          BottleWidget(onBottleTap: _refreshBottleCount),
+          BottleWidget(onBottleTap: _refreshBottleCount),
+          BottleWidget(onBottleTap: _refreshBottleCount),
+          BottleWidget(onBottleTap: _refreshBottleCount),
         ]),
       ),
     );
@@ -61,15 +94,11 @@ class CirclePainter extends CustomPainter {
     var paint = Paint()
       ..color = Colors.grey.withOpacity(0.5)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0; // You can adjust the stroke width here
+      ..strokeWidth = 1.0;
 
-    canvas.drawCircle(
-        Offset.zero, MediaQuery.of(context).size.width * 0.2, paint);
-    canvas.drawCircle(
-        Offset.zero, MediaQuery.of(context).size.width * 0.4, paint);
-    canvas.drawCircle(
-        Offset.zero, MediaQuery.of(context).size.width * 0.6, paint);
-    // Add more circles as needed
+    canvas.drawCircle(Offset.zero, MediaQuery.of(context).size.width * 0.2, paint);
+    canvas.drawCircle(Offset.zero, MediaQuery.of(context).size.width * 0.4, paint);
+    canvas.drawCircle(Offset.zero, MediaQuery.of(context).size.width * 0.6, paint);
   }
 
   @override
