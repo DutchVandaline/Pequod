@@ -2,17 +2,20 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Constants//Constants.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 
 String apiKey = Constants.apikey;
+bool receivePoint = false;
 
 class AnalysisScreen extends StatefulWidget {
   final String habitName;
   final String? imagePath;
+  final int habitId;
 
   const AnalysisScreen(
-      {super.key, required this.habitName, required this.imagePath});
+      {super.key, required this.habitName, required this.habitId, required this.imagePath});
 
   @override
   _AnalysisScreenState createState() => _AnalysisScreenState();
@@ -149,11 +152,20 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainScreen()),
-                      (route) => false);
+                onTap: () async {
+                  setState(() {
+                    if(_analysisResult.contains("true")){
+                      receivePoint = true;
+                    } else{
+                      receivePoint = false;
+                    }
+                  });
+                  if(receivePoint){
+                    await ApiServices.patchHabitCompleted(widget.habitId);
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainScreen()), (route) => false);
+                  }else{
+
+                  }
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -163,7 +175,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       color: Theme.of(context).primaryColorLight),
                   child: Center(
                     child: Text(
-                      "Recieve Points",
+                      receivePoint ? "Recieve Points" : "Retake Photo",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 18.0,

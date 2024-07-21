@@ -170,6 +170,7 @@ class _ShopScreenState extends State<ShopScreen> {
                         inputImage: shopData[index]['description'],
                         inputDetail:
                             "+ ${shopData[index]['receive_time'].toString()}",
+                        inputId: shopData[index]['id'],
                         //gridItems[index]['detail']!
                       );
                     }

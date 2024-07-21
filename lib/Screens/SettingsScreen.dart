@@ -23,114 +23,107 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 80.0,
+              height: 60.0,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
               child: Text(
                 "Edit Account",
-                style: TextStyle(fontSize: 17.0),
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.04),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.25,
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).canvasColor.withOpacity(0.1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SettingsWidget(
-                    inputTitle: "Account",
-                    inputicon: Icons.person_outlined,
-                    nextScreen: const AccountScreen(),
-                  ),
-                  SettingsWidget(
-                    inputTitle: "Notifications",
-                    inputicon: Icons.notifications_none,
-                    nextScreen: const SettingsScreen(),
-                  ),
-                  SettingsWidget(
-                    inputTitle: "Privacy & Security",
-                    inputicon: Icons.lock_outlined,
-                    nextScreen: const SettingsScreen(),
-                  ),
-                  SettingsWidget(
-                    inputTitle: "Help & Support",
-                    inputicon: Icons.question_mark_outlined,
-                    nextScreen: const SettingsScreen(),
-                  ),
-                ],
-              ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SettingsWidget(
+                  inputTitle: "Account",
+                  inputicon: Icons.person_outlined,
+                  nextScreen: const AccountScreen(),
+                ),
+                SettingsWidget(
+                  inputTitle: "Notifications",
+                  inputicon: Icons.notifications_none,
+                  nextScreen: const SettingsScreen(),
+                ),
+                SettingsWidget(
+                  inputTitle: "Privacy & Security",
+                  inputicon: Icons.lock_outlined,
+                  nextScreen: const SettingsScreen(),
+                ),
+                SettingsWidget(
+                  inputTitle: "Help & Support",
+                  inputicon: Icons.question_mark_outlined,
+                  nextScreen: const SettingsScreen(),
+                ),
+              ],
             ),
             const SizedBox(
               height: 20.0,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
-              child: Text(
-                "Help",
-                style: TextStyle(fontSize: 17.0),
-              ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
+              child: Text("Help",
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04)),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.15,
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).canvasColor.withOpacity(0.1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showLogoutDialog(context);
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 55.0,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 15.0,
-                                ),
-                                Icon(
-                                  Icons.logout_outlined,
-                                  size: 30.0,
-                                ),
-                                SizedBox(width: 20.0),
-                                Text(
-                                  "Logout",
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(right: 10.0),
-                              child: Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: 25.0,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showLogoutDialog(context);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 55.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 15.0,
                               ),
-                            )
-                          ],
-                        ),
+                              const Icon(
+                                Icons.logout_outlined,
+                                size: 30.0,
+                              ),
+                              const SizedBox(width: 20.0),
+                              Text("Logout",
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.05)),
+                            ],
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 25.0,
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                  SettingsWidget(
-                    inputTitle: "About",
-                    inputicon: Icons.star_border,
-                    nextScreen: const SettingsScreen(),
-                  ),
-                ],
-              ),
+                ),
+                SettingsWidget(
+                  inputTitle: "About",
+                  inputicon: Icons.star_border,
+                  nextScreen: const SettingsScreen(),
+                ),
+              ],
             ),
           ],
         ));

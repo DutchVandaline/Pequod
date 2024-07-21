@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/API/ApiServices.dart';
 
 class ShopScreenWidget extends StatefulWidget {
   String inputImage;
   String inputPoint;
   String inputName;
   String inputDetail;
+  int inputId;
 
 
   ShopScreenWidget(
@@ -12,7 +14,8 @@ class ShopScreenWidget extends StatefulWidget {
       required this.inputPoint,
       required this.inputName,
       required this.inputImage,
-      required this.inputDetail});
+      required this.inputDetail,
+      required this.inputId});
 
   @override
   State<ShopScreenWidget> createState() => _ShopScreenWidgetState();
@@ -25,7 +28,8 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       child: GestureDetector(
         onTap: (){
-          print(widget.inputName);
+          showBuyDialog(context, widget.inputId);
+
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,4 +95,39 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
       ),
     );
   }
+}
+
+void showBuyDialog(BuildContext context, int _inputId) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Buy Item'),
+        content: const Text('Do you really want to buy this item?'),
+        backgroundColor: Theme.of(context).primaryColor,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: Theme.of(context).primaryColorLight),
+            ),
+          ),
+          TextButton(
+            onPressed: () async {
+              await ApiServices.patchShopBuyItem(_inputId);
+            },
+            child: Text(
+              'Buy',
+              style: TextStyle(color: Theme.of(context).primaryColorLight),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

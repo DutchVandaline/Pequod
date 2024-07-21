@@ -55,6 +55,24 @@ class ApiServices {
     }
   }
 
+  static Future<void> patchAddPoints(int points) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
+        '/api/user/me/');
+    var response = await http.patch(url, headers: {
+      'Authorization': 'Token $_userToken'
+    }, body: {
+      "points": points,
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+    }
+  }
+
   //Habit
   static Future<List<Habit>> getHabit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -65,7 +83,7 @@ class ApiServices {
         await http.get(url, headers: {'Authorization': 'Token $userToken'});
 
     if (response.statusCode == 200) {
-      List<dynamic> responseData = json.decode(response.body);
+      List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes));
       return responseData.map((json) => Habit.fromJson(json)).toList();
     } else {
       throw Exception('Error: ${response.statusCode}, ${response.body}');
@@ -120,8 +138,8 @@ class ApiServices {
   static Future<void> patchHabitCompleted(int _inputId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
-    var url = Uri.https('sogak-api-nraiv.run.goorm.site',
-        '/api/habit/habits/$_inputId/complete_habit');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
+        '/api/habit/habits/$_inputId/complete_habit/');
     var response = await http.patch(url, headers: {
       'Authorization': 'Token $_userToken'
     }, body: {
@@ -190,6 +208,24 @@ class ApiServices {
       throw Exception('Error: ${response.statusCode}, ${response.body}');
     }
   }
+
+  static Future<void> patchShopBuyItem(int _inputId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
+        '/api/shop/shop/$_inputId/buy_item/');
+    var response = await http.patch(url, headers: {
+      'Authorization': 'Token $_userToken'
+    }, body: {
+      "completed": 'true',
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+    }
+  }
 }
 
 
@@ -215,3 +251,4 @@ class Habit {
     );
   }
 }
+

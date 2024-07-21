@@ -95,6 +95,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                         borderRadius: BorderRadius.circular(10.0)),
                     child: TextField(
                       controller: todoController,
+                      style: TextStyle(fontSize: 17.0),
                       onChanged: (text) {
                         inputTodo = text;
                       },
@@ -110,7 +111,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                               borderSide:
                                   BorderSide(color: Colors.transparent)),
                           hintText: "Type in a habit you want to make.",
-                          hintStyle: const TextStyle(color: Colors.grey)),
+                          hintStyle: const TextStyle(color: Colors.grey, fontSize: 16.0)),
                       cursorColor: Theme.of(context).focusColor,
                       autofocus: true,
                     ),
@@ -127,7 +128,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                     child: TextField(
                       controller: memoController,
                       textInputAction: TextInputAction.done,
-                      style: const TextStyle(fontSize: 20.0),
+                      style: const TextStyle(fontSize: 17.0),
                       maxLines: 10,
                       onChanged: (text) {
                         memo = text;
@@ -142,7 +143,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                         enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.transparent)),
                         hintText: "Write a memo about the habit.",
-                        hintStyle: const TextStyle(color: Colors.grey),
+                        hintStyle: const TextStyle(color: Colors.grey, fontSize: 16.0),
                       ),
                       cursorColor: Theme.of(context).focusColor,
                     ),
@@ -190,7 +191,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                       "Add Habit",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 23.0),
+                          fontSize: 20.0),
                       textAlign: TextAlign.center,
                     )),
                   ),

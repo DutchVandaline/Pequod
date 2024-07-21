@@ -58,15 +58,17 @@ class _HabitScreenState extends State<HabitScreen> {
         actions: [
           IconButton(
               onPressed: () {},
-              icon: const Icon(
+              icon: Icon(
                 Icons.book_outlined,
-                size: 35.0,
+                size: MediaQuery.of(context).size.width * 0.07,
+                color: Theme.of(context).primaryColorLight,
               )),
           IconButton(
             onPressed: _onRefresh, // Refresh button action
-            icon: const Icon(
+            icon: Icon(
               Icons.refresh,
-              size: 35.0,
+              size: MediaQuery.of(context).size.width * 0.07,
+              color: Theme.of(context).primaryColorLight,
             ),
           ),
           if (habits.length < 8)
@@ -77,9 +79,10 @@ class _HabitScreenState extends State<HabitScreen> {
                       MaterialPageRoute(
                           builder: (context) => const AddHabitScreen()));
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.add,
-                  size: 35.0,
+                  size: MediaQuery.of(context).size.width * 0.07,
+                  color: Theme.of(context).primaryColorLight,
                 )),
         ],
         title: const ClimateCrisisCurrentDateWidget(),
@@ -132,7 +135,14 @@ class MyGame extends Forge2DGame {
         Vector2(300, -300),
       ];
       List<double> size = [
-        100.0, 180.0, 150.0, 80.0, 150.0, 150.0, 100.0, 90.0
+        MediaQuery.of(context).size.width * 0.25,
+        MediaQuery.of(context).size.width * 0.35,
+        MediaQuery.of(context).size.width * 0.3,
+        MediaQuery.of(context).size.width * 0.2,
+        MediaQuery.of(context).size.width * 0.25,
+        MediaQuery.of(context).size.width * 0.3,
+        MediaQuery.of(context).size.width * 0.3,
+        MediaQuery.of(context).size.width * 0.2,
       ];
       List<Color> color = [
         Colors.red,

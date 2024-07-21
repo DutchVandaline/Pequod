@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(13.0),
                   ),
-                  child: const Stack(
+                  child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
                       Column(
@@ -185,9 +185,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                                 fontFamily: 'FjallaOne',
                                 fontWeight: FontWeight.bold,
-                                fontSize: 90.0),
+                                fontSize: MediaQuery.of(context).size.width * 0.22),
                           ),
-                          Text(
+                          const Text(
                             "",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -197,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      AnimalWidget(),
+                      const AnimalWidget(),
                     ],
                   ),
                 ),

@@ -55,7 +55,7 @@ class _VerificationPreviewScreenState extends State<VerificationPreviewScreen> {
             padding: EdgeInsets.all(8.0),
             child: Center(
                 child: Text(
-                  "Image will be analysed by Gemini AI wheather it matches the habit.",
+                  "Image will be analysed by AI wheather it matches the habit.",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16.0, color: Colors.white),
                 )),
@@ -65,7 +65,7 @@ class _VerificationPreviewScreenState extends State<VerificationPreviewScreen> {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                    AnalysisScreen(habitName:widget.habitName, imagePath: widget.imagePath,)));
+                    AnalysisScreen(habitName:widget.habitName, habitId: widget.habitId, imagePath: widget.imagePath,)));
               },
               child: Container(
                 width: MediaQuery
