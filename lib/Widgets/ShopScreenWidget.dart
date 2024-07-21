@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:pequod/API/ApiServices.dart';
 
 class ShopScreenWidget extends StatefulWidget {
-  String inputImage;
-  String inputPoint;
-  String inputName;
-  String inputDetail;
-  int inputId;
+  final String inputImage;
+  final String inputPoint;
+  final String inputName;
+  final String inputDetail;
+  final int inputId;
+  final VoidCallback onBuy;
 
-
-  ShopScreenWidget(
-      {super.key,
-      required this.inputPoint,
-      required this.inputName,
-      required this.inputImage,
-      required this.inputDetail,
-      required this.inputId});
+  ShopScreenWidget({
+    super.key,
+    required this.inputPoint,
+    required this.inputName,
+    required this.inputImage,
+    required this.inputDetail,
+    required this.inputId,
+    required this.onBuy,
+  });
 
   @override
   State<ShopScreenWidget> createState() => _ShopScreenWidgetState();
@@ -27,9 +29,8 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       child: GestureDetector(
-        onTap: (){
-          showBuyDialog(context, widget.inputId);
-
+        onTap: () {
+          showBuyDialog(context, widget.inputId, widget.onBuy); // Pass the callback
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +58,7 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       widget.inputPoint,
                       style: TextStyle(
@@ -97,7 +98,7 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
   }
 }
 
-void showBuyDialog(BuildContext context, int _inputId) {
+void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -119,7 +120,9 @@ void showBuyDialog(BuildContext context, int _inputId) {
           ),
           TextButton(
             onPressed: () async {
-              await ApiServices.patchShopBuyItem(_inputId);
+              await ApiServices.patchShopBuyItem(inputId);
+              Navigator.pop(context);
+              onBuy();
             },
             child: Text(
               'Buy',

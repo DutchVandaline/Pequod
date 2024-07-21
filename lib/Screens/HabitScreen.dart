@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Screens/AddHabitScreen.dart';
-import 'package:pequod/Screens/ArchiveScreen.dart';
 import 'package:pequod/Screens/DetailScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisCurrentDateWidget.dart';
 import 'package:pequod/Constants/Constants.dart';
@@ -19,23 +18,30 @@ class HabitScreen extends StatefulWidget {
 
 class _HabitScreenState extends State<HabitScreen> {
   List<Habit> habits = [];
+  List<int> habitIds = [];
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadHabits();
+    _loadData();
   }
 
-  Future<void> _loadHabits() async {
+  Future<void> _loadData() async {
     setState(() {
       isLoading = true;
     });
+
     try {
       List<Habit> fetchedHabits = await ApiServices.getHabit();
+      List<int> fetchedHabitIds = await _getHabitIds();
+
       setState(() {
         habits = fetchedHabits;
+        habitIds = fetchedHabitIds;
       });
+    } catch (e) {
+      print('Error loading data: $e');
     } finally {
       setState(() {
         isLoading = false;
@@ -43,8 +49,25 @@ class _HabitScreenState extends State<HabitScreen> {
     }
   }
 
+  Future<List<int>> _getHabitIds() async {
+    try {
+      List<dynamic>? fetchHabitStatus = await ApiServices.getHabitStatus(Constants.changeDateFormat(DateTime.now()));
+      if (fetchHabitStatus != null) {
+        return fetchHabitStatus
+            .map<int>((item) => item['habit'] as int)
+            .toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print('Error fetching habit IDs: $e');
+      return [];
+    }
+  }
+
+
   void _onRefresh() {
-    _loadHabits();
+    _loadData();
   }
 
   @override
@@ -58,16 +81,6 @@ class _HabitScreenState extends State<HabitScreen> {
         shadowColor: Colors.transparent,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ArchiveScreen()));
-              },
-              icon: Icon(
-                Icons.book_outlined,
-                size: MediaQuery.of(context).size.width * 0.07,
-                color: Theme.of(context).primaryColorLight,
-              )),
           IconButton(
             onPressed: _onRefresh, // Refresh button action
             icon: Icon(
@@ -98,8 +111,7 @@ class _HabitScreenState extends State<HabitScreen> {
               color: Theme.of(context).primaryColorLight,
             ))
           : FutureBuilder(
-              future: ApiServices.getHabitStatus(
-                  Constants.changeDateFormat(DateTime.now())),
+              future: ApiServices.getHabit(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -117,18 +129,15 @@ class _HabitScreenState extends State<HabitScreen> {
                     ),
                   );
                 } else if (snapshot.hasData) {
-                  List<dynamic>? archiveData = snapshot.data;
-                  if (archiveData != null && archiveData.isNotEmpty) {
-                    List<int> habitIds = archiveData
-                        .map<int>((item) => item['habit'] as int)
-                        .toList();
+                  List<dynamic>? habitData = snapshot.data;
+                  if (habitData != null && habitData.isNotEmpty) {
                     return GameWidget(
                       game: MyGame(
                           context: context,
                           scaffoldBackgroundColor:
                               Theme.of(context).scaffoldBackgroundColor,
                           habits: habits,
-                          habitIds: habitIds),
+                          habitIds: habitIds),//habitIds
                     );
                   } else {
                     return const Center(
@@ -208,12 +217,12 @@ class MyGame extends Forge2DGame {
         Vector2(300, -300),
       ];
       List<double> size = [
-        MediaQuery.of(context).size.width * 0.25,
+        MediaQuery.of(context).size.width * 0.23,
+        MediaQuery.of(context).size.width * 0.27,
         MediaQuery.of(context).size.width * 0.3,
-        MediaQuery.of(context).size.width * 0.35,
         MediaQuery.of(context).size.width * 0.25,
         MediaQuery.of(context).size.width * 0.25,
-        MediaQuery.of(context).size.width * 0.3,
+        MediaQuery.of(context).size.width * 0.31,
         MediaQuery.of(context).size.width * 0.3,
         MediaQuery.of(context).size.width * 0.25,
       ];
