@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Screens/AddHabitScreen.dart';
-import 'package:pequod/Screens/DetailScreen.dart';
+import 'package:pequod/Screens/HabitDetailScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisCurrentDateWidget.dart';
 import 'package:pequod/Constants/Constants.dart';
 
@@ -51,7 +51,7 @@ class _HabitScreenState extends State<HabitScreen> {
 
   Future<List<int>> _getHabitIds() async {
     try {
-      List<dynamic>? fetchHabitStatus = await ApiServices.getHabitStatus(Constants.changeDateFormat(DateTime.now()));
+      List<dynamic>? fetchHabitStatus = await ApiServices.getTodayHabitStatus(Constants.changeDateFormat(DateTime.now()));
       if (fetchHabitStatus != null) {
         return fetchHabitStatus
             .map<int>((item) => item['habit'] as int)
@@ -247,7 +247,7 @@ class MyGame extends Forge2DGame {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetailScreen(
+                      builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
                           )));
@@ -264,7 +264,7 @@ class MyGame extends Forge2DGame {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetailScreen(
+                      builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
                           )));
@@ -279,7 +279,7 @@ class MyGame extends Forge2DGame {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => DetailScreen(
+                    builder: (context) => HabitDetailScreen(
                           habitName: habit.name,
                           habitId: habit.id,
                         )));
@@ -298,7 +298,7 @@ class MyGame extends Forge2DGame {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetailScreen(
+                      builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
                           )));
@@ -315,7 +315,7 @@ class MyGame extends Forge2DGame {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetailScreen(
+                      builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
                           )));
@@ -330,7 +330,7 @@ class MyGame extends Forge2DGame {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => DetailScreen(
+                    builder: (context) => HabitDetailScreen(
                           habitName: habit.name,
                           habitId: habit.id,
                         )));
@@ -350,7 +350,7 @@ class MyGame extends Forge2DGame {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetailScreen(
+                      builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
                           )));
@@ -366,7 +366,7 @@ class MyGame extends Forge2DGame {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetailScreen(
+                      builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
                           )));

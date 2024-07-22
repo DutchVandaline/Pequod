@@ -49,13 +49,13 @@ class SettingsScreen extends StatelessWidget {
                   nextScreen: const SettingsScreen(),
                 ),
                 SettingsWidget(
-                  inputTitle: "Privacy & Security",
-                  inputicon: Icons.lock_outlined,
+                  inputTitle: "Help & Support",
+                  inputicon: Icons.question_mark_outlined,
                   nextScreen: const SettingsScreen(),
                 ),
                 SettingsWidget(
-                  inputTitle: "Help & Support",
-                  inputicon: Icons.question_mark_outlined,
+                  inputTitle: "About",
+                  inputicon: Icons.star_border,
                   nextScreen: const SettingsScreen(),
                 ),
               ],
@@ -66,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
-              child: Text("Help",
+              child: Text("Logout",
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.04)),
             ),
@@ -117,11 +117,6 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                SettingsWidget(
-                  inputTitle: "About",
-                  inputicon: Icons.star_border,
-                  nextScreen: const SettingsScreen(),
                 ),
               ],
             ),

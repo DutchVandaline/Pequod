@@ -208,7 +208,7 @@ class ApiServices {
     }
   }
 
-  static Future<List<dynamic>?> getHabitStatus(String _date) async {
+  static Future<List<dynamic>?> getTodayHabitStatus(String _date) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
     var url = Uri.https(
@@ -226,6 +226,25 @@ class ApiServices {
       throw Exception('Error: ${response.statusCode}, ${response.body}');
     }
   }
+
+  static Future<List<dynamic>?> getHabitStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site', '/api/habitstatus/habitstatus/',
+    );
+
+    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = json.decode(response.body);
+      return responseData;
+    } else {
+      throw Exception('Error: ${response.statusCode}, ${response.body}');
+    }
+  }
+
+
 
 
 

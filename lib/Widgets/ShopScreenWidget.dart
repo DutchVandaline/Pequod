@@ -30,7 +30,13 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       child: GestureDetector(
         onTap: () {
-          showBuyDialog(context, widget.inputId, widget.onBuy); // Pass the callback
+          showBuyDialog(
+              context,
+              widget.inputId,
+              widget.onBuy,
+              widget.inputImage,
+              widget.inputName,
+              widget.inputDetail); // Pass the callback
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,37 +104,85 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
   }
 }
 
-void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy) {
+void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy,
+    String itemPath, String itemName, String itemDetail) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Buy Item'),
-        content: const Text('Do you really want to buy this item?'),
+        title: const Text(
+          'Buy Item',
+          style: TextStyle(
+              fontFamily: 'ClimateCrisis', fontWeight: FontWeight.w600),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Do you really want to buy this item?',
+              style: TextStyle(fontSize: 17.0),
+              textAlign: TextAlign.center,
+            ),
+            Image.asset(itemPath),
+            Text(itemName,
+                style: TextStyle(fontSize: 27.0, fontFamily: 'FjallaOne')),
+            Text(
+              "You can get additional\n${itemDetail} for your animal",
+              style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
         backgroundColor: Theme.of(context).primaryColor,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Cancel',
-              style: TextStyle(color: Theme.of(context).primaryColorLight),
-            ),
+          Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Theme.of(context).primaryColorLight),
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 3,
+                child: TextButton(
+                  onPressed: () async {
+                    await ApiServices.patchShopBuyItem(inputId);
+                    Navigator.pop(context);
+                    onBuy();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).canvasColor,
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Center(
+                      child: Text(
+                        'Buy',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                            fontFamily: 'FjallaOne',
+                            fontSize: 20.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () async {
-              await ApiServices.patchShopBuyItem(inputId);
-              Navigator.pop(context);
-              onBuy();
-            },
-            child: Text(
-              'Buy',
-              style: TextStyle(color: Theme.of(context).primaryColorLight),
-            ),
-          ),
+
         ],
       );
     },
