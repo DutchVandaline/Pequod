@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
         habitDone = fetchedHabitDone;
         habitDone ??= [];
         percentage = (habitDone!.length / habits.length * 100).toInt()!;
-        print(percentage);
       });
     } catch (e) {
       print('Error loading data: $e');
@@ -69,9 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: MediaQuery.of(context).size.width * 0.07,
                   color: Theme.of(context).primaryColorLight,
                 )),
-            const SizedBox(
-              width: 10.0,
-            ),
           ],
         ),
         body: Column(

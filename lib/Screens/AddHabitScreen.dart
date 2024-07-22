@@ -111,7 +111,8 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                               borderSide:
                                   BorderSide(color: Colors.transparent)),
                           hintText: "Type in a habit you want to make.",
-                          hintStyle: const TextStyle(color: Colors.grey, fontSize: 16.0)),
+                          hintStyle: const TextStyle(
+                              color: Colors.grey, fontSize: 16.0)),
                       cursorColor: Theme.of(context).focusColor,
                       autofocus: true,
                     ),
@@ -143,7 +144,8 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                         enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.transparent)),
                         hintText: "Write a memo about the habit.",
-                        hintStyle: const TextStyle(color: Colors.grey, fontSize: 16.0),
+                        hintStyle:
+                            const TextStyle(color: Colors.grey, fontSize: 16.0),
                       ),
                       cursorColor: Theme.of(context).focusColor,
                     ),
@@ -156,16 +158,15 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      print(DateFormat("YYYY-MM-DD").format(DateTime.now()).toString());
-                      //String _name, String _date, bool _completed,
-                      // int _receive_point, String _receive_time, String _description
                       if (inputTodo == "" || inputTodo.isEmpty) {
                         _showError = true;
                       } else {
                         _showError = false;
                         ApiServices.postHabit(
                             inputTodo,
-                            DateFormat("yyyy-MM-dd").format(DateTime.now()).toString(),
+                            DateFormat("yyyy-MM-dd")
+                                .format(DateTime.now())
+                                .toString(),
                             "false",
                             "10",
                             const Duration(hours: 1).toString(),
@@ -175,8 +176,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                           ? ()
                           : Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => MainScreen()),
+                              PageRouteBuilder(
+                                pageBuilder: (context, a1, a2) => MainScreen(),
+                                transitionDuration: Duration.zero,
+                                reverseTransitionDuration: Duration.zero,
+                              ),
                               (route) => false);
                     });
                   },
@@ -189,9 +193,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                     child: const Center(
                         child: Text(
                       "Add Habit",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0),
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
                       textAlign: TextAlign.center,
                     )),
                   ),

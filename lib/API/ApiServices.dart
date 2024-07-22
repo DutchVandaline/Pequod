@@ -55,22 +55,39 @@ class ApiServices {
     }
   }
 
-  static Future<void> patchAddPoints(int points) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? _userToken = prefs.getString('UserToken');
-    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/user/me/');
-    var response = await http.patch(url, headers: {
-      'Authorization': 'Token $_userToken'
-    }, body: {
-      "points": points,
-    });
-    if (response.statusCode == 200) {
-      print(response.body);
+  static Future<void> patchAddPoints(int pointsToAdd) async {
+    Map<String, dynamic>? userData;
+    try {
+      userData = await getUser();
+    } catch (e) {
+      print('Failed to fetch user data: $e');
+      return;
+    }
+
+    if (userData != null) {
+      int currentPoints = userData['points'] ?? 0;
+      int updatedPoints = currentPoints + pointsToAdd;
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userToken = prefs.getString('UserToken');
+      var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/user/me/');
+
+      var response = await http.patch(url, headers: {
+        'Authorization': 'Token $userToken'
+      }, body: {'points': updatedPoints.toString()});
+
+      if (response.statusCode == 200) {
+        print('Points updated successfully!');
+        print(response.body);
+      } else {
+        print('Error: ${response.statusCode}');
+        print('Error body: ${response.body}');
+      }
     } else {
-      print('Error: ${response.statusCode}');
-      print('Error body: ${response.body}');
+      print('User data is null, cannot update points.');
     }
   }
+
 
   //Habit
   static Future<List<Habit>> getHabit() async {
@@ -155,7 +172,7 @@ class ApiServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
     var url = Uri.https(
-        'sogak-api-nraiv.run.goorm.site', '/api/habit/habits/$_inputId/');
+        'pequod-api-dlyou.run.goorm.site', '/api/habit/habits/$_inputId/');
     var response = await http.patch(url, headers: {
       'Authorization': 'Token $_userToken'
     }, body: {
@@ -227,6 +244,24 @@ class ApiServices {
     }
   }
 
+  static Future<List<dynamic>?> getMonthlyHabitStatus(String _month) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site',
+        '/api/habitstatus/habitstatus/habit_status_by_month/',
+        {'month': _month}
+    );
+    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = json.decode(response.body);
+      return responseData;
+    } else {
+      throw Exception('Error: ${response.statusCode}, ${response.body}');
+    }
+  }
+
   static Future<List<dynamic>?> getHabitStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
@@ -243,9 +278,6 @@ class ApiServices {
       throw Exception('Error: ${response.statusCode}, ${response.body}');
     }
   }
-
-
-
 
 
   //Shop

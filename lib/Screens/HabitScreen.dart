@@ -197,7 +197,6 @@ class MyGame extends Forge2DGame {
     List<Habit> displayedHabits = habits.take(8).toList();
 
     for (int i = 0; i < displayedHabits.length; i++) {
-      print(habitIds);
       Habit habit = displayedHabits[i];
 
       if(habitIds.contains(habit.id)){
@@ -250,6 +249,7 @@ class MyGame extends Forge2DGame {
                       builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
+                        habitDescription: habit.description,
                           )));
             }));
       } else if (j == 1) {
@@ -267,6 +267,7 @@ class MyGame extends Forge2DGame {
                       builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
+                        habitDescription: habit.description,
                           )));
             }));
       } else if (j == 2) {
@@ -282,6 +283,7 @@ class MyGame extends Forge2DGame {
                     builder: (context) => HabitDetailScreen(
                           habitName: habit.name,
                           habitId: habit.id,
+                      habitDescription: habit.description,
                         )));
           },
           borderRadius: 10.0,
@@ -301,6 +303,7 @@ class MyGame extends Forge2DGame {
                       builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
+                        habitDescription: habit.description,
                           )));
             }));
       } else if (j == 4) {
@@ -318,6 +321,7 @@ class MyGame extends Forge2DGame {
                       builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
+                        habitDescription: habit.description,
                           )));
             }));
       } else if (j == 5) {
@@ -333,6 +337,7 @@ class MyGame extends Forge2DGame {
                     builder: (context) => HabitDetailScreen(
                           habitName: habit.name,
                           habitId: habit.id,
+                      habitDescription: habit.description,
                         )));
           },
           borderRadius: 10.0,
@@ -353,6 +358,7 @@ class MyGame extends Forge2DGame {
                       builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
+                        habitDescription: habit.description,
                           )));
             }));
       } else if (j == 7) {
@@ -369,6 +375,7 @@ class MyGame extends Forge2DGame {
                       builder: (context) => HabitDetailScreen(
                             habitName: habit.name,
                             habitId: habit.id,
+                            habitDescription: habit.description,
                           )));
             }));
       }

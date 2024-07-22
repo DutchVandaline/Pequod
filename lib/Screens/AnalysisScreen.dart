@@ -175,9 +175,14 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         widget.habitName);
                     await ApiServices.patchHabitCompleted(widget.habitId);
                     Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainScreen()),
-                        (route) => false);
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, a1, a2) => MainScreen(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                          (route) => false,
+                    );
                   } else {}
                 },
                 child: Container(
