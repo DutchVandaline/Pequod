@@ -121,7 +121,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   controller: EmailController,
                   onChanged: (text) {
-                    //inputEmail = text;
                     EmailController.text = text;
                   },
                   keyboardType: TextInputType.emailAddress,
@@ -138,14 +137,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderSide:
                               const BorderSide(color: Colors.transparent),
                           borderRadius: BorderRadius.circular(15.0)),
-                      hintText: "Email을 입력하세요.",
+                      hintText: "Enter your Email",
                       hintStyle: const TextStyle(
                           fontSize: 18.0, fontWeight: FontWeight.normal),
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.email_outlined,
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColorLight,
                       )),
-                  cursorColor: Colors.grey,
+                  cursorColor: Theme.of(context).primaryColorLight,
                   autofocus: false,
                 ),
               ),
@@ -173,15 +172,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.transparent),
                         borderRadius: BorderRadius.circular(15.0)),
-                    hintText: "비밀번호를 입력하세요",
+                    hintText: "Enter your password",
                     hintStyle: const TextStyle(
                         fontSize: 18.0, fontWeight: FontWeight.normal),
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.password_outlined,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColorLight,
                     ),
                   ),
-                  cursorColor: Colors.grey,
+                  cursorColor: Theme.of(context).primaryColorLight,
                   obscureText: true,
                   autofocus: false,
                 ),
@@ -202,12 +201,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: 60.0,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColorLight,
                       borderRadius: BorderRadius.circular(15.0)),
                   child: Center(
                     child: Text(
-                      "로그인",
-                      style: Theme.of(context).textTheme.bodySmall,
+                      "Log-In",
+                      style: TextStyle(
+                          fontFamily: 'FjallaOne',
+                          color: Theme.of(context).cardColor,
+                          fontSize: 20.0),
                     ),
                   ),
                 ),

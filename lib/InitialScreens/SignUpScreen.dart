@@ -66,15 +66,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             emailError
                 ? const ErrorWidget(
-              inputString: "이메일 값이 잘못되었습니다.",
+              inputString: "Email is Invalid",
             )
                 : passwordError
                 ? const ErrorWidget(
-              inputString: "비밀번호는 다섯자리 이상이어야합니다.",
+              inputString: "Password needs to be more than 5 letters",
             )
                 : displayError
                 ? const ErrorWidget(
-              inputString: "가입된 계정이거나 비밀번호가 일치하지 않습니다.",
+              inputString: "It's already existing Email or password is not correct",
             )
                 : const SizedBox(
               height: 20.0,
@@ -102,14 +102,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(color: Colors.transparent),
                           borderRadius: BorderRadius.circular(15.0)),
-                      hintText: "가입할 Email을 입력하세요.",
+                      hintText: "Enter your Email for account",
                       hintStyle: const TextStyle(
                           fontSize: 18.0, fontWeight: FontWeight.normal),
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.email_outlined,
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColorLight,
                       )),
-                  cursorColor: Colors.grey,
+                  cursorColor: Theme.of(context).primaryColorLight,
                   autofocus: false,
                 ),
               ),
@@ -136,15 +136,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.transparent),
                         borderRadius: BorderRadius.circular(15.0)),
-                    hintText: "비밀번호를 입력하세요",
+                    hintText: "Enter your Password",
                     hintStyle: const TextStyle(
                         fontSize: 18.0, fontWeight: FontWeight.normal),
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.password_outlined,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColorLight,
                     ),
                   ),
-                  cursorColor: Colors.grey,
+                  cursorColor: Theme.of(context).primaryColorLight,
                   obscureText: true,
                   autofocus: false,
                 ),
@@ -172,15 +172,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.transparent),
                         borderRadius: BorderRadius.circular(15.0)),
-                    hintText: "비밀번호를 다시 한 번 입력하세요",
+                    hintText: "Enter Your Password Again",
                     hintStyle: const TextStyle(
                         fontSize: 18.0, fontWeight: FontWeight.normal),
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.password_outlined,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColorLight,
                     ),
                   ),
-                  cursorColor: Colors.grey,
+                  cursorColor: Theme.of(context).primaryColorLight,
                   obscureText: true,
                   autofocus: false,
                 ),
@@ -218,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   createUser(EmailController.text, PasswordController.text,
                       "User${DateTime.now()}");
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("회원 가입이 완료되었습니다. 로그인해주세요."),
+                    content: Text("You're all set! Please Log-In!"),
                     duration: Duration(seconds: 2),
                   ));
                   Navigator.pop(context);
@@ -235,8 +235,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(15.0)),
                   child: Center(
                     child: Text(
-                      "회원 가입",
-                      style: Theme.of(context).textTheme.bodySmall,
+                      "Sign-Up",
+                      style: TextStyle(fontFamily: 'FjallaOne', fontSize: 20.0, color: Theme.of(context).primaryColorLight,)
                     ),
                   ),
                 ),
@@ -248,7 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
                 child: const Center(
                     child: Text(
-                      "이미 계정이 있으신가요?",
+                      "Do you already have Account?",
                       style: TextStyle(fontSize: 15.0),
                     ))),
             const SizedBox(
@@ -280,7 +280,7 @@ class ErrorWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               inputString,
-              style: const TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red, fontFamily: 'FjallaOne'),
             ),
           ),
         ),

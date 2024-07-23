@@ -84,12 +84,8 @@ flutter:
     - assets/images/items/PlasticWaterBottle.png
     - assets/images/items/RecycleBag.png
     - assets/images/garbages/water_bottle.png
-    - assets/images/garbages/bottlebottom_noside.png
     - assets/images/garbages/bottle_withblack.png
-    - assets/images/garbages/bottletop_noside.png
-    - assets/images/garbages/bottletop_withside.png
     - assets/images/garbages/bottletop_blood.png
-    - assets/images/garbages/bottlebottom_blood.png
     - assets/images/SeaSplash.jpg
 
 

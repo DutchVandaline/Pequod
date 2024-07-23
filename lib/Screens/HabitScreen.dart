@@ -142,7 +142,7 @@ class _HabitScreenState extends State<HabitScreen> {
                   } else {
                     return const Center(
                       child: Text(
-                        'No data available',
+                        '📡 No Habits are Recorded...',
                         style: TextStyle(
                           fontFamily: 'FjallaOne',
                           fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _HabitScreenState extends State<HabitScreen> {
                 } else {
                   return const Center(
                     child: Text(
-                      'No data available',
+                      '📡 No Habits are Recorded...',
                       style: TextStyle(
                         fontFamily: 'FjallaOne',
                         fontWeight: FontWeight.bold,

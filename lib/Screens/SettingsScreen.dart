@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
               child: Text(
-                "Edit Account",
+                "Privacy",
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.04),
               ),
@@ -42,11 +42,6 @@ class SettingsScreen extends StatelessWidget {
                   inputTitle: "Account",
                   inputicon: Icons.person_outlined,
                   nextScreen: const AccountScreen(),
-                ),
-                SettingsWidget(
-                  inputTitle: "Notifications",
-                  inputicon: Icons.notifications_none,
-                  nextScreen: const SettingsScreen(),
                 ),
                 SettingsWidget(
                   inputTitle: "Help & Support",
@@ -130,33 +125,66 @@ void showLogoutDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Do you really want to Logout?'),
+        title: const Text(
+          'Logout',
+          style: TextStyle(
+              fontFamily: 'ClimateCrisis', fontWeight: FontWeight.w600),
+        ),
+        content: const Text(
+          "Do you really want to Log-out?",
+          style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
+          textAlign: TextAlign.center,
+        ),
         backgroundColor: Theme.of(context).primaryColor,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Cancel',
-              style: TextStyle(color: Theme.of(context).primaryColorLight),
-            ),
-          ),
-          TextButton(
-            onPressed: () async {
-              await ApiServices.logout();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SplashScreen()),
-                  (route) => false);
-            },
-            child: Text(
-              'Logout',
-              style: TextStyle(color: Theme.of(context).primaryColorLight),
-            ),
+          Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Theme.of(context).primaryColorLight),
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 3,
+                child: TextButton(
+                  onPressed: () async {
+                    await ApiServices.logout();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SplashScreen()),
+                            (route) => false);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).canvasColor,
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Center(
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                            fontFamily: 'FjallaOne',
+                            fontSize: 20.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       );

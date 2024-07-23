@@ -178,8 +178,7 @@ void showBuyDialog(BuildContext context, int currentBottle) {
                       if (currentBottle ~/ 10 == 0) {
                         print("Nothing Happended");
                       } else {
-                        await ApiServices.patchAddPoints(
-                            (currentBottle ~/ 10).toInt());
+                        await ApiServices.patchAddPoints((currentBottle ~/ 10).toInt());
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         await prefs.setInt('bottle_count', 0);

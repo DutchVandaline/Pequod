@@ -4,6 +4,7 @@ import 'package:marquee/marquee.dart';
 import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Constants/EnvironmentTips.dart';
 import 'package:pequod/Screens/ArchiveScreen.dart';
+import 'package:pequod/Widgets/PoalrBearWidget.dart';
 import 'package:pequod/Widgets/TurtleWidget.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/CountDownWidget.dart';
@@ -60,8 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const ArchiveScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ArchiveScreen()));
                 },
                 icon: Icon(
                   Icons.book_outlined,
@@ -101,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: FutureBuilder(
-                          future: ApiServices.getUser(),
+                          future: ApiServices.getAnimal(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -126,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ]),
                               );
                             } else if (snapshot.hasError) {
+                              print(snapshot.error);
                               return const Center(
                                 child: Text(
                                   '🏴‍☠️ Error Occurred Loading Deadline',
@@ -137,10 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               );
                             } else {
-                              Map<String, dynamic>? myPoint =
-                                  snapshot.data as Map<String, dynamic>;
-                              DateTime deadline =
-                                  DateTime.parse(myPoint['animal_deadline']);
+                              List<dynamic>? animalData = snapshot.data;
+                              DateTime deadline = DateTime.parse(
+                                  animalData?.first['animal_deadline']);
                               return CountDownWidget(deadline: deadline);
                             }
                           }),
@@ -159,7 +162,42 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(13.0),
                   ),
-                  child: const TurtleWidget(),
+                  child: FutureBuilder(
+                      future: ApiServices.getAnimal(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                              child: CircularProgressIndicator(
+                            color: Theme.of(context).primaryColorLight,
+                          ));
+                        } else if (snapshot.hasError) {
+                          print(snapshot.error);
+                          return const Center(
+                            child: Text(
+                              '🏴‍☠️ Error Occurred Loading Animal',
+                              style: TextStyle(
+                                fontFamily: 'FjallaOne',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          );
+                        } else {
+                          List<dynamic>? animalData = snapshot.data;
+                          String animalName = animalData?.first['animal_name'];
+                          int animalType = animalData?.first['animal_type'];
+
+                          if(animalType == 0){
+                            return TurtleWidget(animalName: animalName);
+                          } else if(animalType == 1){
+                            return WhaleWidget(animalName: animalName);
+                          } else{
+                            return PolarBearWidget(animalName: animalName);WhaleWidget(animalName: animalName);
+                          }
+
+                        }
+                      }),
                 ),
               ),
             ),
@@ -211,7 +249,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontSize: 18.0,
                                   ),
                                 ),
-                                SizedBox(height: 15.0,),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
                                 Text(
                                   envTips[rndNumb],
                                   style: const TextStyle(

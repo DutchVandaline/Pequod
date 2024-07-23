@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 
-class WhaleWidget extends StatefulWidget {
+class PolarBearWidget extends StatefulWidget {
   String animalName;
 
-  WhaleWidget({required this.animalName, super.key});
+  PolarBearWidget({required this.animalName, super.key});
 
   @override
-  State<WhaleWidget> createState() => _WhaleWidgetState();
+  State<PolarBearWidget> createState() => _PolarBearWidgetState();
 }
 
-class _WhaleWidgetState extends State<WhaleWidget> {
+class _PolarBearWidgetState extends State<PolarBearWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,7 +30,7 @@ class _WhaleWidgetState extends State<WhaleWidget> {
                   fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.of(context).size.width * 0.22),
               maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              overflow: TextOverflow.clip,
             ),
           ),
           Positioned(
@@ -48,7 +48,7 @@ class _WhaleWidgetState extends State<WhaleWidget> {
             ),
           ),
           Image.asset(
-            'assets/images/animals/whale.png',
+            'assets/images/animals/polar_bear.png',
             alignment: Alignment.bottomCenter,
           ),
           Positioned(
@@ -57,7 +57,7 @@ class _WhaleWidgetState extends State<WhaleWidget> {
             child: Transform.rotate(
               angle: 0.4,
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.08,
+                height: MediaQuery.of(context).size.height * 0.1,
                 child: AspectRatio(
                     aspectRatio: 1 / 1,
                     child:

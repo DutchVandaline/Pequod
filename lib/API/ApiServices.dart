@@ -3,6 +3,22 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiServices {
+  //animal
+  static Future<List<dynamic>?> getAnimal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/animal/animal');
+
+    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = json.decode(response.body);
+      return responseData;
+    } else {
+      throw Exception('Error: ${response.statusCode}, ${response.body}');
+    }
+  }
+
   //User
   static Future<Map<String, dynamic>?> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -87,7 +103,6 @@ class ApiServices {
       print('User data is null, cannot update points.');
     }
   }
-
 
   //Habit
   static Future<List<Habit>> getHabit() async {

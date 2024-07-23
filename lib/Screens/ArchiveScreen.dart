@@ -39,8 +39,10 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
             future: ApiServices.getMonthlyHabitStatus("2024-07"),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               } else if (snapshot.hasError) {
                 print(snapshot.error);
@@ -69,72 +71,73 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   DateTime date = DateTime.parse(dateStr);
                   String dateForParse = DateFormat("yyyy-MM").format(date);
                   int daysInMonth = DateTime(date.year, date.month + 1, 0).day;
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 7),
-                        itemBuilder: (context, index) {
-                          int day = index + 1;
-                          int count = dayCounts[day] ?? 0;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      child: GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 7),
+                          itemBuilder: (context, index) {
+                            int day = index + 1;
+                            int count = dayCounts[day] ?? 0;
 
-                          double opacity;
-                          count == 0
-                              ? opacity = 0.0
-                              : opacity = (count / 8).clamp(0.0, 1.0);
-                          return Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  inputDate =
-                                      "$dateForParse-${day.toString().padLeft(2, '0')}";
-                                  print(inputDate);
-                                });
-                              },
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  AspectRatio(
-                                    aspectRatio: 1 / 1,
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .canvasColor
-                                              .withOpacity(opacity),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          border: Border.all(
-                                              color: Theme.of(context)
-                                                  .primaryColorLight
-                                                  .withOpacity(0.2))),
-                                      child: Text(
-                                        "$day",
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontFamily: 'FjallaOne'),
+                            double opacity;
+                            count == 0
+                                ? opacity = 0.0
+                                : opacity = (count / 8).clamp(0.0, 1.0);
+                            return Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    inputDate =
+                                        "$dateForParse-${day.toString().padLeft(2, '0')}";
+                                    print(inputDate);
+                                  });
+                                },
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    AspectRatio(
+                                      aspectRatio: 1 / 1,
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                            color: Colors.teal.withOpacity(opacity),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .primaryColorLight
+                                                    .withOpacity(0.2))),
+                                        child: Text(
+                                          "$day",
+                                          style: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontFamily: 'FjallaOne'),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Text(
-                                    count == 0 ? "" : "$count",
-                                    style: const TextStyle(fontSize: 20.0),
-                                  ),
-                                ],
+                                    Text(
+                                      count == 0 ? "" : "$count",
+                                      style: const TextStyle(fontSize: 20.0),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        itemCount: daysInMonth),
+                            );
+                          },
+                          itemCount: daysInMonth),
+                    ),
                   );
                 } else {
                   return const Center(
                     child: Text(
-                      'No data available',
+                      '📡 No Habits are Recorded...',
                       style: TextStyle(
                         fontFamily: 'FjallaOne',
                         fontWeight: FontWeight.bold,
@@ -146,7 +149,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
               } else {
                 return const Center(
                   child: Text(
-                    'No data available',
+                    '📡 No Habits are Recorded...',
                     style: TextStyle(
                       fontFamily: 'FjallaOne',
                       fontWeight: FontWeight.bold,
@@ -162,8 +165,10 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
             future: ApiServices.getTodayHabitStatus(inputDate),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               } else if (snapshot.hasError) {
                 print(snapshot.error);
@@ -208,7 +213,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                 } else {
                   return const Center(
                     child: Text(
-                      'No data available',
+                      '📡 No Habits are Recorded...',
                       style: TextStyle(
                         fontFamily: 'FjallaOne',
                         fontWeight: FontWeight.bold,
@@ -220,7 +225,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
               } else {
                 return const Center(
                   child: Text(
-                    'No data available',
+                    '📡 No Habits are Recorded...',
                     style: TextStyle(
                       fontFamily: 'FjallaOne',
                       fontWeight: FontWeight.bold,

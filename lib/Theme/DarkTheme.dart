@@ -10,7 +10,7 @@ class DarkTheme {
           scaffoldBackgroundColor: Color(0xFF202023),
           hoverColor: Color(0xFF2c3a47),
           primaryColorDark: Color(0xFF2e2e33),
-          cardColor: Color(0xFF2e2e33),
+          cardColor: Colors.black,
       );
 
 }
