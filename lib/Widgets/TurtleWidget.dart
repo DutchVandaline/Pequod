@@ -24,10 +24,11 @@ class _TurtleWidgetState extends State<TurtleWidget> {
             child: Text(
               widget.animalName,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'FjallaOne',
-                  fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.width * 0.22),
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                fontFamily: 'FjallaOne',
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.width * 0.22,
+              ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

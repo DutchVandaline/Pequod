@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class PolarBearWidget extends StatefulWidget {
   String animalName;
 
@@ -25,10 +24,11 @@ class _PolarBearWidgetState extends State<PolarBearWidget> {
             child: Text(
               widget.animalName,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'FjallaOne',
-                  fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.width * 0.22),
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    fontFamily: 'FjallaOne',
+                    fontWeight: FontWeight.bold,
+                    fontSize: MediaQuery.of(context).size.width * 0.22,
+                  ),
               maxLines: 1,
               overflow: TextOverflow.clip,
             ),
@@ -42,8 +42,8 @@ class _PolarBearWidgetState extends State<PolarBearWidget> {
                 height: MediaQuery.of(context).size.height * 0.15,
                 child: AspectRatio(
                     aspectRatio: 1 / 1,
-                    child:
-                    Image.asset('assets/images/garbages/bottle_withblack.png')),
+                    child: Image.asset(
+                        'assets/images/garbages/bottle_withblack.png')),
               ),
             ),
           ),
@@ -60,12 +60,11 @@ class _PolarBearWidgetState extends State<PolarBearWidget> {
                 height: MediaQuery.of(context).size.height * 0.1,
                 child: AspectRatio(
                     aspectRatio: 1 / 1,
-                    child:
-                    Image.asset('assets/images/garbages/bottletop_blood.png')),
+                    child: Image.asset(
+                        'assets/images/garbages/bottletop_blood.png')),
               ),
             ),
           ),
-
         ]),
       ),
     );

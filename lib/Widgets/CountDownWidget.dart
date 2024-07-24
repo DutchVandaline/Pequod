@@ -4,7 +4,7 @@ import 'dart:async';
 class CountDownWidget extends StatefulWidget {
   final DateTime deadline;
 
-  CountDownWidget({required this.deadline});
+  const CountDownWidget({required this.deadline});
 
   @override
   _CountDownWidgetState createState() => _CountDownWidgetState();
