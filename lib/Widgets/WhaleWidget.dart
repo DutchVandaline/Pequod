@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/Widgets/GarbageWidget.dart';
 
 class WhaleWidget extends StatefulWidget {
   String animalName;
+  Duration leftTime;
 
-  WhaleWidget({required this.animalName, super.key});
+  WhaleWidget({required this.animalName, required this.leftTime, super.key});
 
   @override
   State<WhaleWidget> createState() => _WhaleWidgetState();
@@ -12,6 +14,7 @@ class WhaleWidget extends StatefulWidget {
 class _WhaleWidgetState extends State<WhaleWidget> {
   @override
   Widget build(BuildContext context) {
+    print(widget.leftTime.inSeconds);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -34,38 +37,14 @@ class _WhaleWidgetState extends State<WhaleWidget> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.13,
-              left: MediaQuery.of(context).size.width * 0.03,
-              child: Transform.rotate(
-                angle: 3,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: Image.asset(
-                          'assets/images/garbages/bottle_withblack.png')),
-                ),
-              ),
-            ),
+            GarbageWidget(top: 0.15, left: 0.03, size: 0.15, angle: 3, asset: "bottle_withblack"),
             Image.asset(
               'assets/images/animals/whale.png',
               alignment: Alignment.bottomCenter,
             ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.22,
-              left: MediaQuery.of(context).size.width * 0.5,
-              child: Transform.rotate(
-                angle: 0.4,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.08,
-                  child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: Image.asset(
-                          'assets/images/garbages/bottletop_blood.png')),
-                ),
-              ),
-            ),
+            GarbageWidget(top: 0.22, left: 0.5, size: 0.08, angle: 0.4, asset: "bottletop_blood"),
+            GarbageWidget(top: 0.21, left: -0.01, size: 0.06, angle: 5, asset: "bottlebottom_blood"),
+            GarbageWidget(top: 0.2, left: 0.4, size: 0.04, angle: 0, asset: "tribotblood_yellow"),
           ]),
         ),
       ),

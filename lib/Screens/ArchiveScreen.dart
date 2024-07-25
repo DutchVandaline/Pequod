@@ -21,7 +21,6 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
         elevation: 0.0,
         shadowColor: Colors.transparent,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        automaticallyImplyLeading: false,
         scrolledUnderElevation: 0.0,
         title: ClimateChangeTextWidget("Archive"),
       ),
@@ -107,8 +106,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                     AspectRatio(
                                       aspectRatio: 1 / 1,
                                       child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(context).size.width,
+                                        height: MediaQuery.of(context).size.height * 0.4,
                                         decoration: BoxDecoration(
                                             color: Colors.teal
                                                 .withOpacity(opacity),
@@ -197,13 +196,13 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       child: ListView.builder(
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: const EdgeInsets.all(2.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 height: 100.0,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color: Colors.teal,
+                                  border: Border.all(color: Theme.of(context).primaryColorLight)
                                 ),
                                 child: Center(
                                   child: Text(

@@ -93,7 +93,7 @@ class _VerificationScreenState extends State<VerificationScreen>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.65,
+                      height: MediaQuery.of(context).size.height * 0.67,
                       width: MediaQuery.of(context).size.width,
                       child: CameraPreview(_controller!)),
                   SizedBox(

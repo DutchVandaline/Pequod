@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/InitialScreens/SignUpScreen.dart';
 import 'package:http/http.dart' as http;
+import 'package:pequod/Screens/AnimalSelectionScreen.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,10 +38,23 @@ class _LoginScreenState extends State<LoginScreen> {
       String token = jsonData['token'];
       userAuthorize(token);
       prefs.setString("UserToken", token);
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen()),
-          (route) => false);
+
+      var animalResponse = await ApiServices.getAnimal();
+      print(animalResponse);
+
+      if(animalResponse == null || animalResponse!.isEmpty){
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const AnimalSelectionScreen()),
+                (route) => false);
+      } else{
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+                (route) => false);
+      }
+
+
     } else {
       print('Error: ${response.statusCode}');
       print('Error body: ${response.body}');

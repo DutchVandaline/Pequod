@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class TurtleWidget extends StatefulWidget {
   String animalName;
+  Duration leftTime;
 
-  TurtleWidget({super.key, required this.animalName});
+  TurtleWidget({super.key, required this.animalName, required this.leftTime});
 
   @override
   State<TurtleWidget> createState() => _TurtleWidgetState();
@@ -65,6 +66,7 @@ class _TurtleWidgetState extends State<TurtleWidget> {
               ),
             ),
           ),
+
         ]),
       ),
     );

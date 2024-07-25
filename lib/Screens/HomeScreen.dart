@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
@@ -5,10 +7,10 @@ import 'package:pequod/API/ApiServices.dart';
 import 'package:pequod/Constants/EnvironmentTips.dart';
 import 'package:pequod/Screens/AnimalDetailScreen.dart';
 import 'package:pequod/Screens/ArchiveScreen.dart';
+import 'package:pequod/Widgets/DeathWidget.dart';
 import 'package:pequod/Widgets/PoalrBearWidget.dart';
 import 'package:pequod/Widgets/TurtleWidget.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
-import 'package:pequod/Widgets/CountDownWidget.dart';
 import 'package:pequod/Constants/Constants.dart';
 import 'package:pequod/Widgets/WhaleWidget.dart';
 
@@ -25,6 +27,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int rndNumb = 0;
   late Future<List<dynamic>?> animalFuture;
+  DateTime? deadline;
+  bool? dead;
+  Timer? timer;
+  Duration timeLeft = Duration();
 
   @override
   void initState() {
@@ -32,10 +38,37 @@ class _HomeScreenState extends State<HomeScreen> {
     Random random = Random();
     rndNumb = random.nextInt(envTips.length);
     animalFuture = ApiServices.getAnimal();
+    startTimer();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (deadline != null && deadline!.isAfter(DateTime.now())) {
+        setState(() {
+          timeLeft = deadline!.difference(DateTime.now());
+        });
+      }
+      if (dead == true) {
+        timer.cancel();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> refreshData() async {
+    setState(() {
+      animalFuture = ApiServices.getAnimal();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if(timeLeft.inSeconds == 0) refreshData(); //patch data
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -58,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Theme.of(context).primaryColorLight,
             ),
           ),
+          IconButton(onPressed: refreshData, icon: Icon(Icons.refresh)),
         ],
       ),
       body: Column(
@@ -101,9 +135,50 @@ class _HomeScreenState extends State<HomeScreen> {
                         return const ErrorText(
                             '🏴‍☠️ Error Occurred Loading Deadline');
                       } else {
-                        DateTime deadline = DateTime.parse(
+                        deadline = DateTime.parse(
                             snapshot.data?.first['animal_deadline']);
-                        return CountDownWidget(deadline: deadline);
+                        dead = snapshot.data?.first['dead'];
+                        if (deadline!.isBefore(DateTime.now())) {
+                          ApiServices.patchDead();
+                        }
+
+                        return dead == true
+                            ? const Center(
+                                child: Text(
+                                  "☠️ Your Animal is Dead. ☠️",
+                                  style: TextStyle(
+                                      fontFamily: 'FjallaOne',
+                                      fontSize: 25.0,
+                                      color: Colors.white),
+                                ),
+                              )
+                            : RichText(
+                                text: TextSpan(
+                                    style: const TextStyle(
+                                        fontFamily: 'FjallaOne',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                    children: [
+                                      TextSpan(
+                                          text: timeLeft.inDays
+                                              .toString()
+                                              .padLeft(2, '0'),
+                                          style:
+                                              const TextStyle(fontSize: 40.0)),
+                                      const TextSpan(
+                                          text: " Days ",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.normal)),
+                                      TextSpan(
+                                          text:
+                                              "${(timeLeft.inHours % 24).toString().padLeft(2, '0')}:"
+                                              "${(timeLeft.inMinutes % 60).toInt().toString().padLeft(2, '0')}:"
+                                              "${(timeLeft.inSeconds % 60).toInt().toString().padLeft(2, '0')}",
+                                          style:
+                                              const TextStyle(fontSize: 40.0)),
+                                    ]),
+                              );
                       }
                     },
                   ),
@@ -114,25 +189,37 @@ class _HomeScreenState extends State<HomeScreen> {
           Flexible(
             flex: 3,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      transitionDuration: Duration(milliseconds: 500),
-                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                        return AnimalDetailScreen(animalName: animalName, animalType: animalType);
-                      },
-                      transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-                        return Align(
-                          child: FadeTransition(
-                            opacity: animation,
-                            child: child,
+                  dead == true
+                      ? ()
+                      : Navigator.of(context).push(
+                          PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 500),
+                            pageBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation) {
+                              return AnimalDetailScreen(
+                                animalName: animalName,
+                                animalType: animalType,
+                                leftTime: timeLeft,
+                              );
+                            },
+                            transitionsBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation,
+                                Widget child) {
+                              return Align(
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              );
+                            },
                           ),
                         );
-                      },
-                    ),
-                  );
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.5,
@@ -151,11 +238,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       } else if (snapshot.hasError) {
-                        return const ErrorText('🏴‍☠️ Error Occurred Loading Animal');
+                        return const ErrorText(
+                            '🏴‍☠️ Error Occurred Loading Animal');
                       } else {
                         animalName = snapshot.data?.first['animal_name'];
                         animalType = snapshot.data?.first['animal_type'];
-                        return AnimalWidget(animalType: animalType, animalName: animalName);
+                        return dead == true
+                            ? DeathWidget(
+                                animalName: animalName,
+                              )
+                            : AnimalWidget(
+                                animalType: animalType,
+                                animalName: animalName,
+                                leftTime: timeLeft);
                       }
                     },
                   ),
@@ -166,7 +261,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Flexible(
             flex: 1,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               child: Row(
                 children: [
                   Flexible(
@@ -178,10 +274,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(13.0),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             "",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 40.0,
                               fontFamily: 'FjallaOne',
                             ),
@@ -201,7 +297,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 2.0),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 2.0, vertical: 2.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,7 +352,9 @@ class CountDownPlaceholder extends StatelessWidget {
         ),
         children: [
           TextSpan(text: "--", style: TextStyle(fontSize: 40.0)),
-          TextSpan(text: " Days ", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
+          TextSpan(
+              text: " Days ",
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
           TextSpan(text: "--:--:--", style: TextStyle(fontSize: 40.0)),
         ],
       ),
@@ -265,6 +364,7 @@ class CountDownPlaceholder extends StatelessWidget {
 
 class ErrorText extends StatelessWidget {
   final String message;
+
   const ErrorText(this.message, {Key? key}) : super(key: key);
 
   @override
@@ -285,16 +385,38 @@ class ErrorText extends StatelessWidget {
 class AnimalWidget extends StatelessWidget {
   final int animalType;
   final String animalName;
-  const AnimalWidget({required this.animalType, required this.animalName, Key? key}) : super(key: key);
+  final Duration leftTime;
+
+  const AnimalWidget({
+    required this.animalType,
+    required this.animalName,
+    required this.leftTime,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (animalType == 0) {
-      return Hero(tag: animalType, child: TurtleWidget(animalName: animalName));
+      return Hero(
+          tag: animalType,
+          child: TurtleWidget(
+            animalName: animalName,
+            leftTime: leftTime,
+          ));
     } else if (animalType == 1) {
-      return Hero(tag: animalType, child: WhaleWidget(animalName: animalName));
+      return Hero(
+          tag: animalType,
+          child: WhaleWidget(
+            animalName: animalName,
+            leftTime: leftTime,
+          ));
     } else {
-      return Hero(tag: animalType, child: PolarBearWidget(animalName: animalName));
+      return Hero(
+          tag: animalType,
+          child: PolarBearWidget(
+            animalName: animalName,
+            leftTime: leftTime,
+          ));
     }
   }
 }

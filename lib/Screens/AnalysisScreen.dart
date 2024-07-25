@@ -173,7 +173,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         widget.habitId.toString(),
                         Constants.changeDateFormat(DateTime.now()).toString(),
                         widget.habitName);
-                    await ApiServices.patchHabitCompleted(widget.habitId);
+                    ApiServices.patchHabitCompleted(widget.habitId);
                     Navigator.pushAndRemoveUntil(
                       context,
                       PageRouteBuilder(

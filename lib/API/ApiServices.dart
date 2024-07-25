@@ -19,6 +19,45 @@ class ApiServices {
     }
   }
 
+  static void postAnimal(String animal_name, String animal_type, String animal_deadline, String dead) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site', '/api/animal/animal/');
+    var response = await http.post(url, headers: {
+      'Authorization': 'Token $_userToken'
+    }, body: {
+      'animal_name': animal_name,
+      'animal_type': animal_type,
+      'animal_deadline': animal_deadline,
+      'dead' : dead,
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+    }
+  }
+
+  static Future<void> patchDead() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/animal/animal/patch_last_animal_dead/');
+    var response = await http.patch(url, headers: {
+      'Authorization': 'Token $_userToken'
+    }, body: {
+      'dead' : 'true'
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+    }
+  }
+
   //User
   static Future<Map<String, dynamic>?> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

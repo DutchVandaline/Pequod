@@ -49,6 +49,7 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         centerTitle: false,
@@ -146,7 +147,7 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                         hintStyle: const TextStyle(
                             color: Colors.grey, fontSize: 16.0)),
                     cursorColor: Theme.of(context).focusColor,
-                    autofocus: true,
+                    autofocus: false,
                   ),
                 ),
               ),

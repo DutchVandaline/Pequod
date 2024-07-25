@@ -84,7 +84,22 @@ flutter:
     - assets/images/items/RecycleBag.png
     - assets/images/garbages/water_bottle.png
     - assets/images/garbages/bottle_withblack.png
+    - assets/images/garbages/bottlebottom_blood.png
+    - assets/images/garbages/bottlebottom_noblood.png
     - assets/images/garbages/bottletop_blood.png
+    - assets/images/garbages/bottletop_noblood.png
+    - assets/images/garbages/tribot_blue.png
+    - assets/images/garbages/tribot_green.png
+    - assets/images/garbages/tribot_orange.png
+    - assets/images/garbages/tribot_sky.png
+    - assets/images/garbages/tribot_yellow.png
+    - assets/images/garbages/tribotblood_blue.png
+    - assets/images/garbages/tribotblood_green.png
+    - assets/images/garbages/tribotblood_orange.png
+    - assets/images/garbages/tribotblood_sky.png
+    - assets/images/garbages/tribotblood_yellow.png
+    - assets/images/garbages/tritopblood_orange.png
+    - assets/images/garbages/tritopblood_yellow.png
     - assets/images/SeaSplash.jpg
 
 

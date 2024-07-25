@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/Widgets/GarbageWidget.dart';
 
 class PolarBearWidget extends StatefulWidget {
-  String animalName;
+  final String animalName;
+  final Duration leftTime;
 
-  PolarBearWidget({required this.animalName, super.key});
+  PolarBearWidget({required this.animalName, required this.leftTime, super.key});
 
   @override
   State<PolarBearWidget> createState() => _PolarBearWidgetState();
@@ -33,38 +35,11 @@ class _PolarBearWidgetState extends State<PolarBearWidget> {
               overflow: TextOverflow.clip,
             ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.23,
-            left: MediaQuery.of(context).size.width * 0.03,
-            child: Transform.rotate(
-              angle: 3,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.15,
-                child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Image.asset(
-                        'assets/images/garbages/bottle_withblack.png')),
-              ),
-            ),
-          ),
           Image.asset(
             'assets/images/animals/polar_bear.png',
             alignment: Alignment.bottomCenter,
           ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.28,
-            left: MediaQuery.of(context).size.width * 0.5,
-            child: Transform.rotate(
-              angle: 0.4,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Image.asset(
-                        'assets/images/garbages/bottletop_blood.png')),
-              ),
-            ),
-          ),
+          GarbageWidget(top: 0.2, left: 0.6, size: 0.07, angle: 0.4, asset: "bottletop_blood")
         ]),
       ),
     );

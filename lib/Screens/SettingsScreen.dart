@@ -148,7 +148,7 @@ void showLogoutDialog(BuildContext context) {
                     Navigator.pop(context);
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.2,
                     child: Text(
                       'Cancel',
                       style: TextStyle(color: Theme.of(context).primaryColorLight),
@@ -157,7 +157,7 @@ void showLogoutDialog(BuildContext context) {
                 ),
               ),
               Flexible(
-                flex: 3,
+                flex: 2,
                 child: TextButton(
                   onPressed: () async {
                     await ApiServices.logout();
