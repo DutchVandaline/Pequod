@@ -177,7 +177,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, a1, a2) => MainScreen(),
+                        pageBuilder: (context, a1, a2) => MainScreen(initialIndex: 2,),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),

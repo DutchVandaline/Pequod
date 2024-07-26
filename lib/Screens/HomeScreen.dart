@@ -42,17 +42,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (deadline != null && deadline!.isAfter(DateTime.now())) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+      DateTime now = DateTime.now();
+      if (deadline != null && deadline!.isBefore(now)) {
+        if (!dead!) {
+          dead = true;
+          await ApiServices.patchDead();
+          setState(() {});
+          refreshData();
+        }
+      } else if (deadline != null && deadline!.isAfter(now)) {
         setState(() {
-          timeLeft = deadline!.difference(DateTime.now());
+          timeLeft = deadline!.difference(now);
         });
-      }
-      if (dead == true) {
-        timer.cancel();
       }
     });
   }
+
 
   @override
   void dispose() {
@@ -68,7 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(timeLeft.inSeconds == 0) refreshData(); //patch data
+    if (timeLeft.inSeconds == 0) {
+      refreshData();
+    }
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -134,11 +142,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else if (snapshot.hasError) {
                         return const ErrorText(
                             '🏴‍☠️ Error Occurred Loading Deadline');
+                      } else if (!snapshot.hasData || snapshot.data?.isEmpty == true) {
+                        return const ErrorText('🏴‍☠️ There is no animal Data.');
                       } else {
                         deadline = DateTime.parse(
                             snapshot.data?.first['animal_deadline']);
                         dead = snapshot.data?.first['dead'];
-                        if (deadline!.isBefore(DateTime.now())) {
+                        if (deadline!.isBefore(DateTime.now()) && deadline?.second == 0) {
                           ApiServices.patchDead();
                         }
 
@@ -190,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
             flex: 3,
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () {
                   dead == true
@@ -240,13 +250,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else if (snapshot.hasError) {
                         return const ErrorText(
                             '🏴‍☠️ Error Occurred Loading Animal');
+                      } else if (!snapshot.hasData || snapshot.data?.isEmpty == true) {
+                        return DeathWidget();
                       } else {
                         animalName = snapshot.data?.first['animal_name'];
                         animalType = snapshot.data?.first['animal_type'];
                         return dead == true
-                            ? DeathWidget(
-                                animalName: animalName,
-                              )
+                            ? DeathWidget()
                             : AnimalWidget(
                                 animalType: animalType,
                                 animalName: animalName,

@@ -30,6 +30,7 @@ class _PolarBearWidgetState extends State<PolarBearWidget> {
                     fontFamily: 'FjallaOne',
                     fontWeight: FontWeight.bold,
                     fontSize: MediaQuery.of(context).size.width * 0.22,
+                  color: Color(0xFF202023),
                   ),
               maxLines: 1,
               overflow: TextOverflow.clip,

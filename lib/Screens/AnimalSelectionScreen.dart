@@ -126,7 +126,7 @@ class _AnimalSelectionScreenState extends State<AnimalSelectionScreen> {
                         borderRadius: BorderRadius.circular(10.0)),
                     child: TextField(
                       controller: NameController,
-                      maxLength: 6,
+                      maxLength: 9,
                       onChanged: (text) {
                         NameController.text = text;
                       },
@@ -171,7 +171,7 @@ class _AnimalSelectionScreenState extends State<AnimalSelectionScreen> {
 
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => const MainScreen()),
+                      MaterialPageRoute(builder: (context) => const MainScreen(initialIndex: 2,)),
                           (route) => false);
                   NameController.text = "";
                 }

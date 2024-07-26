@@ -24,9 +24,19 @@ class _AnimalDetailScreenState extends State<AnimalDetailScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Hero(
-                tag: widget.animalType,
-                child: animalWidget(widget.animalType, widget.animalName, widget.leftTime)),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Hero(
+                  tag: widget.animalType,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: animalWidget(widget.animalType, widget.animalName, widget.leftTime)),
+                  )),
+            ),
             GestureDetector(
               onTap: () {
                 Navigator.pop(context);

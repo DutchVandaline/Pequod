@@ -6,14 +6,22 @@ import 'SettingsScreen.dart';
 import 'ShopScreen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final int initialIndex;
+
+  const MainScreen({super.key, this.initialIndex = 2});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentPageIndex = 2;
+  late int currentPageIndex;
+
+  @override
+  void initState() {
+    currentPageIndex = widget.initialIndex;
+    super.initState();
+  }
 
   final List<Widget> _pages = [
     const ShopScreen(),

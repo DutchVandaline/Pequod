@@ -56,7 +56,6 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
         elevation: 0.0,
         shadowColor: Colors.transparent,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        automaticallyImplyLeading: false,
         title: ClimateChangeTextWidget("Detail"),
         actions: [
           IconButton(
@@ -83,7 +82,7 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, a1, a2) => MainScreen(),
+                    pageBuilder: (context, a1, a2) => const MainScreen(initialIndex: 1,),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),

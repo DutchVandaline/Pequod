@@ -76,10 +76,10 @@ class _TragedyScreenState extends State<TragedyScreen> {
             child: Center(
               child: Text(
                 _bottleCount.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: "FjallaOne",
                     fontSize: 50.0,
-                    color: Theme.of(context).primaryColor),
+                    color: Color(0xFFe5e3d8)),
               ),
             ),
           ),
@@ -185,7 +185,7 @@ void showBuyDialog(BuildContext context, int currentBottle) {
                         Navigator.pushAndRemoveUntil(
                           context,
                           PageRouteBuilder(
-                              pageBuilder: (context, a1, a2) => MainScreen(),
+                              pageBuilder: (context, a1, a2) => const MainScreen(initialIndex: 3,),
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
                           ),
@@ -206,7 +206,7 @@ void showBuyDialog(BuildContext context, int currentBottle) {
                       child: Text(
                         'Change',
                         style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).primaryColor,
                             fontFamily: 'FjallaOne',
                             fontSize: 20.0),
                       ),

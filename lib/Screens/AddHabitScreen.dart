@@ -40,7 +40,6 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
           elevation: 0.0,
           shadowColor: Colors.transparent,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          automaticallyImplyLeading: false,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,7 +176,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                           : Navigator.pushAndRemoveUntil(
                               context,
                               PageRouteBuilder(
-                                pageBuilder: (context, a1, a2) => MainScreen(),
+                                pageBuilder: (context, a1, a2) => const MainScreen(initialIndex: 1,),
                                 transitionDuration: Duration.zero,
                                 reverseTransitionDuration: Duration.zero,
                               ),

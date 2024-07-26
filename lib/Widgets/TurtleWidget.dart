@@ -29,6 +29,7 @@ class _TurtleWidgetState extends State<TurtleWidget> {
                 fontFamily: 'FjallaOne',
                 fontWeight: FontWeight.bold,
                 fontSize: MediaQuery.of(context).size.width * 0.22,
+                color: Color(0xFF202023),
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

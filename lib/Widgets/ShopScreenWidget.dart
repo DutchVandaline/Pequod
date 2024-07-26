@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Screens/MainScreen.dart';
 
 class ShopScreenWidget extends StatefulWidget {
   final String inputImage;
@@ -30,13 +31,8 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       child: GestureDetector(
         onTap: () {
-          showBuyDialog(
-              context,
-              widget.inputId,
-              widget.onBuy,
-              widget.inputImage,
-              widget.inputName,
-              widget.inputDetail); // Pass the callback
+          showBuyDialog(context, widget.inputId, widget.inputImage,
+              widget.inputName, widget.inputDetail); // Pass the callback
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,8 +100,8 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
   }
 }
 
-void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy,
-    String itemPath, String itemName, String itemDetail) {
+void showBuyDialog(BuildContext context, int inputId, String itemPath,
+    String itemName, String itemDetail) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -149,7 +145,8 @@ void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy,
                     width: MediaQuery.of(context).size.width * 0.15,
                     child: Text(
                       'Cancel',
-                      style: TextStyle(color: Theme.of(context).primaryColorLight),
+                      style:
+                          TextStyle(color: Theme.of(context).primaryColorLight),
                     ),
                   ),
                 ),
@@ -158,9 +155,39 @@ void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy,
                 flex: 3,
                 child: TextButton(
                   onPressed: () async {
-                    await ApiServices.patchShopBuyItem(inputId);
                     Navigator.pop(context);
-                    onBuy();
+                    bool success = await ApiServices.patchShopBuyItem(inputId);
+                    if (success) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Item successfully bought!',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColorLight,
+                                fontFamily: 'FjallaOne',  fontSize: 20.0 ),
+                          ),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen(initialIndex: 0,)),
+                          (route) => false);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text(
+                            'Failed to buy item. Not enought points.',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'FjallaOne', fontSize: 20.0 ),
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.45,
@@ -168,11 +195,11 @@ void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy,
                     decoration: BoxDecoration(
                         color: Theme.of(context).canvasColor,
                         borderRadius: BorderRadius.circular(20.0)),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Buy',
                         style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Colors.white,
                             fontFamily: 'FjallaOne',
                             fontSize: 20.0),
                       ),
@@ -182,7 +209,6 @@ void showBuyDialog(BuildContext context, int inputId, VoidCallback onBuy,
               ),
             ],
           ),
-
         ],
       );
     },

@@ -354,7 +354,7 @@ class ApiServices {
     }
   }
 
-  static Future<void> patchShopBuyItem(int _inputId) async {
+  static Future<bool> patchShopBuyItem(int _inputId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
     var url = Uri.https('pequod-api-dlyou.run.goorm.site',
@@ -366,9 +366,11 @@ class ApiServices {
     });
     if (response.statusCode == 200) {
       print(response.body);
+      return true;
     } else {
       print('Error: ${response.statusCode}');
       print('Error body: ${response.body}');
+      return false;
     }
   }
 }
