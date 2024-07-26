@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Constants//Constants.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 

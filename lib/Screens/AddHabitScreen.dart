@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Constants//HabitRecommendation.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Screens/AccountScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/SettingsWidget.dart';

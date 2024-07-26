@@ -44,7 +44,7 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
   void _randomizePosition() {
     _left = random.nextDouble() * 300;
     _top = random.nextDouble() * 500;
-    _size = random.nextInt(130) + 50;
+    _size = random.nextInt(100) + 80;
     _rotation = random.nextDouble() * 2 * pi;
   }
 

@@ -3,7 +3,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Screens/AddHabitScreen.dart';
 import 'package:pequod/Screens/HabitDetailScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisCurrentDateWidget.dart';

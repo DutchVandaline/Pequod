@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services//ApiServices.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 
 class ShopScreenWidget extends StatefulWidget {
@@ -152,32 +154,20 @@ void showBuyDialog(BuildContext context, int inputId, String itemPath,
                 ),
               ),
               Flexible(
-                flex: 3,
+                flex: 2,
                 child: TextButton(
                   onPressed: () async {
                     Navigator.pop(context);
                     bool success = await ApiServices.patchShopBuyItem(inputId);
                     if (success) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Item successfully bought!',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColorLight,
-                                fontFamily: 'FjallaOne',  fontSize: 20.0 ),
-                          ),
-                          backgroundColor: Theme.of(context).primaryColor,
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => MainScreen(initialIndex: 0,)),
                           (route) => false);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text(
+                        const SnackBar(
+                          content: Text(
                             'Failed to buy item. Not enought points.',
                             style: TextStyle(
                                 color: Colors.white,

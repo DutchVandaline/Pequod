@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/InitialScreens/SignUpScreen.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 

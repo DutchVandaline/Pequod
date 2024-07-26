@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/ShopScreenWidget.dart';
 
@@ -42,10 +42,10 @@ class _ShopScreenState extends State<ShopScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: _SliverAppBarDelegate(
-              minHeight: 60.0,
-              maxHeight: 60.0,
+              minHeight: 50.0,
+              maxHeight: 50.0,
               child: Container(
-                height: 60,
+                height: MediaQuery.of(context).size.width * 0.2,
                 decoration:
                 BoxDecoration(color: Theme.of(context).primaryColorLight),
                 child: Row(

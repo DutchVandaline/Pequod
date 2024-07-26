@@ -24,18 +24,35 @@ class _AnimalDetailScreenState extends State<AnimalDetailScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: Hero(
-                  tag: widget.animalType,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        child: animalWidget(widget.animalType, widget.animalName, widget.leftTime)),
-                  )),
+            Flexible(
+              flex: 2,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: Hero(
+                    tag: widget.animalType,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 17.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: animalWidget(widget.animalType, widget.animalName, widget.leftTime)),
+                    )),
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
             ),
             GestureDetector(
               onTap: () {

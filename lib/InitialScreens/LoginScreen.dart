@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/InitialScreens/SignUpScreen.dart';
 import 'package:http/http.dart' as http;
 import 'package:pequod/Screens/AnimalSelectionScreen.dart';

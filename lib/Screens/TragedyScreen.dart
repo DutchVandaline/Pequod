@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Widgets/BottleWidget.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
@@ -152,7 +152,8 @@ void showBuyDialog(BuildContext context, int currentBottle) {
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         actions: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 flex: 1,
@@ -171,7 +172,7 @@ void showBuyDialog(BuildContext context, int currentBottle) {
                 ),
               ),
               Flexible(
-                flex: 3,
+                flex: 2,
                 child: TextButton(
                   onPressed: () async {
                     try {

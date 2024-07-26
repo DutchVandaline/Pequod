@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Screens/VerificationScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';

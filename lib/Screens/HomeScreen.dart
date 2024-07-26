@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
-import 'package:pequod/API/ApiServices.dart';
+import 'package:pequod/Screens/MainScreen.dart';
+import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Constants/EnvironmentTips.dart';
 import 'package:pequod/Screens/AnimalDetailScreen.dart';
 import 'package:pequod/Screens/ArchiveScreen.dart';
+import 'package:pequod/Services/Notification.dart';
 import 'package:pequod/Widgets/DeathWidget.dart';
 import 'package:pequod/Widgets/PoalrBearWidget.dart';
 import 'package:pequod/Widgets/TurtleWidget.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime? deadline;
   bool? dead;
   Timer? timer;
-  Duration timeLeft = Duration();
+  Duration timeLeft = const Duration();
 
   @override
   void initState() {
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       DateTime now = DateTime.now();
       if (deadline != null && deadline!.isBefore(now)) {
         if (!dead!) {
@@ -58,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-
 
   @override
   void dispose() {
@@ -99,7 +99,18 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Theme.of(context).primaryColorLight,
             ),
           ),
-          IconButton(onPressed: refreshData, icon: Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => const MainScreen(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                    (route) => false);
+              },
+              icon: const Icon(Icons.refresh)),
         ],
       ),
       body: Column(
@@ -142,13 +153,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else if (snapshot.hasError) {
                         return const ErrorText(
                             '🏴‍☠️ Error Occurred Loading Deadline');
-                      } else if (!snapshot.hasData || snapshot.data?.isEmpty == true) {
-                        return const ErrorText('🏴‍☠️ There is no animal Data.');
+                      } else if (!snapshot.hasData ||
+                          snapshot.data?.isEmpty == true) {
+                        return const ErrorText(
+                            '🏴‍☠️ There is no animal Data.');
                       } else {
                         deadline = DateTime.parse(
                             snapshot.data?.first['animal_deadline']);
                         dead = snapshot.data?.first['dead'];
-                        if (deadline!.isBefore(DateTime.now()) && deadline?.second == 0) {
+                        if (deadline!.isBefore(DateTime.now()) &&
+                            deadline?.second == 0) {
                           ApiServices.patchDead();
                         }
 
@@ -199,15 +213,15 @@ class _HomeScreenState extends State<HomeScreen> {
           Flexible(
             flex: 3,
             child: Padding(
-              padding:
-                  const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () {
                   dead == true
                       ? ()
                       : Navigator.of(context).push(
                           PageRouteBuilder(
-                            transitionDuration: Duration(milliseconds: 500),
+                            transitionDuration:
+                                const Duration(milliseconds: 500),
                             pageBuilder: (BuildContext context,
                                 Animation<double> animation,
                                 Animation<double> secondaryAnimation) {
@@ -250,7 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else if (snapshot.hasError) {
                         return const ErrorText(
                             '🏴‍☠️ Error Occurred Loading Animal');
-                      } else if (!snapshot.hasData || snapshot.data?.isEmpty == true) {
+                      } else if (!snapshot.hasData ||
+                          snapshot.data?.isEmpty == true) {
                         return DeathWidget();
                       } else {
                         animalName = snapshot.data?.first['animal_name'];
@@ -320,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontSize: 18.0,
                                   ),
                                 ),
-                                SizedBox(height: 15.0),
+                                const SizedBox(height: 15.0),
                                 Text(
                                   envTips[rndNumb],
                                   style: const TextStyle(
@@ -382,7 +397,7 @@ class ErrorText extends StatelessWidget {
     return Center(
       child: Text(
         message,
-        style: TextStyle(
+        style: const TextStyle(
           fontFamily: 'FjallaOne',
           fontWeight: FontWeight.bold,
           fontSize: 20.0,

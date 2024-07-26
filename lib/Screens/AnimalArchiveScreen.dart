@@ -5,14 +5,14 @@ import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 
 String inputDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
 
-class ArchiveScreen extends StatefulWidget {
-  const ArchiveScreen({super.key});
+class AnimalArchiveScreen extends StatefulWidget {
+  const AnimalArchiveScreen({super.key});
 
   @override
-  State<ArchiveScreen> createState() => _ArchiveScreenState();
+  State<AnimalArchiveScreen> createState() => _AnimalArchiveScreenState();
 }
 
-class _ArchiveScreenState extends State<ArchiveScreen> {
+class _AnimalArchiveScreenState extends State<AnimalArchiveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,8 +80,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       child: GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 7),
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 7),
                           itemBuilder: (context, index) {
                             int day = index + 1;
                             int count = dayCounts[day] ?? 0;
@@ -96,7 +96,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                 onTap: () {
                                   setState(() {
                                     inputDate =
-                                        "$dateForParse-${day.toString().padLeft(2, '0')}";
+                                    "$dateForParse-${day.toString().padLeft(2, '0')}";
                                     print(inputDate);
                                   });
                                 },
@@ -112,7 +112,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                             color: Colors.teal
                                                 .withOpacity(opacity),
                                             borderRadius:
-                                                BorderRadius.circular(10.0),
+                                            BorderRadius.circular(10.0),
                                             border: Border.all(
                                                 color: Theme.of(context)
                                                     .primaryColorLight
@@ -201,8 +201,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  border: Border.all(color: Theme.of(context).primaryColorLight)
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    border: Border.all(color: Theme.of(context).primaryColorLight)
                                 ),
                                 child: Center(
                                   child: Text(
@@ -249,103 +249,3 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
     );
   }
 }
-
-//Fetch all and sort daily
-//FutureBuilder<List<dynamic>?>(
-//         future: ApiServices.getMonthlyHabitStatus("2024-07"),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(
-//               child: CircularProgressIndicator(),
-//             );
-//           } else if (snapshot.hasError) {
-//             print(snapshot.error);
-//             return const Center(
-//               child: Text(
-//                 "🏴‍☠️ Error",
-//                 style: TextStyle(
-//                   fontFamily: 'FjallaOne',
-//                   fontWeight: FontWeight.bold,
-//                   fontSize: 20.0,
-//                 ),
-//               ),
-//             );
-//           } else if (snapshot.hasData) {
-//             List<dynamic>? archiveData = snapshot.data;
-//             if (archiveData != null && archiveData.isNotEmpty) {
-//               archiveData.sort((a, b) {
-//                 int dateComparison = a['date'].compareTo(b['date']);
-//                 if (dateComparison == 0) {
-//                   return a['habit_name'].compareTo(b['habit_name']);
-//                 }
-//                 return dateComparison;
-//               });
-//
-//               // Group the data by date
-//               Map<String, List<dynamic>> groupedData = {};
-//               for (var item in archiveData) {
-//                 String date = item['date'];
-//                 if (!groupedData.containsKey(date)) {
-//                   groupedData[date] = [];
-//                 }
-//                 groupedData[date]!.add(item);
-//               }
-//
-//               return CustomScrollView(
-//                 slivers: groupedData.entries.map((entry) {
-//                   String date = entry.key;
-//                   List<dynamic> items = entry.value;
-//                   return SliverList(
-//                     delegate: SliverChildBuilderDelegate(
-//                           (context, index) {
-//                         if (index == 0) {
-//                           return Padding(
-//                             padding: const EdgeInsets.all(8.0),
-//                             child: Text(
-//                               date,
-//                               style: const TextStyle(
-//                                 fontSize: 20.0,
-//                                 fontWeight: FontWeight.bold,
-//                               ),
-//                             ),
-//                           );
-//                         }
-//                         var item = items[index - 1];
-//                         return Card(
-//                           child: ListTile(
-//                             title: Text('Habit: ${item['habit']}'),
-//                             subtitle: Text('Habit ID: ${item['id']}'),
-//                           ),
-//                         );
-//                       },
-//                       childCount: items.length + 1, // +1 for the date header
-//                     ),
-//                   );
-//                 }).toList(),
-//               );
-//             } else {
-//               return const Center(
-//                 child: Text(
-//                   'No data available',
-//                   style: TextStyle(
-//                     fontFamily: 'FjallaOne',
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 20.0,
-//                   ),
-//                 ),
-//               );
-//             }
-//           } else {
-//             return const Center(
-//               child: Text(
-//                 'No data available',
-//                 style: TextStyle(
-//                   fontFamily: 'FjallaOne',
-//                   fontWeight: FontWeight.bold,
-//                   fontSize: 20.0,
-//                 ),
-//               ),
-//             );
-//           }
-//         },
-//       ),
