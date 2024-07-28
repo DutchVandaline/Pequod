@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pequod/Screens/HabitScreen.dart';
+import 'package:pequod/Screens/HomeScreen2.dart';
 import 'TragedyScreen.dart';
 import 'HomeScreen.dart';
 import 'SettingsScreen.dart';
@@ -26,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     const ShopScreen(),
     const HabitScreen(),
-    const HomeScreen(),
+    const HomeScreen2(),//HomeScreen(),
     const TragedyScreen(),
     const SettingsScreen(),
   ];

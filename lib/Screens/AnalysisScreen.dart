@@ -5,9 +5,11 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Constants//Constants.dart';
 import 'package:pequod/Screens/MainScreen.dart';
+import 'package:pequod/Widgets/CountdownWidget.dart';
 
 String apiKey = Constants.apikey;
 bool receivePoint = false;
+int animal_id = 0;
 
 class AnalysisScreen extends StatefulWidget {
   final String habitName;
@@ -173,16 +175,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         widget.habitId.toString(),
                         Constants.changeDateFormat(DateTime.now()).toString(),
                         widget.habitName);
-                    ApiServices.patchHabitCompleted(widget.habitId);
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, a1, a2) => MainScreen(initialIndex: 2,),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                      ),
-                          (route) => false,
-                    );
+                    showWhomDialog(context);
                   } else {}
                 },
                 child: Container(
@@ -207,6 +200,156 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           ),
         ),
       ),
+    );
+  }
+  void showWhomDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: const Text('Select Animal',
+              style: TextStyle(
+                  fontFamily: 'ClimateCrisis', fontWeight: FontWeight.w600)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                const Text('Which animal do you want to give the time to?',
+                    style: TextStyle(fontSize: 17.0),
+                    textAlign: TextAlign.center),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.27,
+                  child: FutureBuilder(
+                    future: ApiServices.getAnimal(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData &&
+                          snapshot.data!.isNotEmpty) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            var animal = snapshot.data![index];
+                            return GestureDetector(
+                              onTap: () async {
+                                setState(() {
+                                  animal_id = animal['id'];
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 4.0, vertical: 2.0),
+                                child: Container(
+                                  height:
+                                  MediaQuery.of(context).size.height * 0.06,
+                                  decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      border: Border.all(
+                                        color: Theme.of(context)
+                                            .primaryColorLight,
+                                      )),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '${animal['animal_name']}',
+                                          style: TextStyle(
+                                              fontFamily: 'FjallaOne',
+                                              fontSize: 22.0),
+                                        ),
+                                        CountDownWidget(
+                                          deadline: DateTime.parse(
+                                              animal['animal_deadline']),
+                                          dead: animal['dead'],
+                                          inputTextStyle: TextStyle(
+                                              fontFamily: 'FjallaOne',
+                                              fontSize: 15.0,
+                                              color: Theme.of(context).primaryColorLight),
+                                        ),
+                                      ],
+                                    ),
+                                  ), // Assuming the data has 'id'
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Text('No animals available');
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColorLight),
+                      ),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: TextButton(
+                    onPressed: () async {
+                      await ApiServices.patchHabitCompleted(widget.habitId, animal_id);
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, a1, a2) => MainScreen(initialIndex: 2,),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                            (route) => false,
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(20.0)),
+                      child: Center(
+                        child: Text(
+                          'Give hour',
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontFamily: 'FjallaOne',
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

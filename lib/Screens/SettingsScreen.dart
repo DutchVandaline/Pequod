@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Screens/AccountScreen.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
@@ -53,6 +54,50 @@ class SettingsScreen extends StatelessWidget {
                   inputicon: Icons.star_border,
                   nextScreen: const SettingsScreen(),
                 ),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => const MainScreen(initialIndex: 2,),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                ),
+                    (route) => false);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 15.0),
+                    Icon(
+                      Icons.refresh,
+                      size: 30.0,
+                    ),
+                    const SizedBox(width: 20.0),
+                    Text(
+                        "Refresh",
+                        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05)
+                    ),
+                  ],
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 25.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
               ],
             ),
             const SizedBox(
@@ -118,76 +163,75 @@ class SettingsScreen extends StatelessWidget {
           ],
         ));
   }
-}
-
-void showLogoutDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text(
-          'Logout',
-          style: TextStyle(
-              fontFamily: 'ClimateCrisis', fontWeight: FontWeight.w600),
-        ),
-        content: const Text(
-          "Do you really want to Log-out?",
-          style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
-          textAlign: TextAlign.center,
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0))),
-        actions: [
-          Row(
-            children: [
-              Flexible(
-                flex: 1,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(color: Theme.of(context).primaryColorLight),
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 2,
-                child: TextButton(
-                  onPressed: () async {
-                    await ApiServices.logout();
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SplashScreen()),
-                            (route) => false);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).canvasColor,
-                        borderRadius: BorderRadius.circular(20.0)),
-                    child: Center(
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Logout',
+            style: TextStyle(
+                fontFamily: 'ClimateCrisis', fontWeight: FontWeight.w600),
+          ),
+          content: const Text(
+            "Do you really want to Log-out?",
+            style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          actions: [
+            Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.2,
                       child: Text(
-                        'Logout',
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
-                            fontFamily: 'FjallaOne',
-                            fontSize: 20.0),
+                        'Cancel',
+                        style: TextStyle(color: Theme.of(context).primaryColorLight),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      );
-    },
-  );
+                Flexible(
+                  flex: 2,
+                  child: TextButton(
+                    onPressed: () async {
+                      await ApiServices.logout();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const SplashScreen()),
+                              (route) => false);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(20.0)),
+                      child: Center(
+                        child: Text(
+                          'Logout',
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColorLight,
+                              fontFamily: 'FjallaOne',
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

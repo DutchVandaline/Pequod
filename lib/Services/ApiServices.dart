@@ -7,9 +7,11 @@ class ApiServices {
   static Future<List<dynamic>?> getAnimal() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
-    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/animal/animal');
+    var url =
+        Uri.https('pequod-api-dlyou.run.goorm.site', '/api/animal/animal');
 
-    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+    var response =
+        await http.get(url, headers: {'Authorization': 'Token $_userToken'});
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = json.decode(response.body);
@@ -19,19 +21,40 @@ class ApiServices {
     }
   }
 
-  static void postAnimal(String animal_name, String animal_type, String animal_deadline, String dead) async {
+  static Future<dynamic>? getAnimalbyId(int inputId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userToken = prefs.getString('UserToken');
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site', '/api/animal/animal/$inputId/');
+    var response =
+        await http.get(url, headers: {'Authorization': 'Token $userToken'});
+
+    if (response.statusCode == 200) {
+      dynamic responseData = json.decode(response.body);
+      if (responseData.isNotEmpty) {
+        return responseData;
+      } else {
+        return null;
+      }
+    } else {
+      throw Exception('Error: ${response.statusCode}, ${response.body}');
+    }
+  }
+
+  static void postAnimal(String animal_name, String animal_type,
+      String animal_deadline, String dead) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
 
-    var url = Uri.https(
-        'pequod-api-dlyou.run.goorm.site', '/api/animal/animal/');
+    var url =
+        Uri.https('pequod-api-dlyou.run.goorm.site', '/api/animal/animal/');
     var response = await http.post(url, headers: {
       'Authorization': 'Token $_userToken'
     }, body: {
       'animal_name': animal_name,
       'animal_type': animal_type,
       'animal_deadline': animal_deadline,
-      'dead' : dead,
+      'dead': dead,
     });
     if (response.statusCode == 200) {
       print(response.body);
@@ -41,15 +64,14 @@ class ApiServices {
     }
   }
 
-  static Future<void> patchDead() async {
+  static Future<void> patchDead(int animalId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
-    var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/animal/animal/patch_last_animal_dead/');
-    var response = await http.patch(url, headers: {
-      'Authorization': 'Token $_userToken'
-    }, body: {
-      'dead' : 'true'
-    });
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
+        '/api/animal/animal/$animalId/mark_animal_dead/');
+    var response = await http.patch(url,
+        headers: {'Authorization': 'Token $_userToken'},
+        body: {'dead': 'true'});
     if (response.statusCode == 200) {
       print(response.body);
     } else {
@@ -57,6 +79,24 @@ class ApiServices {
       print('Error body: ${response.body}');
     }
   }
+
+  static Future<void> deleteAnimal(int inputId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site', '/api/animal/animal/$inputId/');
+    var response =
+    await http.delete(url, headers: {'Authorization': 'Token $_userToken'});
+    if (response.statusCode == 200) {
+      print("Data Deleted Successfully");
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+    }
+  }
+
+
 
   //User
   static Future<Map<String, dynamic>?> getUser() async {
@@ -127,9 +167,9 @@ class ApiServices {
       String? userToken = prefs.getString('UserToken');
       var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/user/me/');
 
-      var response = await http.patch(url, headers: {
-        'Authorization': 'Token $userToken'
-      }, body: {'points': updatedPoints.toString()});
+      var response = await http.patch(url,
+          headers: {'Authorization': 'Token $userToken'},
+          body: {'points': updatedPoints.toString()});
 
       if (response.statusCode == 200) {
         print('Points updated successfully!');
@@ -205,16 +245,20 @@ class ApiServices {
     }
   }
 
-  static Future<void> patchHabitCompleted(int _inputId) async {
+  static Future<void> patchHabitCompleted(int habitId, int animalId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? _userToken = prefs.getString('UserToken');
+    String? userToken = prefs.getString('UserToken');
     var url = Uri.https('pequod-api-dlyou.run.goorm.site',
-        '/api/habit/habits/$_inputId/complete_habit/');
-    var response = await http.patch(url, headers: {
-      'Authorization': 'Token $_userToken'
-    }, body: {});
+        '/api/habit/habits/$habitId/complete_habit/');
+    var response = await http.patch(
+      url,
+      headers: {
+        'Authorization': 'Token $userToken',
+      },
+      body: {'animal_id': animalId.toString()},
+    );
     if (response.statusCode == 200) {
-      print(response.body);
+      print('Response body: ${response.body}');
     } else {
       print('Error: ${response.statusCode}');
       print('Error body: ${response.body}');
@@ -258,7 +302,8 @@ class ApiServices {
   }
 
   //Habit Status
-  static void postHabitStatus(String _habit_id, String _date, String _name) async {
+  static void postHabitStatus(
+      String _habit_id, String _date, String _name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
 
@@ -282,13 +327,11 @@ class ApiServices {
   static Future<List<dynamic>?> getTodayHabitStatus(String _date) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
-    var url = Uri.https(
-        'pequod-api-dlyou.run.goorm.site',
-        '/api/habitstatus/habitstatus/habit_status_by_date/',
-        {'date': _date}
-    );
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
+        '/api/habitstatus/habitstatus/habit_status_by_date/', {'date': _date});
 
-    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+    var response =
+        await http.get(url, headers: {'Authorization': 'Token $_userToken'});
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = json.decode(response.body);
@@ -304,9 +347,9 @@ class ApiServices {
     var url = Uri.https(
         'pequod-api-dlyou.run.goorm.site',
         '/api/habitstatus/habitstatus/habit_status_by_month/',
-        {'month': _month}
-    );
-    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+        {'month': _month});
+    var response =
+        await http.get(url, headers: {'Authorization': 'Token $_userToken'});
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = json.decode(response.body);
@@ -320,10 +363,12 @@ class ApiServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
     var url = Uri.https(
-        'pequod-api-dlyou.run.goorm.site', '/api/habitstatus/habitstatus/',
+      'pequod-api-dlyou.run.goorm.site',
+      '/api/habitstatus/habitstatus/',
     );
 
-    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+    var response =
+        await http.get(url, headers: {'Authorization': 'Token $_userToken'});
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = json.decode(response.body);
@@ -332,7 +377,6 @@ class ApiServices {
       throw Exception('Error: ${response.statusCode}, ${response.body}');
     }
   }
-
 
   //Shop
   static Future<List<dynamic>?>? getShop() async {
@@ -354,18 +398,18 @@ class ApiServices {
     }
   }
 
-  static Future<bool> patchShopBuyItem(int _inputId) async {
+  static Future<bool> patchShopBuyItem(int shopId, int animalId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? _userToken = prefs.getString('UserToken');
-    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
-        '/api/shop/shop/$_inputId/buy_item/');
+    String? userToken = prefs.getString('UserToken');
+    var url = Uri.https(
+        'pequod-api-dlyou.run.goorm.site', '/api/shop/shop/$shopId/buy_item/');
     var response = await http.patch(url, headers: {
-      'Authorization': 'Token $_userToken'
+      'Authorization': 'Token $userToken',
     }, body: {
-      "completed": 'true',
+      'animal_id': animalId.toString(),
     });
     if (response.statusCode == 200) {
-      print(response.body);
+      print('Response body: ${response.body}');
       return true;
     } else {
       print('Error: ${response.statusCode}');

@@ -3,6 +3,8 @@ import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Widgets/ShopScreenWidget.dart';
 
+int userPoint = 0;
+
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
 
@@ -96,6 +98,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           } else {
                             Map<String, dynamic>? myPoint =
                             snapshot.data as Map<String, dynamic>;
+                            userPoint = myPoint['points'];
                             return Text(
                               "${myPoint['points'].toString()} P",
                               style: TextStyle(
@@ -147,19 +150,20 @@ class _ShopScreenState extends State<ShopScreen> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 0.0,
                     crossAxisSpacing: 0.0,
-                    childAspectRatio: 0.7,
+                    childAspectRatio: 0.65,
                   ),
                   delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                       return ShopScreenWidget(
                         inputPoint:
-                        "${shopData[index]['cost_point'].toString()} P",
+                        "${shopData[index]['cost_point'].toString()}",
                         inputName: shopData[index]['name'],
                         inputImage: shopData[index]['description'],
                         inputDetail:
                         "+ ${shopData[index]['receive_time'].toString()}",
                         inputId: shopData[index]['id'],
                         onBuy: refreshShopData,
+                        userPoint : userPoint,
                       );
                     },
                     childCount: shopData.length,

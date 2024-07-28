@@ -2,12 +2,10 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
-import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Constants/EnvironmentTips.dart';
 import 'package:pequod/Screens/AnimalDetailScreen.dart';
 import 'package:pequod/Screens/ArchiveScreen.dart';
-import 'package:pequod/Services/Notification.dart';
 import 'package:pequod/Widgets/DeathWidget.dart';
 import 'package:pequod/Widgets/PoalrBearWidget.dart';
 import 'package:pequod/Widgets/TurtleWidget.dart';
@@ -48,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (deadline != null && deadline!.isBefore(now)) {
         if (!dead!) {
           dead = true;
-          await ApiServices.patchDead();
+          await ApiServices.patchDead(1);
           setState(() {});
           refreshData();
         }
@@ -99,18 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Theme.of(context).primaryColorLight,
             ),
           ),
-          IconButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => const MainScreen(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                    (route) => false);
-              },
-              icon: const Icon(Icons.refresh)),
         ],
       ),
       body: Column(
@@ -163,9 +149,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         dead = snapshot.data?.first['dead'];
                         if (deadline!.isBefore(DateTime.now()) &&
                             deadline?.second == 0) {
-                          ApiServices.patchDead();
+                          ApiServices.patchDead(1);
                         }
-
                         return dead == true
                             ? const Center(
                                 child: Text(
