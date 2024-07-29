@@ -217,11 +217,11 @@ class MyGame extends Forge2DGame {
       ];
       List<double> size = [
         MediaQuery.of(context).size.width * 0.23,
-        MediaQuery.of(context).size.width * 0.27,
+        MediaQuery.of(context).size.width * 0.25,
         MediaQuery.of(context).size.width * 0.3,
         MediaQuery.of(context).size.width * 0.25,
         MediaQuery.of(context).size.width * 0.25,
-        MediaQuery.of(context).size.width * 0.31,
+        MediaQuery.of(context).size.width * 0.3,
         MediaQuery.of(context).size.width * 0.3,
         MediaQuery.of(context).size.width * 0.25,
       ];
@@ -239,7 +239,7 @@ class MyGame extends Forge2DGame {
         add(Circle(
             radius: size[j],
             position: position[i],
-            color: color[j],
+            color: color[i],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -255,7 +255,7 @@ class MyGame extends Forge2DGame {
       } else if (j == 1) {
         add(Rectangle(
             position: position[i],
-            color: color[j],
+            color: color[i],
             width: size[j],
             height: size[j],
             text: habit.name,
@@ -273,7 +273,7 @@ class MyGame extends Forge2DGame {
       } else if (j == 2) {
         add(Triangle(
           position: position[i],
-          color: color[j],
+          color: color[i],
           text: habit.name,
           yVelocity: yVelocity,
           onTap: () {
@@ -293,7 +293,7 @@ class MyGame extends Forge2DGame {
         add(Circle(
             radius: size[j],
             position: position[i],
-            color: color[j],
+            color: color[i],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {
@@ -309,7 +309,7 @@ class MyGame extends Forge2DGame {
       } else if (j == 4) {
         add(Rectangle(
             position: position[i],
-            color: color[j],
+            color: color[i],
             width: size[j],
             height: size[j],
             text: habit.name,
@@ -327,7 +327,7 @@ class MyGame extends Forge2DGame {
       } else if (j == 5) {
         add(Triangle(
           position: position[i],
-          color: color[j],
+          color: color[i],
           text: habit.name,
           yVelocity: yVelocity,
           onTap: () {
@@ -346,7 +346,7 @@ class MyGame extends Forge2DGame {
       } else if (j == 6) {
         add(Rectangle(
             position: position[i],
-            color: color[j],
+            color: color[i],
             width: size[j],
             height: size[j],
             text: habit.name,
@@ -365,7 +365,7 @@ class MyGame extends Forge2DGame {
         add(Circle(
             radius: size[j],
             position: position[i],
-            color: color[j],
+            color: color[i],
             text: habit.name,
             yVelocity: yVelocity,
             onTap: () {

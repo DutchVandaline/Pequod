@@ -1,20 +1,20 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:pequod/Screens/AnimalSelectionScreen.dart';
+import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Services/ApiServices.dart';
-import 'package:pequod/Constants/EnvironmentTips.dart';
-import 'package:pequod/Screens/AnimalDetailScreen.dart';
 import 'package:pequod/Screens/ArchiveScreen.dart';
-import 'package:pequod/Widgets/DeathWidget.dart';
-import 'package:pequod/Widgets/PoalrBearWidget.dart';
-import 'package:pequod/Widgets/TurtleWidget.dart';
 import 'package:pequod/Widgets/ClimateCrisisTextWidget.dart';
 import 'package:pequod/Constants/Constants.dart';
+import 'package:pequod/Widgets/CountdownWidget.dart';
+import 'package:pequod/Widgets/PoalrBearWidget.dart';
+import 'package:pequod/Widgets/TurtleWidget.dart';
 import 'package:pequod/Widgets/WhaleWidget.dart';
 
 String animalName = "";
 int animalType = 0;
+int animalId = 0;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,42 +26,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int rndNumb = 0;
   late Future<List<dynamic>?> animalFuture;
-  DateTime? deadline;
-  bool? dead;
-  Timer? timer;
-  Duration timeLeft = const Duration();
+  late bool dead;
+  late DateTime deadline = DateTime.now().add(Duration(days: 2));
+
+  List<double> left = [-10.0, 90.0, 180.0, 290.0];
 
   @override
   void initState() {
     super.initState();
-    Random random = Random();
-    rndNumb = random.nextInt(envTips.length);
     animalFuture = ApiServices.getAnimal();
-    startTimer();
-  }
-
-  void startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
-      DateTime now = DateTime.now();
-      if (deadline != null && deadline!.isBefore(now)) {
-        if (!dead!) {
-          dead = true;
-          await ApiServices.patchDead(1);
-          setState(() {});
-          refreshData();
-        }
-      } else if (deadline != null && deadline!.isAfter(now)) {
-        setState(() {
-          timeLeft = deadline!.difference(now);
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
   }
 
   Future<void> refreshData() async {
@@ -72,9 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (timeLeft.inSeconds == 0) {
-      refreshData();
-    }
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -123,228 +93,185 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.07,
                 width: MediaQuery.of(context).size.width,
-                alignment: Alignment.centerLeft,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: [Colors.red, Colors.amber]),
+                height: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(13.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: FutureBuilder(
-                    future: animalFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CountDownPlaceholder();
-                      } else if (snapshot.hasError) {
-                        return const ErrorText(
-                            '🏴‍☠️ Error Occurred Loading Deadline');
-                      } else if (!snapshot.hasData ||
-                          snapshot.data?.isEmpty == true) {
-                        return const ErrorText(
-                            '🏴‍☠️ There is no animal Data.');
-                      } else {
-                        deadline = DateTime.parse(
-                            snapshot.data?.first['animal_deadline']);
-                        dead = snapshot.data?.first['dead'];
-                        if (deadline!.isBefore(DateTime.now()) &&
-                            deadline?.second == 0) {
-                          ApiServices.patchDead(1);
-                        }
-                        return dead == true
-                            ? const Center(
-                                child: Text(
-                                  "☠️ Your Animal is Dead. ☠️",
-                                  style: TextStyle(
-                                      fontFamily: 'FjallaOne',
-                                      fontSize: 25.0,
-                                      color: Colors.white),
-                                ),
-                              )
-                            : RichText(
-                                text: TextSpan(
-                                    style: const TextStyle(
-                                        fontFamily: 'FjallaOne',
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                    children: [
-                                      TextSpan(
-                                          text: timeLeft.inDays
-                                              .toString()
-                                              .padLeft(2, '0'),
-                                          style:
-                                              const TextStyle(fontSize: 40.0)),
-                                      const TextSpan(
-                                          text: " Days ",
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.normal)),
-                                      TextSpan(
-                                          text:
-                                              "${(timeLeft.inHours % 24).toString().padLeft(2, '0')}:"
-                                              "${(timeLeft.inMinutes % 60).toInt().toString().padLeft(2, '0')}:"
-                                              "${(timeLeft.inSeconds % 60).toInt().toString().padLeft(2, '0')}",
-                                          style:
-                                              const TextStyle(fontSize: 40.0)),
-                                    ]),
-                              );
-                      }
-                    },
-                  ),
+                child: FutureBuilder(
+                  future: animalId > 0
+                      ? ApiServices.getAnimalbyId(animalId)
+                      : Future.value(null),
+                  builder: (context, snapshot) {
+                    print(animalId);
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).primaryColorLight,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const ErrorText(
+                          '🏴‍☠️ Error Occurred Loading Animal');
+                    } else if (!snapshot.hasData ||
+                        snapshot.data?.isEmpty == true) {
+                      return const Center(
+                        child: Text(
+                          "Select animal from the bottom!",
+                          style: TextStyle(
+                              fontFamily: 'FjallaOne',
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    } else {
+                      dead = snapshot.data['dead'];
+                      deadline =
+                          DateTime.parse(snapshot.data['animal_deadline']);
+                      animalName = snapshot.data['animal_name'];
+                      animalType = snapshot.data['animal_type'];
+                      return Column(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: MediaQuery.of(context).size.width,
+                            alignment: Alignment.centerLeft,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [Colors.red, Colors.amber]),
+                            ),
+                            child: dead == true
+                                ? const Center(
+                                    child: Text(
+                                      "☠️ Your Animal is Dead. ☠️",
+                                      style: TextStyle(
+                                          fontFamily: 'FjallaOne',
+                                          fontSize: 25.0,
+                                          color: Colors.white),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CountDownWidget(
+                                      deadline: deadline,
+                                      dead: dead,
+                                      inputTextStyle: const TextStyle(
+                                          fontFamily: 'FjallaOne',
+                                          fontSize: 33.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                          ),
+                          Expanded(
+                            child: AnimalWidget(
+                              animalType: animalType,
+                              animalId: snapshot.data['id'],
+                              dead: snapshot.data['dead'],
+                              deadline: deadline,
+                            ),
+                          ),
+                          Text(
+                            animalName,
+                            style: const TextStyle(
+                                fontFamily: 'FjallaOne', fontSize: 60.0),
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 ),
               ),
             ],
           ),
-          Flexible(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  dead == true
-                      ? ()
-                      : Navigator.of(context).push(
-                          PageRouteBuilder(
-                            transitionDuration:
-                                const Duration(milliseconds: 500),
-                            pageBuilder: (BuildContext context,
-                                Animation<double> animation,
-                                Animation<double> secondaryAnimation) {
-                              return AnimalDetailScreen(
-                                animalName: animalName,
-                                animalType: animalType,
-                                leftTime: timeLeft,
-                              );
-                            },
-                            transitionsBuilder: (BuildContext context,
-                                Animation<double> animation,
-                                Animation<double> secondaryAnimation,
-                                Widget child) {
-                              return Align(
-                                child: FadeTransition(
-                                  opacity: animation,
-                                  child: child,
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
-                    borderRadius: BorderRadius.circular(13.0),
-                  ),
-                  child: FutureBuilder(
-                    future: animalFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Theme.of(context).primaryColorLight,
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return const ErrorText(
-                            '🏴‍☠️ Error Occurred Loading Animal');
-                      } else if (!snapshot.hasData ||
-                          snapshot.data?.isEmpty == true) {
-                        return DeathWidget();
-                      } else {
-                        animalName = snapshot.data?.first['animal_name'];
-                        animalType = snapshot.data?.first['animal_type'];
-                        return dead == true
-                            ? DeathWidget()
-                            : AnimalWidget(
-                                animalType: animalType,
-                                animalName: animalName,
-                                leftTime: timeLeft);
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).canvasColor,
-                          borderRadius: BorderRadius.circular(13.0),
+          FutureBuilder(
+            future: animalFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return const Center(child: Text("🏴‍☠️Error Occurred"));
+              } else if (snapshot.hasData && snapshot.data != null) {
+                List<dynamic>? animals = snapshot.data;
+                int? filledSlots = animals?.length;
+
+                List<Widget> animalWidgets = animals!.map((animal) {
+                  double leftPosition =
+                      left[animals.indexOf(animal) % left.length];
+                  return Positioned(
+                    left: leftPosition,
+                    bottom: 0.0,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          animalId = animal['id'];
+                        });
+                        checkAndPatchAnimalDeath(
+                            animal['id'], animal['animal_deadline']);
+                      },
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.33,
+                        child: AnimalBottomWidget(
+                          animalType: animal['animal_type'],
+                          dead: animal['dead'],
                         ),
-                        child: const Center(
-                          child: Text(
-                            "",
-                            style: TextStyle(
-                              fontSize: 40.0,
-                              fontFamily: 'FjallaOne',
+                      ),
+                    ),
+                  );
+                }).toList();
+
+                if (filledSlots! < 4) {
+                  animalWidgets.add(
+                    Positioned(
+                      left: filledSlots == 0
+                          ? MediaQuery.of(context).size.width * 0.45
+                          : left[3],
+                      bottom: 50.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AnimalSelectionScreen()));
+                        },
+                        child: SizedBox(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColorLight,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              size: 50,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).canvasColor,
-                          borderRadius: BorderRadius.circular(13.0),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 2.0, vertical: 2.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "💡Tips",
-                                  style: TextStyle(
-                                    fontFamily: 'FjallaOne',
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                                const SizedBox(height: 15.0),
-                                Text(
-                                  envTips[rndNumb],
-                                  style: const TextStyle(
-                                    fontFamily: 'FjallaOne',
-                                    fontSize: 18.0,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 3,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                  );
+                }
+
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: Stack(children: animalWidgets),
+                );
+              } else {
+                return const Center(child: Text("No Animals Found"));
+              }
+            },
+          )
         ],
       ),
     );
+  }
+}
+
+void checkAndPatchAnimalDeath(int animalId, String deadlineStr) {
+  DateTime deadline = DateTime.parse(deadlineStr);
+  if (deadline.isBefore(DateTime.now())) {
+    ApiServices.patchDead(animalId);
   }
 }
 
@@ -361,11 +288,18 @@ class CountDownPlaceholder extends StatelessWidget {
           color: Colors.white,
         ),
         children: [
-          TextSpan(text: "--", style: TextStyle(fontSize: 40.0)),
+          TextSpan(
+              text: "--",
+              style: TextStyle(fontSize: 40.0, color: Colors.white)),
           TextSpan(
               text: " Days ",
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal)),
-          TextSpan(text: "--:--:--", style: TextStyle(fontSize: 40.0)),
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white)),
+          TextSpan(
+              text: "--:--:--",
+              style: TextStyle(fontSize: 40.0, color: Colors.white)),
         ],
       ),
     );
@@ -392,41 +326,157 @@ class ErrorText extends StatelessWidget {
   }
 }
 
-class AnimalWidget extends StatelessWidget {
+class AnimalWidget extends StatefulWidget {
   final int animalType;
-  final String animalName;
-  final Duration leftTime;
+  final bool dead;
+  final int animalId;
+  final DateTime deadline;
 
-  const AnimalWidget({
-    required this.animalType,
-    required this.animalName,
-    required this.leftTime,
-    Key? key,
-  }) : super(key: key);
+  const AnimalWidget(
+      {super.key,
+      required this.animalId,
+      required this.animalType,
+      required this.dead,
+      required this.deadline});
 
   @override
+  State<AnimalWidget> createState() => _AnimalWidgetState();
+}
+
+class _AnimalWidgetState extends State<AnimalWidget> {
+  @override
   Widget build(BuildContext context) {
-    if (animalType == 0) {
-      return Hero(
-          tag: animalType,
-          child: TurtleWidget(
-            animalName: animalName,
-            leftTime: leftTime,
-          ));
-    } else if (animalType == 1) {
-      return Hero(
-          tag: animalType,
-          child: WhaleWidget(
-            animalName: animalName,
-            leftTime: leftTime,
-          ));
+    if (widget.dead == true) {
+      return GestureDetector(
+          onTap: () {
+            showDeleteDialog(context);
+          },
+          child: Image.asset('assets/images/animals/death_screen.png'));
     } else {
-      return Hero(
-          tag: animalType,
-          child: PolarBearWidget(
-            animalName: animalName,
-            leftTime: leftTime,
-          ));
+      if (widget.animalType == 0) {
+        return TurtleWidget(deadline: widget.deadline);
+      } else if (widget.animalType == 1) {
+        return WhaleWidget(deadline: widget.deadline);
+      } else if (widget.animalType == 2) {
+        return PolarBearWidget(deadline: widget.deadline);
+      } else {
+        return Image.asset('assets/images/animals/death_screen.png');
+      }
+    }
+  }
+
+  void showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Delete',
+            style: TextStyle(
+                fontFamily: 'ClimateCrisis', fontWeight: FontWeight.w600),
+          ),
+          content: const Text(
+            "Do you really want Collect the Garbage and make another room for new animal?",
+            style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          actions: [
+            Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColorLight),
+                      ),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: TextButton(
+                    onPressed: () async {
+                      ApiServices.deleteAnimal(widget.animalId);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, a1, a2) => const MainScreen(
+                              initialIndex: 2,
+                            ),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                          (route) => false);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(20.0)),
+                      child: Center(
+                        child: Text(
+                          'Collect',
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColorLight,
+                              fontFamily: 'FjallaOne',
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class AnimalBottomWidget extends StatefulWidget {
+  final int animalType;
+  final bool dead;
+
+  const AnimalBottomWidget(
+      {Key? key, required this.animalType, required this.dead})
+      : super(key: key);
+
+  @override
+  _AnimalBottomWidgetState createState() => _AnimalBottomWidgetState();
+}
+
+class _AnimalBottomWidgetState extends State<AnimalBottomWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return widget.dead ? deadAnimalWidget() : aliveAnimalWidget();
+  }
+
+  Widget deadAnimalWidget() {
+    return Image.asset(
+        'assets/images/animals/death_screen.png'); // Display dead animal image
+  }
+
+  Widget aliveAnimalWidget() {
+    if (widget.animalType == 0) {
+      return Image.asset('assets/images/animals/sea_turtle.png');
+    } else if (widget.animalType == 1) {
+      return Image.asset('assets/images/animals/whale.png');
+    } else if (widget.animalType == 1) {
+      return Image.asset('assets/images/animals/polar_bear.png');
+    } else {
+      return Image.asset('assets/images/animals/unknown_animal.png');
     }
   }
 }

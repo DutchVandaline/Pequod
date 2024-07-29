@@ -176,7 +176,12 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         Constants.changeDateFormat(DateTime.now()).toString(),
                         widget.habitName);
                     showWhomDialog(context);
-                  } else {}
+                  } else {
+                    int count = 0;
+                    Navigator.popUntil(context, (route) {
+                      return count++ == 2;
+                    });
+                  }
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -186,7 +191,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       color: Theme.of(context).primaryColorLight),
                   child: Center(
                     child: Text(
-                      receivePoint ? "Recieve Points" : "Retake Photo",
+                      "Next Actions!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 18.0,
@@ -202,6 +207,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       ),
     );
   }
+
   void showWhomDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -214,77 +220,97 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                const Text('Which animal do you want to give the time to?',
-                    style: TextStyle(fontSize: 17.0),
+                const Text('Which animal do you want to use this item with?',
+                    style: TextStyle(fontSize: 20.0),
                     textAlign: TextAlign.center),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: MediaQuery.of(context).size.height * 0.27,
-                  child: FutureBuilder(
-                    future: ApiServices.getAnimal(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData &&
-                          snapshot.data!.isNotEmpty) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            var animal = snapshot.data![index];
-                            return GestureDetector(
-                              onTap: () async {
-                                setState(() {
-                                  animal_id = animal['id'];
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 4.0, vertical: 2.0),
-                                child: Container(
-                                  height:
-                                  MediaQuery.of(context).size.height * 0.06,
-                                  decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .primaryColorLight,
-                                      )),
+                  child: StatefulBuilder(
+                    builder: (BuildContext dialogContext,
+                        StateSetter setDialogState) {
+                      return FutureBuilder(
+                        future: ApiServices.getAnimal(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData &&
+                              snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                var animal = snapshot.data![index];
+                                bool pressed = animal_id == animal['id'];
+                                return GestureDetector(
+                                  onTap: () {
+                                    setDialogState(() {
+                                      animal_id = animal['id'];
+                                    });
+                                  },
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '${animal['animal_name']}',
-                                          style: TextStyle(
-                                              fontFamily: 'FjallaOne',
-                                              fontSize: 22.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0, vertical: 2.0),
+                                    child: Container(
+                                      height:
+                                      MediaQuery.of(context).size.height *
+                                          0.06,
+                                      decoration: BoxDecoration(
+                                          color: pressed
+                                              ? Colors.teal
+                                              : Colors.transparent,
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
+                                          )),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '${animal['animal_name']}',
+                                              style: const TextStyle(
+                                                  fontFamily: 'FjallaOne',
+                                                  fontSize: 22.0),
+                                            ),
+                                            Theme(
+                                              data: Theme.of(context).copyWith(
+                                                textTheme: Theme.of(context)
+                                                    .textTheme
+                                                    .apply(fontSizeFactor: 0.5),
+                                              ),
+                                              child: CountDownWidget(
+                                                deadline: DateTime.parse(
+                                                    animal['animal_deadline']),
+                                                dead: animal['dead'],
+                                                inputTextStyle: TextStyle(
+                                                    fontFamily: 'FjallaOne',
+                                                    fontSize: 15.0,
+                                                    color: Theme.of(context)
+                                                        .primaryColorLight),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        CountDownWidget(
-                                          deadline: DateTime.parse(
-                                              animal['animal_deadline']),
-                                          dead: animal['dead'],
-                                          inputTextStyle: TextStyle(
-                                              fontFamily: 'FjallaOne',
-                                              fontSize: 15.0,
-                                              color: Theme.of(context).primaryColorLight),
-                                        ),
-                                      ],
+                                      ), // Assuming the data has 'id'
                                     ),
-                                  ), // Assuming the data has 'id'
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             );
-                          },
-                        );
-                      } else {
-                        return Text('No animals available');
-                      }
+                          } else {
+                            return const Text('No animals available');
+                          }
+                        },
+                      );
                     },
                   ),
                 ),
@@ -335,7 +361,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                           borderRadius: BorderRadius.circular(20.0)),
                       child: Center(
                         child: Text(
-                          'Give hour',
+                          'Give time',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontFamily: 'FjallaOne',

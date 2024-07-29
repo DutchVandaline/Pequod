@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Screens/ShopScreen.dart';
@@ -7,6 +5,7 @@ import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Widgets/CountdownWidget.dart';
 
 int animal_id = 0;
+bool pressed = false;
 
 class ShopScreenWidget extends StatefulWidget {
   final String inputImage;
@@ -178,11 +177,11 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
                       decoration: BoxDecoration(
                           color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(20.0)),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Buy',
                           style: TextStyle(
-                              color: Theme.of(context).primaryColorLight,
+                              color: Colors.white,
                               fontFamily: 'FjallaOne',
                               fontSize: 20.0),
                         ),
@@ -210,84 +209,97 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                const Text('Which animal do you want to use this item with?',
-                    style: TextStyle(fontSize: 17.0),
+                const Text('Which animal do you want to use this item with? Select One!',
+                    style: TextStyle(fontSize: 20.0),
                     textAlign: TextAlign.center),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: MediaQuery.of(context).size.height * 0.27,
-                  child: FutureBuilder(
-                    future: ApiServices.getAnimal(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData &&
-                          snapshot.data!.isNotEmpty) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            var animal = snapshot.data![index];
-                            return GestureDetector(
-                              onTap: () async {
-                                setState(() {
-                                  animal_id = animal['id'];
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 4.0, vertical: 2.0),
-                                child: Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.06,
-                                  decoration: BoxDecoration(
-                                    color: animal_id == animal['id'] ? Colors.teal : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                                .primaryColorLight,
-                                      )),
+                  child: StatefulBuilder(
+                    builder: (BuildContext dialogContext,
+                        StateSetter setDialogState) {
+                      return FutureBuilder(
+                        future: ApiServices.getAnimal(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData &&
+                              snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                var animal = snapshot.data![index];
+                                bool pressed = animal_id == animal['id'];
+                                return GestureDetector(
+                                  onTap: () {
+                                    setDialogState(() {
+                                      animal_id = animal['id'];
+                                    });
+                                  },
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '${animal['animal_name']}',
-                                          style: const TextStyle(
-                                              fontFamily: 'FjallaOne',
-                                              fontSize: 22.0),
-                                        ),
-                                        Theme(
-                                          data: Theme.of(context).copyWith(
-                                            textTheme: Theme.of(context).textTheme.apply(
-                                              fontSizeFactor: 0.5
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0, vertical: 2.0),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      decoration: BoxDecoration(
+                                          color: pressed
+                                              ? Colors.teal
+                                              : Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
+                                          )),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '${animal['animal_name']}',
+                                              style: const TextStyle(
+                                                  fontFamily: 'FjallaOne',
+                                                  fontSize: 22.0),
                                             ),
-                                          ),
-                                          child: CountDownWidget(
-                                            deadline: DateTime.parse(
-                                                animal['animal_deadline']),
-                                            dead: animal['dead'],
-                                            inputTextStyle: TextStyle(
-                                                fontFamily: 'FjallaOne',
-                                                fontSize: 15.0,
-                                                color: Theme.of(context).primaryColorLight),
-                                          ),
+                                            Theme(
+                                              data: Theme.of(context).copyWith(
+                                                textTheme: Theme.of(context)
+                                                    .textTheme
+                                                    .apply(fontSizeFactor: 0.5),
+                                              ),
+                                              child: CountDownWidget(
+                                                deadline: DateTime.parse(
+                                                    animal['animal_deadline']),
+                                                dead: animal['dead'],
+                                                inputTextStyle: TextStyle(
+                                                    fontFamily: 'FjallaOne',
+                                                    fontSize: 15.0,
+                                                    color: Theme.of(context)
+                                                        .primaryColorLight),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ), // Assuming the data has 'id'
                                     ),
-                                  ), // Assuming the data has 'id'
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             );
-                          },
-                        );
-                      } else {
-                        return const Text('No animals available');
-                      }
+                          } else {
+                            return const Text('No animals available');
+                          }
+                        },
+                      );
                     },
                   ),
                 ),
@@ -319,7 +331,7 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
                   flex: 2,
                   child: TextButton(
                     onPressed: () async {
-                      if(animal_id == 0){
+                      if (animal_id == 0) {
                         print("select One");
                       } else {
                         bool success = await ApiServices.patchShopBuyItem(
@@ -339,13 +351,13 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
                               context,
                               PageRouteBuilder(
                                 pageBuilder: (context, a1, a2) =>
-                                const MainScreen(
+                                    const MainScreen(
                                   initialIndex: 0,
                                 ),
                                 transitionDuration: Duration.zero,
                                 reverseTransitionDuration: Duration.zero,
                               ),
-                                  (route) => false);
+                              (route) => false);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -361,7 +373,6 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
                           );
                         }
                       }
-
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.45,

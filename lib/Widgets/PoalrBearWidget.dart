@@ -1,48 +1,78 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pequod/Widgets/GarbageWidget.dart';
 
 class PolarBearWidget extends StatefulWidget {
-  final String animalName;
-  final Duration leftTime;
+  final DateTime deadline;
 
-  PolarBearWidget({required this.animalName, required this.leftTime, super.key});
+  PolarBearWidget({required this.deadline, super.key});
 
   @override
   State<PolarBearWidget> createState() => _PolarBearWidgetState();
 }
 
 class _PolarBearWidgetState extends State<PolarBearWidget> {
+  late Timer _timer;
+  late Duration leftTime;
+
+  @override
+  void initState() {
+    super.initState();
+    leftTime = widget.deadline.difference(DateTime.now());
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      final newLeftTime = widget.deadline.difference(DateTime.now());
+      if (newLeftTime != leftTime) {
+        setState(() {
+          leftTime = newLeftTime;
+          if (leftTime.isNegative) {
+            leftTime = Duration.zero;
+            _timer.cancel();
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  bool isGarbageVisible(int index) {
+    if (leftTime.inHours <= 2) {
+      return true;
+    } else if (leftTime.inHours <= 12) {
+      return index <= 8;
+    } else if (leftTime.inHours <= 24) {
+      return index <= 4;
+    } else if (leftTime.inHours <= 48) {
+      return index <= 2;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.5,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(alignment: Alignment.bottomCenter, children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              widget.animalName,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontFamily: 'FjallaOne',
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).size.width * 0.22,
-                  color: Color(0xFF202023),
-                  ),
-              maxLines: 1,
-              overflow: TextOverflow.clip,
-            ),
-          ),
-          Image.asset(
-            'assets/images/animals/polar_bear.png',
-            alignment: Alignment.bottomCenter,
-          ),
-          GarbageWidget(top: 0.2, left: 0.6, size: 0.07, angle: 0.4, asset: "bottletop_blood")
-        ]),
-      ),
+      child: Stack(alignment: Alignment.bottomCenter, children: [
+        if(isGarbageVisible(4)) GarbageWidget(top: 0, left: 0.03, size: 0.1, angle: 3, asset: "bottle_withblack"),
+        if(isGarbageVisible(8)) GarbageWidget(top: 0.01, left: 0.32, size: 0.05, angle: 0.5, asset: "tribot_orange"),
+        Image.asset(
+          'assets/images/animals/polar_bear.png',
+          alignment: Alignment.bottomCenter,
+        ),
+        if(isGarbageVisible(0)) GarbageWidget(top: 0.04, left: 0.4, size: 0.05, angle: 0.4, asset: "bottletop_blood"),
+        if(isGarbageVisible(2)) GarbageWidget(top: 0.02, left: -0.02, size: 0.06, angle: 5, asset: "bottlebottom_blood"),
+        if(isGarbageVisible(1)) GarbageWidget(top: 0.02, left: 0.3, size: 0.04, angle: 0, asset: "tribotblood_yellow"),
+        if(isGarbageVisible(7)) GarbageWidget(top: 0.05, left: 0.3, size: 0.03, angle: 2, asset: "tribotblood_green"),
+        if(isGarbageVisible(3)) GarbageWidget(top: 0.12, left: 0.1, size: 0.06, angle: 3.3, asset: "tribotblood_blue"),
+        if(isGarbageVisible(6)) GarbageWidget(top: 0.02, left: 0.65, size: 0.035, angle: 5, asset: "tribotblood_orange"),
+
+      ]),
     );
   }
 }

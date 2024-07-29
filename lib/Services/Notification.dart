@@ -121,6 +121,7 @@ class FlutterLocalNotification {
       uiLocalNotificationDateInterpretation:
       UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
+      matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 
