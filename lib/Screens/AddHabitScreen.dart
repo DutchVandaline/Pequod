@@ -168,7 +168,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
                                 .toString(),
                             "false",
                             "10",
-                            const Duration(hours: 1).toString(),
+                            const Duration(hours: 2).toString(),
                             memo);
                       }
                       _showError

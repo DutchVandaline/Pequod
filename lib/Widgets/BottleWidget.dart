@@ -3,16 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BottleWidget extends StatefulWidget {
-  final VoidCallback onBottleTap; // Callback to notify when bottle is tapped
+class GarbageWidget extends StatefulWidget {
+  final VoidCallback onBottleTap;
+  final int garbagetype;
 
-  const BottleWidget({Key? key, required this.onBottleTap}) : super(key: key);
+  const GarbageWidget(
+      {Key? key, required this.onBottleTap, required this.garbagetype})
+      : super(key: key);
 
   @override
-  State<BottleWidget> createState() => _PositionedBottleWidgetState();
+  State<GarbageWidget> createState() => _PositionedBottleWidgetState();
 }
 
-class _PositionedBottleWidgetState extends State<BottleWidget> {
+class _PositionedBottleWidgetState extends State<GarbageWidget> {
   double _left = 0.0;
   double _top = 0.0;
   double _rotation = 0;
@@ -94,7 +97,11 @@ class _PositionedBottleWidgetState extends State<BottleWidget> {
               child: AspectRatio(
                   aspectRatio: 58 / 138,
                   child: Center(
-                      child: Image.asset('assets/images/garbages/water_bottle.png'))),
+                      child: widget.garbagetype == 0
+                          ? Image.asset(
+                              'assets/images/garbages/water_bottle.png')
+                          : Image.asset(
+                              'assets/images/garbages/plastic_bag.png'))),
             ),
           ),
         ),

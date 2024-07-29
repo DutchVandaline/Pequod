@@ -77,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
                 size: 30.0,
                 color: Theme.of(context).primaryColorLight,
               ),
-              label: "Score"),
+              label: "Tragedy"),
           NavigationDestination(
               icon: Icon(
                 Icons.settings_outlined,

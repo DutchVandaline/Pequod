@@ -177,10 +177,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         widget.habitName);
                     showWhomDialog(context);
                   } else {
-                    int count = 0;
-                    Navigator.popUntil(context, (route) {
-                      return count++ == 2;
-                    });
+                    Navigator.pop(context);
                   }
                 },
                 child: Container(
@@ -220,8 +217,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                const Text('Which animal do you want to use this item with?',
-                    style: TextStyle(fontSize: 20.0),
+                const Text('Which animal do you want to give time to?\n2 hours will be given',
+                    style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
                     textAlign: TextAlign.center),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -363,7 +360,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         child: Text(
                           'Give time',
                           style: TextStyle(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.white,
                               fontFamily: 'FjallaOne',
                               fontSize: 20.0),
                         ),

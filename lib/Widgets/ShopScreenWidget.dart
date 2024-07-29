@@ -210,7 +210,7 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
             child: ListBody(
               children: [
                 const Text('Which animal do you want to use this item with? Select One!',
-                    style: TextStyle(fontSize: 20.0),
+                    style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
                     textAlign: TextAlign.center),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -380,11 +380,11 @@ class _ShopScreenWidgetState extends State<ShopScreenWidget> {
                       decoration: BoxDecoration(
                           color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(20.0)),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Buy',
                           style: TextStyle(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.white,
                               fontFamily: 'FjallaOne',
                               fontSize: 20.0),
                         ),

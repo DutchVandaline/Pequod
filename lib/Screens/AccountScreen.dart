@@ -133,34 +133,66 @@ class _AccountScreenState extends State<AccountScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Account Delete'),
-          backgroundColor: Theme.of(context).primaryColor,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          title: const Text(
+            'Account Delete',
+            style: TextStyle(
+                fontFamily: 'ClimateCrisis', fontWeight: FontWeight.w600),
+          ),
           content: const Text(
-              'Do you really want to delete your account?\n Every data will be removed permanently.'),
+            "Do you really want to delete your account? Every data will be removed permanently.",
+            style: TextStyle(fontSize: 15.0, fontFamily: 'FjallaOne'),
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: Theme.of(context).primaryColorLight),
-              ),
-            ),
-            TextButton(
-              onPressed: () async {
-                await ApiServices.eraseUser().then((value) =>
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SplashScreen()),
-                        (route) => false));
-              },
-              child: Text(
-                'Delete',
-                style: TextStyle(color: Theme.of(context).primaryColorLight),
-              ),
+            Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(color: Theme.of(context).primaryColorLight),
+                      ),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: TextButton(
+                    onPressed: () async {
+                      await ApiServices.eraseUser().then((value) =>
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SplashScreen()),
+                                  (route) => false));
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(20.0)),
+                      child: Center(
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColorLight,
+                              fontFamily: 'FjallaOne',
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         );

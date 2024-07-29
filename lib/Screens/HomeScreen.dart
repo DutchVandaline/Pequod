@@ -29,18 +29,29 @@ class _HomeScreenState extends State<HomeScreen> {
   late bool dead;
   late DateTime deadline = DateTime.now().add(Duration(days: 2));
 
-  List<double> left = [-10.0, 90.0, 180.0, 290.0];
+  List<double> left = [0.0, 90.0, 190.0, 300.0];
 
   @override
   void initState() {
     super.initState();
     animalFuture = ApiServices.getAnimal();
+    initializeAnimalId();
   }
 
   Future<void> refreshData() async {
     setState(() {
       animalFuture = ApiServices.getAnimal();
+      initializeAnimalId();
     });
+  }
+
+  void initializeAnimalId() async {
+    final animals = await ApiServices.getAnimal();
+    if (animals != null && animals.isNotEmpty) {
+      setState(() {
+        animalId = animals.last['id'];
+      });
+    }
   }
 
   @override
@@ -103,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? ApiServices.getAnimalbyId(animalId)
                       : Future.value(null),
                   builder: (context, snapshot) {
-                    print(animalId);
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                         child: CircularProgressIndicator(
@@ -473,10 +483,10 @@ class _AnimalBottomWidgetState extends State<AnimalBottomWidget> {
       return Image.asset('assets/images/animals/sea_turtle.png');
     } else if (widget.animalType == 1) {
       return Image.asset('assets/images/animals/whale.png');
-    } else if (widget.animalType == 1) {
+    } else if (widget.animalType == 2) {
       return Image.asset('assets/images/animals/polar_bear.png');
     } else {
-      return Image.asset('assets/images/animals/unknown_animal.png');
+      return Image.asset('assets/images/animals/death_screen.png');
     }
   }
 }

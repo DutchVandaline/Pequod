@@ -45,11 +45,6 @@ class SettingsScreen extends StatelessWidget {
                   nextScreen: const AccountScreen(),
                 ),
                 SettingsWidget(
-                  inputTitle: "Help & Support",
-                  inputicon: Icons.question_mark_outlined,
-                  nextScreen: const SettingsScreen(),
-                ),
-                SettingsWidget(
                   inputTitle: "About",
                   inputicon: Icons.star_border,
                   nextScreen: const SettingsScreen(),
@@ -175,8 +170,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           content: const Text(
             "Do you really want to Log-out?",
-            style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
-            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 17.0, fontFamily: 'FjallaOne'),
           ),
           backgroundColor: Theme.of(context).primaryColor,
           shape: const RoundedRectangleBorder(
