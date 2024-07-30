@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-bool displayError = false;
-bool passwordError = false;
-bool emailError = false;
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -22,29 +18,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     EmailController.dispose();
     PasswordController.dispose();
     CheckPasswordController.dispose();
-    displayError = false;
-    passwordError = false;
     super.dispose();
   }
 
-  void createUser(
-      String _enterEmail, String _enterPassword, String _enterName) async {
+  Future<bool> createUser(String _enterEmail, String _enterPassword, String _enterName) async {
     var url = Uri.https('pequod-api-dlyou.run.goorm.site', '/api/user/create/');
     var response = await http.post(url, body: {
       'email': _enterEmail,
       'password': _enterPassword,
       'name': _enterName
     });
-    if (mounted) {
-      if (response.statusCode == 200) {
-        print('Sign-up successful');
-      } else {
-        print('Error: ${response.statusCode}');
-        print('Error body: ${response.body}');
-        setState(() {
-          displayError = true;
-        });
-      }
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      print('Sign-up successful');
+      return true;
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+      return false;
     }
   }
 
@@ -64,24 +54,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: TextStyle(fontSize: 40.0),
               ),
             ),
-            emailError
-                ? const ErrorWidget(
-              inputString: "Email is Invalid",
-            )
-                : passwordError
-                ? const ErrorWidget(
-              inputString: "Password needs to be more than 5 letters",
-            )
-                : displayError
-                ? const ErrorWidget(
-              inputString: "It's already existing Email or password is not correct",
-            )
-                : const SizedBox(
-              height: 20.0,
-            ),
+            const SizedBox(height: 20.0),
             Padding(
-              padding:
-              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
@@ -115,8 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             Padding(
-              padding:
-              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
@@ -151,8 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             Padding(
-              padding:
-              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
@@ -187,56 +160,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (PasswordController.text.length < 5 &&
                     CheckPasswordController.text.length < 5) {
-                  setState(() {
-                    emailError = false;
-                    passwordError = true;
-                    displayError = false;
-                  });
+                  showErrorSnackBar(context, "Password is too short. Needs to be at least 5 letters");
                 } else if (PasswordController.text !=
                     CheckPasswordController.text) {
-                  setState(() {
-                    emailError = false;
-                    passwordError = false;
-                    displayError = true;
-                  });
-                } else if (!EmailController.text.contains("@") &&
+                  showErrorSnackBar(context, "Password doesn\'t match. Please check again.");
+                } else if (!EmailController.text.contains("@") ||
                     !EmailController.text.contains(".")) {
-                  setState(() {
-                    emailError = true;
-                    passwordError = false;
-                    displayError = false;
-                  });
-                } else if (PasswordController.text ==
-                    CheckPasswordController.text &&
-                    PasswordController.text.length >= 5 &&
-                    CheckPasswordController.text.length >= 5 &&
-                    EmailController.text.contains("@") &&
-                    EmailController.text.contains(".")) {
-                  createUser(EmailController.text, PasswordController.text,
-                      "User${DateTime.now()}");
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("You're all set! Please Log-In!"),
-                    duration: Duration(seconds: 2),
-                  ));
-                  Navigator.pop(context);
+                  showErrorSnackBar(context, "Invalid Email format.");
+                } else {
+                  bool success = await createUser(EmailController.text, PasswordController.text, "User${DateTime.now()}");
+                  if (success) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.teal,
+                      content: Text("You're all set! Please Log-In!", style: TextStyle(fontFamily: 'FjallaOne', fontSize: 18.0),),
+                      duration: Duration(seconds: 2),
+                    ));
+                    Navigator.pop(context);
+                  } else {
+                    showErrorSnackBar(context, "The account already exists. Please log-in");
+                  }
                 }
               },
               child: Padding(
-                padding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 60.0,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColorLight,
                       borderRadius: BorderRadius.circular(15.0)),
                   child: Center(
                     child: Text(
-                      "Sign-Up",
-                      style: TextStyle(fontFamily: 'FjallaOne', fontSize: 20.0, color: Theme.of(context).primaryColorLight,)
+                        "Sign-Up",
+                        style: TextStyle(fontFamily: 'FjallaOne', fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor,)
                     ),
                   ),
                 ),
@@ -256,6 +215,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void showErrorSnackBar(BuildContext context, String inputError) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+            inputError,
+            style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'FjallaOne',
+                fontSize: 18.0)),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 2),
       ),
     );
   }

@@ -32,6 +32,7 @@ class _AccountScreenState extends State<AccountScreen> {
               child: Text(
                 "Please try later.",
                 textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'FjallaOne', fontSize: 15.0),
               ),
             );
           } else {
@@ -107,7 +108,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                       child: Icon(Icons.phonelink_erase),
                                     ),
                                     SizedBox(width: 20.0),
-                                    Text("Delete Account"),
+                                    Text("Delete Account", style: TextStyle(fontFamily: 'FjallaOne', fontSize: 15.0),),
                                   ],
                                 ),
                                 Padding(
@@ -236,12 +237,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
                   widget.inputText,
-                  style: const TextStyle(overflow: TextOverflow.fade),
+                  style: const TextStyle(overflow: TextOverflow.fade, fontFamily: 'FjallaOne', fontSize: 15.0),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 2.0),
-                child: Text(widget.inputData[widget.requireQuery].toString()),
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Text(widget.inputData[widget.requireQuery].toString(), style: const TextStyle(fontFamily: 'FjallaOne', fontSize: 15.0),),
               )
             ],
           ),

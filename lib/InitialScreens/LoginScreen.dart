@@ -7,8 +7,6 @@ import 'package:pequod/Screens/MainScreen.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-bool displayError = false;
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -42,24 +40,37 @@ class _LoginScreenState extends State<LoginScreen> {
       var animalResponse = await ApiServices.getAnimal();
       print(animalResponse);
 
-      if(animalResponse == null || animalResponse!.isEmpty){
+      if (animalResponse == null || animalResponse!.isEmpty) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const AnimalSelectionScreen()),
-                (route) => false);
-      } else{
+            MaterialPageRoute(
+                builder: (context) => const AnimalSelectionScreen()),
+            (route) => false);
+      } else {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const MainScreen(initialIndex: 2,)),
-                (route) => false);
+            MaterialPageRoute(
+                builder: (context) => const MainScreen(
+                      initialIndex: 2,
+                    )),
+            (route) => false);
       }
-
-
     } else {
       print('Error: ${response.statusCode}');
       print('Error body: ${response.body}');
       setState(() {
-        displayError = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'There\'s no such account or password doesn\'t match.',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'FjallaOne',
+                    fontSize: 18.0)),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 2),
+          ),
+        );
       });
     }
   }
@@ -81,9 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      displayError = false;
-    });
   }
 
   @override
@@ -103,29 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            displayError
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.red.shade100,
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            "없는 계정이거나 비밀번호가 일치하지 않습니다.",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                : const SizedBox(
-                    height: 20.0,
-                  ),
+            const SizedBox(
+              height: 20.0,
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
@@ -236,9 +224,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const SignUpScreen()));
-                  setState(() {
-                    displayError = false;
-                  });
                 },
                 child: const Center(
                   child: Text.rich(

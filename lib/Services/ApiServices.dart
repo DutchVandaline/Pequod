@@ -330,11 +330,10 @@ class ApiServices {
     var url = Uri.https('pequod-api-dlyou.run.goorm.site',
         '/api/habitstatus/habitstatus/habit_status_by_date/', {'date': _date});
 
-    var response =
-        await http.get(url, headers: {'Authorization': 'Token $_userToken'});
+    var response = await http.get(url, headers: {'Authorization': 'Token $_userToken'});
 
     if (response.statusCode == 200) {
-      List<dynamic> responseData = json.decode(response.body);
+      List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes));
       return responseData;
     } else {
       throw Exception('Error: ${response.statusCode}, ${response.body}');

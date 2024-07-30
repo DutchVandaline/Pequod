@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pequod/Screens/AboutScreen.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Services/ApiServices.dart';
 import 'package:pequod/Screens/AccountScreen.dart';
@@ -47,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
                 SettingsWidget(
                   inputTitle: "About",
                   inputicon: Icons.star_border,
-                  nextScreen: const SettingsScreen(),
+                  nextScreen: const AboutScreen(),
                 ),
         GestureDetector(
           onTap: () {

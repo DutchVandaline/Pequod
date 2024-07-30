@@ -67,7 +67,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           ),
           systemInstruction: Content.text(
               "You are professional Image Analyzer. User gives an input of 'Habit' and single image. Analyze the image and find if it matches the given Habit. Tell user the analysis. Be terse. Your answer needs to be like following:"
-              "Habit Match : false\n Reason : Image shows cat not tumbler"));
+              "Habit Match : true\n Reason : There are no straw in the cup"));
 
       final response = await model.generateContent([
         Content.text("Habit : ${widget.habitName}"),
@@ -136,18 +136,52 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_imageBytes != null)
-                            Center(
-                              child: ClipRRect(
-                                child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.9,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  child: FittedBox(
-                                      fit: BoxFit.cover,
-                                      child: Image.memory(_imageBytes!)),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Center(
+                                  child: ClipRRect(
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.9,
+                                      child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Image.memory(_imageBytes!)),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Center(
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width * 0.6,
+                                      height: MediaQuery.of(context).size.width * 0.6,
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: _analysisResult
+                                                  .contains("false") ? Colors.red : Colors.teal, width: 15.0),
+                                          borderRadius:
+                                              BorderRadius.circular(200.0)),
+                                      child: Center(
+                                        child: _analysisResult
+                                                .contains("false")
+                                            ? Text(
+                                                "✘",
+                                                style: TextStyle(
+                                                    fontSize: MediaQuery.of(context).size.width * 0.3,
+                                                    color: Colors.red),
+                                              )
+                                            : Text(
+                                                "✓",
+                                                style: TextStyle(
+                                                    fontSize: MediaQuery.of(context).size.width * 0.3,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.teal),
+                                              ),
+                                      )),
+                                )
+                              ],
                             ),
                           const SizedBox(
                             height: 20.0,
@@ -217,7 +251,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                const Text('Which animal do you want to give time to?\n2 hours will be given',
+                const Text(
+                    'Which animal do you want to give time to?\n2 hours will be given',
                     style: TextStyle(fontSize: 20.0, fontFamily: 'FjallaOne'),
                     textAlign: TextAlign.center),
                 SizedBox(
@@ -254,14 +289,14 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         horizontal: 4.0, vertical: 2.0),
                                     child: Container(
                                       height:
-                                      MediaQuery.of(context).size.height *
-                                          0.06,
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
                                       decoration: BoxDecoration(
                                           color: pressed
                                               ? Colors.teal
                                               : Colors.transparent,
                                           borderRadius:
-                                          BorderRadius.circular(10.0),
+                                              BorderRadius.circular(10.0),
                                           border: Border.all(
                                             color: Theme.of(context)
                                                 .primaryColorLight,
@@ -270,7 +305,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               '${animal['animal_name']}',
@@ -339,15 +374,18 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                   flex: 2,
                   child: TextButton(
                     onPressed: () async {
-                      await ApiServices.patchHabitCompleted(widget.habitId, animal_id);
+                      await ApiServices.patchHabitCompleted(
+                          widget.habitId, animal_id);
                       Navigator.pushAndRemoveUntil(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, a1, a2) => MainScreen(initialIndex: 2,),
+                          pageBuilder: (context, a1, a2) => MainScreen(
+                            initialIndex: 2,
+                          ),
                           transitionDuration: Duration.zero,
                           reverseTransitionDuration: Duration.zero,
                         ),
-                            (route) => false,
+                        (route) => false,
                       );
                     },
                     child: Container(
@@ -356,7 +394,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       decoration: BoxDecoration(
                           color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(20.0)),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Give time',
                           style: TextStyle(

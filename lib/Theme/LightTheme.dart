@@ -8,7 +8,7 @@ class LightTheme {
       canvasColor: Color(0xFF708387),
       primaryColorLight: Color(0xFF202023),
       hoverColor: Color(0xFFf5f6f6),
-      primaryColorDark: Colors.white,
+      primaryColorDark: Color(0xFFfffff6),
       cardColor: Colors.white
 
   );

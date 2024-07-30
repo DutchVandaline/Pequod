@@ -129,7 +129,7 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                       borderRadius: BorderRadius.circular(10.0)),
                   child: TextField(
                     controller: todoController,
-                    style: TextStyle(fontSize: 17.0),
+                    style: const TextStyle(fontSize: 17.0),
                     onChanged: (text) {
                       habitName = text;
                     },

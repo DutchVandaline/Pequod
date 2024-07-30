@@ -42,14 +42,16 @@ class _TurtleWidgetState extends State<TurtleWidget> {
   }
 
   bool isGarbageVisible(int index) {
-    if (leftTime.inHours <= 2) {
+    if (leftTime.inHours <= 12) {
       return true;
     } else if (leftTime.inHours <= 24) {
-      return index <= 8;
+      return index <= 6;
     } else if (leftTime.inHours <= 36) {
       return index <= 4;
-    } else if (leftTime.inHours <= 72) {
+    } else if (leftTime.inHours <= 48) {
       return index <= 2;
+    } else if (leftTime.inHours <= 72) {
+      return index <= 1;
     } else {
       return false;
     }

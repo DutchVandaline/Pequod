@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pequod/Services/ApiServices.dart';
@@ -95,8 +97,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                               child: GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    inputDate =
-                                        "$dateForParse-${day.toString().padLeft(2, '0')}";
+                                    inputDate = "$dateForParse-${day.toString().padLeft(2, '0')}";
                                     print(inputDate);
                                   });
                                 },
@@ -106,22 +107,28 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                     AspectRatio(
                                       aspectRatio: 1 / 1,
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        height: MediaQuery.of(context).size.height * 0.4,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.4,
                                         decoration: BoxDecoration(
-                                            color: Colors.teal
-                                                .withOpacity(opacity),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColorLight
-                                                    .withOpacity(0.2))),
-                                        child: Text(
-                                          "$day",
-                                          style: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontFamily: 'FjallaOne'),
+                                          color: count == 0
+                                              ? Theme.of(context)
+                                                  .primaryColorDark
+                                              : Colors.teal
+                                                  .withOpacity(opacity),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Text(
+                                            "$day",
+                                            style: const TextStyle(
+                                                fontSize: 15.0,
+                                                fontFamily: 'FjallaOne'),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -138,7 +145,23 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     ),
                   );
                 } else {
-                  return const Center(
+                  return const Expanded(
+                    child: Center(
+                      child: Text(
+                        '📡 Nothing to fetch...\n Add habits to see the archive!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'FjallaOne',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              } else {
+                return const Expanded(
+                  child: Center(
                     child: Text(
                       '📡 Nothing to fetch...',
                       style: TextStyle(
@@ -147,23 +170,15 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                         fontSize: 20.0,
                       ),
                     ),
-                  );
-                }
-              } else {
-                return const Center(
-                  child: Text(
-                    '📡 Nothing to fetch...',
-                    style: TextStyle(
-                      fontFamily: 'FjallaOne',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
                   ),
                 );
               }
             },
           ),
-          Text(inputDate),
+          Text(
+            inputDate,
+            style: const TextStyle(fontFamily: 'FjallaOne', fontSize: 18.0),
+          ),
           FutureBuilder<List<dynamic>?>(
             future: ApiServices.getTodayHabitStatus(inputDate),
             builder: (context, snapshot) {
@@ -195,22 +210,25 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       height: MediaQuery.of(context).size.height * 0.4,
                       child: ListView.builder(
                           itemBuilder: (context, index) {
+                            final String habitName =
+                                archiveDailyData[index]['habit_name'];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 4.0),
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: 100.0,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.15,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  border: Border.all(color: Theme.of(context).primaryColorLight)
-                                ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Theme.of(context).primaryColorDark),
                                 child: Center(
-                                  child: Text(
-                                    archiveDailyData[index]['habit_name'],
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontFamily: 'FjallaOne'),
-                                  ),
+                                  child: Text(habitName,
+                                      style: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontFamily: 'FjallaOne'),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis),
                                 ),
                               ),
                             );
@@ -219,7 +237,22 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     ),
                   );
                 } else {
-                  return const Center(
+                  return const Expanded(
+                    child: Center(
+                      child: Text(
+                        '📡 No Habits are Recorded...',
+                        style: TextStyle(
+                          fontFamily: 'FjallaOne',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              } else {
+                return const Expanded(
+                  child: Center(
                     child: Text(
                       '📡 No Habits are Recorded...',
                       style: TextStyle(
@@ -227,17 +260,6 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
                       ),
-                    ),
-                  );
-                }
-              } else {
-                return const Center(
-                  child: Text(
-                    '📡 No Habits are Recorded...',
-                    style: TextStyle(
-                      fontFamily: 'FjallaOne',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
                     ),
                   ),
                 );
@@ -249,103 +271,3 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
     );
   }
 }
-
-//Fetch all and sort daily
-//FutureBuilder<List<dynamic>?>(
-//         future: ApiServices.getMonthlyHabitStatus("2024-07"),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(
-//               child: CircularProgressIndicator(),
-//             );
-//           } else if (snapshot.hasError) {
-//             print(snapshot.error);
-//             return const Center(
-//               child: Text(
-//                 "🏴‍☠️ Error",
-//                 style: TextStyle(
-//                   fontFamily: 'FjallaOne',
-//                   fontWeight: FontWeight.bold,
-//                   fontSize: 20.0,
-//                 ),
-//               ),
-//             );
-//           } else if (snapshot.hasData) {
-//             List<dynamic>? archiveData = snapshot.data;
-//             if (archiveData != null && archiveData.isNotEmpty) {
-//               archiveData.sort((a, b) {
-//                 int dateComparison = a['date'].compareTo(b['date']);
-//                 if (dateComparison == 0) {
-//                   return a['habit_name'].compareTo(b['habit_name']);
-//                 }
-//                 return dateComparison;
-//               });
-//
-//               // Group the data by date
-//               Map<String, List<dynamic>> groupedData = {};
-//               for (var item in archiveData) {
-//                 String date = item['date'];
-//                 if (!groupedData.containsKey(date)) {
-//                   groupedData[date] = [];
-//                 }
-//                 groupedData[date]!.add(item);
-//               }
-//
-//               return CustomScrollView(
-//                 slivers: groupedData.entries.map((entry) {
-//                   String date = entry.key;
-//                   List<dynamic> items = entry.value;
-//                   return SliverList(
-//                     delegate: SliverChildBuilderDelegate(
-//                           (context, index) {
-//                         if (index == 0) {
-//                           return Padding(
-//                             padding: const EdgeInsets.all(8.0),
-//                             child: Text(
-//                               date,
-//                               style: const TextStyle(
-//                                 fontSize: 20.0,
-//                                 fontWeight: FontWeight.bold,
-//                               ),
-//                             ),
-//                           );
-//                         }
-//                         var item = items[index - 1];
-//                         return Card(
-//                           child: ListTile(
-//                             title: Text('Habit: ${item['habit']}'),
-//                             subtitle: Text('Habit ID: ${item['id']}'),
-//                           ),
-//                         );
-//                       },
-//                       childCount: items.length + 1, // +1 for the date header
-//                     ),
-//                   );
-//                 }).toList(),
-//               );
-//             } else {
-//               return const Center(
-//                 child: Text(
-//                   'No data available',
-//                   style: TextStyle(
-//                     fontFamily: 'FjallaOne',
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 20.0,
-//                   ),
-//                 ),
-//               );
-//             }
-//           } else {
-//             return const Center(
-//               child: Text(
-//                 'No data available',
-//                 style: TextStyle(
-//                   fontFamily: 'FjallaOne',
-//                   fontWeight: FontWeight.bold,
-//                   fontSize: 20.0,
-//                 ),
-//               ),
-//             );
-//           }
-//         },
-//       ),
