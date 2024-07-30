@@ -78,6 +78,9 @@ flutter:
     - assets/images/animals/whale.png
     - assets/images/animals/sea_turtle.png
     - assets/images/animals/death_screen.png
+    - assets/images/developers/team_leader.png
+    - assets/images/developers/tomato_sua.png
+    - assets/images/developers/designer_yang.png
     - assets/images/items/MetalMedKit.png
     - assets/images/items/MetalTumbler.png
     - assets/images/items/PlasticBag.png

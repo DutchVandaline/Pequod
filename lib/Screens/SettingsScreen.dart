@@ -45,55 +45,59 @@ class SettingsScreen extends StatelessWidget {
                   inputicon: Icons.person_outlined,
                   nextScreen: const AccountScreen(),
                 ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                          const MainScreen(
+                            initialIndex: 2,
+                          ),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                            (route) => false);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 15.0),
+                            Icon(
+                              Icons.refresh,
+                              size: 30.0,
+                            ),
+                            const SizedBox(width: 20.0),
+                            Text("Refresh",
+                                style: TextStyle(
+                                    fontSize:
+                                    MediaQuery.of(context).size.width *
+                                        0.05)),
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 10.0),
+                          child: Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 25.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 SettingsWidget(
                   inputTitle: "About",
                   inputicon: Icons.star_border,
                   nextScreen: const AboutScreen(),
                 ),
-        GestureDetector(
-          onTap: () {
-            Navigator.pushAndRemoveUntil(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => const MainScreen(initialIndex: 2,),
-                  transitionDuration: Duration.zero,
-                  reverseTransitionDuration: Duration.zero,
-                ),
-                    (route) => false);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 15.0),
-                    Icon(
-                      Icons.refresh,
-                      size: 30.0,
-                    ),
-                    const SizedBox(width: 20.0),
-                    Text(
-                        "Refresh",
-                        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05)
-                    ),
-                  ],
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 10.0),
-                  child: Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    size: 25.0,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
               ],
             ),
             const SizedBox(
@@ -159,6 +163,7 @@ class SettingsScreen extends StatelessWidget {
           ],
         ));
   }
+
   void showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -189,7 +194,8 @@ class SettingsScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.2,
                       child: Text(
                         'Cancel',
-                        style: TextStyle(color: Theme.of(context).primaryColorLight),
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColorLight),
                       ),
                     ),
                   ),
@@ -201,8 +207,9 @@ class SettingsScreen extends StatelessWidget {
                       await ApiServices.logout();
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => const SplashScreen()),
-                              (route) => false);
+                          MaterialPageRoute(
+                              builder: (context) => const SplashScreen()),
+                          (route) => false);
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.45,

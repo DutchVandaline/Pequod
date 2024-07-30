@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pequod/Screens/SplashScreen.dart';
 import 'package:pequod/Theme/LightTheme.dart';
 import 'package:pequod/Theme/DarkTheme.dart';
@@ -31,6 +32,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: LightTheme().theme,
