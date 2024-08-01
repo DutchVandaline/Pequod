@@ -1,6 +1,6 @@
 # 🐋 PEQUOD
 
-Let's keep our animals alive, shall we?<br/>
+Why don't we keep our animals alive?<br/>
   
 ## PEQUOD Promotion 
 <a href="https://apps.apple.com/kr/app/pequod/id6593668188?l=en-GB">
