@@ -10,7 +10,7 @@ Let's keep our animals alive, shall we?<br/>
 </a>
 
   
- PEQUOD | A Legendary boat from the novel <Moby Dick>
+ PEQUOD | A Legendary Whaler from the novel <Moby Dick>
 
 🌏 Ah, look at that beautiful boiling 'pale-blue dot'. Glorious age of selective environmentalism, where saving the planet means passionately advocating for the rights of endangered tree frogs while sipping from plastic cups and ignoring the latest wildfire choking out another chunk of the Amazon. Who cares if the oceans are boiling, and polar bears get a few more icebergs to cling to? But hey, at least we're putting stickers on our laptops about saving the sea turtles.
 
