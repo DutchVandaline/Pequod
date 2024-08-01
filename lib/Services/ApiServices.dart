@@ -220,23 +220,30 @@ class ApiServices {
     }
   }
 
-  static void postHabit(String _name, String _date, String _completed,
-      String _receive_point, String _receive_time, String _description) async {
+  static Future<void> postHabit(
+      String _name,
+      String _date,
+      String _completed,
+      String _receive_point,
+      String _receive_time,
+      String _description) async {
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? _userToken = prefs.getString('UserToken');
 
     var url =
-        Uri.https('pequod-api-dlyou.run.goorm.site', '/api/habit/habits/');
+    Uri.https('pequod-api-dlyou.run.goorm.site', '/api/habit/habits/');
     var response = await http.post(url, headers: {
       'Authorization': 'Token $_userToken'
     }, body: {
-      'name': '$_name',
+      'name': _name,
       'date': _date,
       'completed': _completed,
       'receive_point': _receive_point,
-      'receive_time': '$_receive_time',
-      'description': '$_description',
+      'receive_time': _receive_time,
+      'description': _description,
     });
+
     if (response.statusCode == 200) {
       print(response.body);
     } else {
@@ -244,6 +251,7 @@ class ApiServices {
       print('Error body: ${response.body}');
     }
   }
+
 
   static Future<void> patchHabitCompleted(int habitId, int animalId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

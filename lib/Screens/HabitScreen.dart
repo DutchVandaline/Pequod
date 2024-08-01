@@ -120,7 +120,7 @@ class _HabitScreenState extends State<HabitScreen> {
                 } else if (snapshot.hasError) {
                   return const Center(
                     child: Text(
-                      "Error",
+                      "📡Please check your Internet Connection",
                       style: TextStyle(
                         fontFamily: 'FjallaOne',
                         fontWeight: FontWeight.bold,

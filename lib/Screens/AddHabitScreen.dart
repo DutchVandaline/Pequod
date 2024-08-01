@@ -20,6 +20,13 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   final memoController = TextEditingController();
 
   @override
+  void initState() {
+    inputTodo = "";
+    memo = "";
+    super.initState();
+  }
+
+  @override
   void dispose() {
     todoController.dispose();
     memoController.dispose();
@@ -154,47 +161,108 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
             ), //입력창
             Column(
               children: [
-                InkWell(
+                GestureDetector(
                   onTap: () {
-                    setState(() {
-                      if (inputTodo == "" || inputTodo.isEmpty) {
+                    if (inputTodo.isEmpty) {
+                      setState(() {
                         _showError = true;
-                      } else {
-                        _showError = false;
-                        ApiServices.postHabit(
-                            inputTodo,
-                            DateFormat("yyyy-MM-dd")
-                                .format(DateTime.now())
-                                .toString(),
-                            "false",
-                            "10",
-                            const Duration(hours: 2).toString(),
-                            memo);
-                      }
-                      _showError
-                          ? ()
-                          : Navigator.pushAndRemoveUntil(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder: (context, a1, a2) => const MainScreen(initialIndex: 1,),
-                                transitionDuration: Duration.zero,
-                                reverseTransitionDuration: Duration.zero,
+                      });
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Please enter the habit you want to make!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'FjallaOne',
+                                fontSize: 18.0,
                               ),
-                              (route) => false);
-                    });
+                            ),
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    } else {
+                      ApiServices.postHabit(
+                        inputTodo,
+                        DateFormat("yyyy-MM-dd").format(DateTime.now()).toString(),
+                        "false",
+                        "10",
+                        const Duration(hours: 2).toString(),
+                        memo,
+                      ).then((value) {
+                        if (mounted) {
+                          setState(() {
+                            _showError = false;
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Habit Added Successfully',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'FjallaOne',
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              backgroundColor: Colors.teal,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+
+                          // Navigate to MainScreen after successful habit addition
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, a1, a2) => const MainScreen(
+                                initialIndex: 1,
+                              ),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                                (route) => false,
+                          );
+                        }
+                      }).catchError((error) {
+                        if (mounted) {
+                          setState(() {
+                            _showError = true;
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Failed to Add Habit: $error',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'FjallaOne',
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              backgroundColor: Colors.red,
+                              duration: const Duration(seconds: 2),
+                            ),
+                          );
+                        }
+                      });
+                    }
                   },
                   child: Container(
                     height: 50.0,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).canvasColor,
-                        borderRadius: BorderRadius.circular(17.0)),
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: BorderRadius.circular(17.0),
+                    ),
                     child: const Center(
-                        child: Text(
-                      "Add Habit",
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                      textAlign: TextAlign.center,
-                    )),
+                      child: Text(
+                        "Add Habit",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(

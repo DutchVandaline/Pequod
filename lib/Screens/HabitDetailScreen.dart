@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pequod/Services/ApiServices.dart';
@@ -14,11 +16,10 @@ class HabitDetailScreen extends StatefulWidget {
   final String habitDescription;
   final int habitId;
 
-  const HabitDetailScreen(
-      {super.key,
-      required this.habitId,
-      required this.habitName,
-      required this.habitDescription});
+  const HabitDetailScreen({super.key,
+    required this.habitId,
+    required this.habitName,
+    required this.habitDescription});
 
   @override
   State<HabitDetailScreen> createState() => _HabitDetailScreenState();
@@ -55,7 +56,9 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
         centerTitle: false,
         elevation: 0.0,
         shadowColor: Colors.transparent,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme
+            .of(context)
+            .scaffoldBackgroundColor,
         title: ClimateChangeTextWidget("Detail"),
         actions: [
           IconButton(
@@ -64,7 +67,7 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                   if (widget.habitName == habitName &&
                       widget.habitDescription == habitDetail) {
                     print("It's same");
-                  } else if(habitName.isEmpty){
+                  } else if (habitName.isEmpty) {
                     print("There's nothing");
                   } else {
                     ApiServices.patchHabit(
@@ -78,16 +81,32 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
               )),
           IconButton(
               onPressed: () {
-                ApiServices.deleteHabit(widget.habitId);
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, a1, a2) => const MainScreen(initialIndex: 1,),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
+                ApiServices.deleteHabit(widget.habitId).then((value) =>
+                {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Successfully deleted!',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'FjallaOne',
+                              fontSize: 18.0)),
+                      backgroundColor: Colors.teal,
+                      duration: Duration(seconds: 2),
+                    ),
                   ),
-                      (route) => false,
-                );
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, a1, a2) =>
+                      const MainScreen(
+                        initialIndex: 1,
+                      ),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                        (route) => false,
+                  )
+                });
               },
               icon: const Icon(
                 Icons.delete_forever_outlined,
@@ -103,7 +122,10 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.07,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.07,
               ),
               const Padding(
                 padding: EdgeInsets.only(left: 20.0),
@@ -118,14 +140,19 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.05,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 10.0, horizontal: 15.0),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
+                      color: Theme
+                          .of(context)
+                          .cardColor,
                       borderRadius: BorderRadius.circular(10.0)),
                   child: TextField(
                     controller: todoController,
@@ -136,7 +163,7 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderSide:
-                                const BorderSide(color: Colors.transparent),
+                            const BorderSide(color: Colors.transparent),
                             borderRadius: BorderRadius.circular(10.0)),
                         focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.transparent)),
@@ -145,7 +172,9 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                         hintText: "Type in a habit you want to make.",
                         hintStyle: const TextStyle(
                             color: Colors.grey, fontSize: 16.0)),
-                    cursorColor: Theme.of(context).focusColor,
+                    cursorColor: Theme
+                        .of(context)
+                        .focusColor,
                     autofocus: false,
                   ),
                 ),
@@ -154,9 +183,14 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 10.0, horizontal: 15.0),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.22,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.22,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
+                      color: Theme
+                          .of(context)
+                          .cardColor,
                       borderRadius: BorderRadius.circular(10.0)),
                   child: TextField(
                     controller: memoController,
@@ -169,7 +203,7 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.transparent),
+                          const BorderSide(color: Colors.transparent),
                           borderRadius: BorderRadius.circular(10.0)),
                       focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent)),
@@ -177,9 +211,11 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                           borderSide: BorderSide(color: Colors.transparent)),
                       hintText: "Write a memo about the habit.",
                       hintStyle:
-                          const TextStyle(color: Colors.grey, fontSize: 16.0),
+                      const TextStyle(color: Colors.grey, fontSize: 16.0),
                     ),
-                    cursorColor: Theme.of(context).focusColor,
+                    cursorColor: Theme
+                        .of(context)
+                        .focusColor,
                   ),
                 ),
               ),
@@ -192,26 +228,35 @@ class _HabitDetailScreenState extends State<HabitDetailScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => VerificationScreen(
-                              habitName: widget.habitName,
-                              habitId: widget.habitId)));
+                          builder: (context) =>
+                              VerificationScreen(
+                                  habitName: widget.habitName,
+                                  habitId: widget.habitId)));
                 },
                 child: Container(
                   height: 50.0,
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.9,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).canvasColor,
+                      color: Theme
+                          .of(context)
+                          .canvasColor,
                       borderRadius: BorderRadius.circular(17.0)),
                   child: const Center(
                       child: Text(
-                    "Let's Verify Habit!",
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    textAlign: TextAlign.center,
-                  )),
+                        "Let's Verify Habit!",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        textAlign: TextAlign.center,
+                      )),
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.05,
               )
             ],
           )

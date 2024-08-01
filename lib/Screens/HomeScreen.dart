@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.9,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13.0),
                 ),
@@ -200,7 +200,11 @@ class _HomeScreenState extends State<HomeScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return const Center(child: Text("🏴‍☠️Error Occurred"));
+                return const Center(
+                    child: Text(
+                  "📡Please check your Internet Connection",
+                  style: TextStyle(fontFamily: 'FjallaOne', fontSize: 20.0),
+                ));
               } else if (snapshot.hasData && snapshot.data != null) {
                 List<dynamic>? animals = snapshot.data;
                 int? filledSlots = animals?.length;

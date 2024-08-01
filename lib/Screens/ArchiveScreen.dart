@@ -17,6 +17,8 @@ class ArchiveScreen extends StatefulWidget {
 class _ArchiveScreenState extends State<ArchiveScreen> {
   @override
   Widget build(BuildContext context) {
+    String currentMonth = DateFormat("yyyy-MM").format(DateTime.now()); // Get current month in yyyy-MM format
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -32,12 +34,12 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              DateFormat("MMMM yyyy").format(DateTime.now()),
+              DateFormat("MMMM yyyy").format(DateTime.now()), // Show current month and year
               style: const TextStyle(fontSize: 24.0, fontFamily: 'FjallaOne'),
             ),
           ),
           FutureBuilder<List<dynamic>?>(
-            future: ApiServices.getMonthlyHabitStatus("2024-07"),
+            future: ApiServices.getMonthlyHabitStatus(currentMonth), // Fetch data for the current month
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Expanded(
@@ -82,8 +84,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       child: GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 7),
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 7),
                           itemBuilder: (context, index) {
                             int day = index + 1;
                             int count = dayCounts[day] ?? 0;
@@ -108,18 +110,18 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                       aspectRatio: 1 / 1,
                                       child: Container(
                                         width:
-                                            MediaQuery.of(context).size.width,
+                                        MediaQuery.of(context).size.width,
                                         height:
-                                            MediaQuery.of(context).size.height *
-                                                0.4,
+                                        MediaQuery.of(context).size.height *
+                                            0.4,
                                         decoration: BoxDecoration(
                                           color: count == 0
                                               ? Theme.of(context)
-                                                  .primaryColorDark
+                                              .primaryColorDark
                                               : Colors.teal
-                                                  .withOpacity(opacity),
+                                              .withOpacity(opacity),
                                           borderRadius:
-                                              BorderRadius.circular(10.0),
+                                          BorderRadius.circular(10.0),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(2.0),
@@ -211,14 +213,14 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       child: ListView.builder(
                           itemBuilder: (context, index) {
                             final String habitName =
-                                archiveDailyData[index]['habit_name'];
+                            archiveDailyData[index]['habit_name'];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8.0, vertical: 4.0),
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 height:
-                                    MediaQuery.of(context).size.width * 0.15,
+                                MediaQuery.of(context).size.width * 0.15,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
                                     color: Theme.of(context).primaryColorDark),

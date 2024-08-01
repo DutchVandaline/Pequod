@@ -3,19 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class GarbageWidget extends StatefulWidget {
+class BottleWidget extends StatefulWidget {
   final VoidCallback onBottleTap;
   final int garbagetype;
 
-  const GarbageWidget(
+  const BottleWidget(
       {Key? key, required this.onBottleTap, required this.garbagetype})
       : super(key: key);
 
   @override
-  State<GarbageWidget> createState() => _PositionedBottleWidgetState();
+  State<BottleWidget> createState() => _PositionedBottleWidgetState();
 }
 
-class _PositionedBottleWidgetState extends State<GarbageWidget> {
+class _PositionedBottleWidgetState extends State<BottleWidget> {
   double _left = 0.0;
   double _top = 0.0;
   double _rotation = 0;
@@ -77,11 +77,12 @@ class _PositionedBottleWidgetState extends State<GarbageWidget> {
     return AnimatedPositioned(
       left: _left,
       top: _top,
-      duration: const Duration(milliseconds: 0),
+      duration: const Duration(milliseconds: 1),
       child: AnimatedOpacity(
         opacity: _visible ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 500),
-        child: GestureDetector(
+        child: _visible // Only render the GestureDetector if the widget is visible
+            ? GestureDetector(
           onTap: () async {
             setState(() {
               _visible = false;
@@ -95,17 +96,22 @@ class _PositionedBottleWidgetState extends State<GarbageWidget> {
               height: _size,
               color: Colors.transparent,
               child: AspectRatio(
-                  aspectRatio: 58 / 138,
-                  child: Center(
-                      child: widget.garbagetype == 0
-                          ? Image.asset(
-                              'assets/images/garbages/water_bottle.png')
-                          : Image.asset(
-                              'assets/images/garbages/plastic_bag.png'))),
+                aspectRatio: 58 / 138,
+                child: Center(
+                  child: widget.garbagetype == 0
+                      ? Image.asset(
+                      'assets/images/garbages/water_bottle.png')
+                      : Image.asset(
+                    'assets/images/garbages/plastic_bag.png',
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+        )
+            : const SizedBox.shrink(), // Empty widget when _visible is false
       ),
     );
   }
+
 }
