@@ -236,7 +236,8 @@ Use this space to list resources you find helpful and would like to give credit 
 [Flutter-url]: https://flutter.dev
 [Django]: https://img.shields.io/badge/Django-003b2a?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://www.djangoproject.com
-[Gemini]: https://img.shields.io/badge/Gemini-0c469c?style=for-the-badge&logo=gemini&logoColor=white
+[Gemini]: https://img.shields.io/badge/GoogleGemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white
+[Gemini-url]: https://gemini.google.com/?hl=ko
 [Flutter-url]: https://gemini.google.com/?hl=ko
 [AndroidStudio]: https://img.shields.io/badge/AndroidStudio-6fd089?style=for-the-badge&logo=androidstudio&logoColor=white
 [AndroidStudio-url]: https://developer.android.com/studio?hl=ko
