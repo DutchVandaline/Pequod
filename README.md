@@ -1,21 +1,3 @@
-# 🐋 PEQUOD
-
-*Why don't we keep our animals alive?*<br/>
-
-
-
-  
- PEQUOD | A Legendary Whaler from the novel <Moby Dick>
-
-
-
-
-
-<img src="https://github.com/DutchVandaline/SOGAK/assets/142364450/584ff33c-3847-488a-89cf-61988eeb93c6"  width="250" height="250"/>
-<img src="https://github.com/DutchVandaline/SOGAK/assets/142364450/fb1d3d02-e67e-4802-a187-46c6c619bce3"  width="250" height="250"/>
-
-
-
 <a id="readme-top"></a>
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -37,7 +19,7 @@
   <h3 align="center">PEQUOD</h3>
 
   <p align="center">
-    A Game-like Habit tracker app for the environment!
+    *Why don't we keep our animals alive?*
     <br />
     <a href="https://apps.apple.com/kr/app/pequod/id6593668188?l=en-GB">
     <img src="https://img.shields.io/badge/AppStore-0D96F6?style=flat-square&logo=appstore&logoColor=white"
@@ -87,7 +69,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<div align="center">
 ![PLANTABIT-2](https://github.com/user-attachments/assets/556a99cc-cf83-49c7-90d1-c87ac5ca3f60)
 
 
@@ -112,7 +93,7 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Next.js]][Next-url]
+* [![Next][Flutter]][Flutter-url]
 * [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
 * [![Angular][Angular.io]][Angular-url]
