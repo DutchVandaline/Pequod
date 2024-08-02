@@ -7,7 +7,7 @@
   
  PEQUOD | A Legendary Whaler from the novel <Moby Dick>
 
-🌏 Ah, look at that beautiful boiling 'pale-blue dot'. Glorious age of selective environmentalism, where saving the planet means passionately advocating for the rights of endangered tree frogs while sipping from plastic cups and ignoring the latest wildfire choking out another chunk of the Amazon. Who cares if the oceans are boiling, and polar bears get a few more icebergs to cling to? But hey, at least we're putting stickers on our laptops about saving the sea turtles.
+
 
 
 
@@ -90,16 +90,17 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+🌏 Ah, look at that beautiful boiling 'pale-blue dot'. Glorious age of selective environmentalism, where saving the planet means passionately advocating for the rights of endangered tree frogs while sipping from plastic cups and ignoring the latest wildfire choking out another chunk of the Amazon. Who cares if the oceans are boiling, and polar bears get a few more icebergs to cling to? But hey, at least we're putting stickers on our laptops about saving the sea turtles.
+
+🥤 Let's get this straight. Why don’t we care about Earth? It’s not just climate change anymore—it’s a climate crisis. Scientists are raising their voices to stop, or at least slow down, the crisis. The interesting part? The reason we don’t care about global warming might actually be rooted in evolution. Yeah, we've evolved that way.
 
 Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+* **Present Survival Over Future Importance** The basic needs like food, clothing, and shelter was crucial in human evolution. As a result, people tend to value the present more than the future.
+* **Effective Leadership by a Few** - In the processes of hunting and gathering, it was more economical and safer for a few leaders to take the lead in hunting rather than everyone participating.
+* **Lack of Concern for Future Generations** - Throughout human evolution, our concern has typically extended only as far as our great-grandchildren. Therefore, while we take the harm experienced by close relatives seriously, but not on distant generations.
+* **Sunk Cost Fallacy** - People feel reluctant to abandon the investment in fossil fuels, but in rational decision-making, sunk costs should not be factored into current choices.
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+Earth is boiling, sea levels are rising, and the end is near. We need to act now. That’s why I created this app, Pequod, based on four evolutionary reasons. People tend to care more about animals, so we’ve got animals for you to care for. Perform environmentally-friendly habits to earn more time for your animal. But be warned — when the timer hits zero, your animal dies and turns into plastic waste. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
