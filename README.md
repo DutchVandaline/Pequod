@@ -134,7 +134,7 @@ If you are using mac, you need to set up XCode and Simulator.
 
 <!-- CONTRIBUTING -->
 ## Contributing
-If you liked this app, please buy me a coffee! <br/>
+If you liked this app, please buy me a coffee! It helps me do creative stuffs. <br/> <br/>
 <a href="https://www.buymeacoffee.com/PequodApp" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;" >
 </a>
