@@ -3,7 +3,6 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 
 
 
@@ -222,8 +221,6 @@ Use this space to list resources you find helpful and would like to give credit 
 [stars-url]: https://github.com/DutchVandaline/Pequod/stargazers
 [issues-shield]: https://img.shields.io/github/issues/DutchVandaline/Pequod.svg?style=for-the-badge
 [issues-url]: https://github.com/DutchVandaline/Pequod/issues
-[license-shield]: https://img.shields.io/github/license/DutchVandaline/Pequod.svg?style=for-the-badge
-[license-url]: https://github.com/DutchVandaline/Pequod/blob/master/LICENSE.txt
 
 [Flutter]: https://img.shields.io/badge/Flutter-0c469c?style=for-the-badge&logo=flutter&logoColor=white
 [Flutter-url]: https://flutter.dev
