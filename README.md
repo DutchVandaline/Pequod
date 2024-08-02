@@ -71,7 +71,6 @@
 ![PLANTABIT-2](https://github.com/user-attachments/assets/556a99cc-cf83-49c7-90d1-c87ac5ca3f60)
 
 
-
 🌏 Ah, look at that beautiful boiling 'pale-blue dot'. Glorious age of selective environmentalism, where saving the planet means passionately advocating for the rights of endangered tree frogs while sipping from plastic cups and ignoring the latest wildfire choking out another chunk of the Amazon. Who cares if the oceans are boiling, and polar bears get a few more icebergs to cling to? But hey, at least we're putting stickers on our laptops about saving the sea turtles.
 
 🥤 Let's get this straight. Why don’t we care about Earth? It’s not just climate change anymore—it’s a climate crisis. Scientists are raising their voices to stop, or at least slow down, the crisis. The interesting part? The reason we don’t care about global warming might actually be rooted in evolution. Yeah, we've evolved that way.
@@ -86,6 +85,12 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Features
+
+![4](https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd)
+![3](https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427)
+![2](https://github.com/user-attachments/assets/a1c906c5-cb9c-463f-af51-e68f7f57fb1e)
+![1](https://github.com/user-attachments/assets/1725ca46-6a99-4f8c-b599-a27e968b4fb7)
 
 
 ### Built With
@@ -108,6 +113,9 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
             style="height: auto; margin-left: 8px; margin-right: 8px;"/>
     </a>
 </div>
+![5](https://github.com/user-attachments/assets/1bad7849-bfbe-4c10-9300-29573b0cd46a)
+
+
 You can download Pequod at the AppStore. To see the source code, you can follow the instructions.
 
 
