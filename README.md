@@ -42,7 +42,7 @@
   <h3 align="center">🐋 PEQUOD</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    A Game-like Habit tracker for the environment!
     <br />
     <a href="https://github.com/DutchVandaline/Pequod"><strong>Explore the docs »</strong></a>
     <br />
