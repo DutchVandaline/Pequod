@@ -47,11 +47,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/DutchVandaline/Pequod">
+    <img src="https://github.com/user-attachments/assets/ea594440-395a-466f-a09d-9dae66220cf3" alt="Logo" width="80" height="80">
   </a>
-
-![pequod_logo](https://github.com/user-attachments/assets/ea594440-395a-466f-a09d-9dae66220cf3)
 
   
 
