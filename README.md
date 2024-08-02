@@ -88,16 +88,21 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Features
+## Key Features
+🦊 You can add up to 4 animals. These animals are suffering from plastic garbages.
+🪴 You can add up to 8 habits. When you finish your habit, you can get points and time for your animal.
+☕ You can collect garbage from 'Tragedy Screen'. Garbages are floating on the surface of the sea. You can change 10 items for 1 point.
+🚀 Artificial Intelligence verifies your photo and check whether it matches to the habit or not. You have to take photo right there.
 
 <img src="https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd"  width="250" height="250"/>
 <img src="https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427"  width="250" height="250"/>
-<img src="https://github.com/user-attachments/assets/a1c906c5-cb9c-463f-af51-e68f7f57fb1e"  width="250" height="250"/>
+<img src="https://github.com/user-attachments/assets/21928403-799d-496a-a75d-555889a275b3"  width="250" height="250"/>
 
 ### Built With
 
 * [![Flutter][Flutter]][Flutter-url]
 * [![Django][Django]][Django-url]
+* [![Gemini][Gemini]][Gemini-url]
 * [![AndroidStudio][AndroidStudio]][AndroidStudio-url]
 * [![Figma][Figma]][Figma-url]
   
@@ -231,6 +236,8 @@ Use this space to list resources you find helpful and would like to give credit 
 [Flutter-url]: https://flutter.dev
 [Django]: https://img.shields.io/badge/Django-003b2a?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://www.djangoproject.com
+[Gemini]: https://img.shields.io/badge/Gemini-0c469c?style=for-the-badge&logo=gemini&logoColor=white
+[Flutter-url]: https://gemini.google.com/?hl=ko
 [AndroidStudio]: https://img.shields.io/badge/AndroidStudio-6fd089?style=for-the-badge&logo=androidstudio&logoColor=white
 [AndroidStudio-url]: https://developer.android.com/studio?hl=ko
 [Figma]: https://img.shields.io/badge/Figma-f83702?style=for-the-badge&logo=figma&logoColor=white
