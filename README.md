@@ -105,17 +105,13 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 <!-- GETTING STARTED -->
 ## Getting Started
+📱 You can download Pequod at the AppStore. Press the following Image!
 <div style="text-align: center;">
     <a href="https://apps.apple.com/kr/app/pequod/id6593668188?l=en-GB">
-      <img src="https://github.com/user-attachments/assets/d1a69119-6219-409b-b302-9ce24308aeb0"  width="400" height="400"/>
+      <img src="https://github.com/user-attachments/assets/d1a69119-6219-409b-b302-9ce24308aeb0"  width="350" height="350"
             style="height: auto; margin-left: 8px; margin-right: 8px;"/>
     </a>
 </div>
-
-
-
-You can download Pequod at the AppStore. To see the source code, you can follow the instructions.
-
 
 ### Prerequisites
 
