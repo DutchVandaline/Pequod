@@ -91,13 +91,15 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* <img src="https://img.shields.io/badge/AppStore-0D96F6?style=flat-square&logo=appstore&logoColor=white"
+* <img src="https://img.shields.io/badge/Flutter-0D96F6?style=flat-square&logo=flutter&logoColor=white"
         style="height : auto; margin-left : 0px; margin-right : 0px;"/>
-    
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
+* <img src="https://img.shields.io/badge/django-0D96F6?style=flat-square&logo=django&logoColor=white"
+        style="height : auto; margin-left : 0px; margin-right : 0px;"/>
+* <img src="https://img.shields.io/badge/AndroidStudio-0D96F6?style=flat-square&logo=androidstudio&logoColor=white"
+        style="height : auto; margin-left : 0px; margin-right : 0px;"/>
+* <img src="https://img.shields.io/badge/Figma-0D96F6?style=flat-square&logo=figma&logoColor=white"
+        style="height : auto; margin-left : 0px; margin-right : 0px;"/>
+  
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -111,29 +113,17 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
+You need Android Studio and dart, flutter plugin installed.
+If you are using mac, you need to set up XCode and Simulator.
 ### Installation
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/DutchVandaline/Pequod.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+2. Excecute on Android studio
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
