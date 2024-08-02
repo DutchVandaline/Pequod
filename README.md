@@ -91,13 +91,13 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 ### Built With
 
-* <img src="https://img.shields.io/badge/Flutter-0D96F6?style=flat-square&logo=flutter&logoColor=white"
+* <img src="https://img.shields.io/badge/Flutter-0c469c?style=flat-square&logo=flutter&logoColor=white"
         style="height : auto; margin-left : 0px; margin-right : 0px;"/>
-* <img src="https://img.shields.io/badge/django-0D96F6?style=flat-square&logo=django&logoColor=white"
+* <img src="https://img.shields.io/badge/Django-003b2a?style=flat-square&logo=django&logoColor=white"
         style="height : auto; margin-left : 0px; margin-right : 0px;"/>
-* <img src="https://img.shields.io/badge/AndroidStudio-0D96F6?style=flat-square&logo=androidstudio&logoColor=white"
+* <img src="https://img.shields.io/badge/Android Studio-6fd089?style=flat-square&logo=androidstudio&logoColor=white"
         style="height : auto; margin-left : 0px; margin-right : 0px;"/>
-* <img src="https://img.shields.io/badge/Figma-0D96F6?style=flat-square&logo=figma&logoColor=white"
+* <img src="https://img.shields.io/badge/Figma-f83702?style=flat-square&logo=figma&logoColor=white"
         style="height : auto; margin-left : 0px; margin-right : 0px;"/>
   
 
