@@ -87,7 +87,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-![PLANTABIT](https://github.com/user-attachments/assets/2fa92337-f49f-4660-ad26-e5365417f6bd)
+<div align="center">
 ![PLANTABIT-2](https://github.com/user-attachments/assets/556a99cc-cf83-49c7-90d1-c87ac5ca3f60)
 
 
