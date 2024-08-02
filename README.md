@@ -111,7 +111,7 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
             style="height: auto; margin-left: 8px; margin-right: 8px;"/>
     </a>
 </div>
-<img src="https://github.com/user-attachments/assets/1725ca46-6a99-4f8c-b599-a27e968b4fb7"  width="250" height="250"/>
+<img src="https://github.com/user-attachments/assets/d1a69119-6219-409b-b302-9ce24308aeb0"  width="250" height="250"/>
 
 
 You can download Pequod at the AppStore. To see the source code, you can follow the instructions.
