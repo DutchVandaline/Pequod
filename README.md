@@ -19,7 +19,7 @@
   <h3 align="center">PEQUOD</h3>
 
   <p align="center">
-    *Why don't we keep our animals alive?*
+    Why don't we keep our animals alive?
     <br />
     <a href="https://apps.apple.com/kr/app/pequod/id6593668188?l=en-GB">
     <img src="https://img.shields.io/badge/AppStore-0D96F6?style=flat-square&logo=appstore&logoColor=white"
@@ -93,14 +93,10 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Flutter]][Flutter-url]
+* <img src="https://img.shields.io/badge/Flutter-0D96F6?style=flat-square&logo=flutter&logoColor=white"/>
+    
 * [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
