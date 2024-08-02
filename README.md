@@ -87,11 +87,10 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 
 ## Features
 
-![4](https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd)
-![3](https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427)
-![2](https://github.com/user-attachments/assets/a1c906c5-cb9c-463f-af51-e68f7f57fb1e)
-![1](https://github.com/user-attachments/assets/1725ca46-6a99-4f8c-b599-a27e968b4fb7)
-
+<img src="https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd"  width="250" height="250"/>
+<img src="https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427"  width="250" height="250"/>
+<img src="https://github.com/user-attachments/assets/a1c906c5-cb9c-463f-af51-e68f7f57fb1e"  width="250" height="250"/>
+<img src="https://github.com/user-attachments/assets/1725ca46-6a99-4f8c-b599-a27e968b4fb7"  width="250" height="250"/>
 
 ### Built With
 
