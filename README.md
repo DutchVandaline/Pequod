@@ -92,6 +92,9 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 ### Built With
 
 * [![Flutter][Flutter]][Flutter-url]
+* [![Django][Django]][Django-url]
+* [![AndroidStudio][AndroidStudio]][AndroidStudio-url]
+* [![Figma][Figma]][Figma-url]
   
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -211,16 +214,16 @@ Use this space to list resources you find helpful and would like to give credit 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/DutchVandaline/Pequod.svg?style=for-the-badge
+[contributors-url]: https://github.com/DutchVandaline/Pequod/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/DutchVandaline/Pequod.svg?style=for-the-badge
+[forks-url]: https://github.com/DutchVandaline/Pequod/network/members
+[stars-shield]: https://img.shields.io/github/stars/DutchVandaline/Pequod.svg?style=for-the-badge
+[stars-url]: https://github.com/DutchVandaline/Pequod/stargazers
+[issues-shield]: https://img.shields.io/github/issues/DutchVandaline/Pequod.svg?style=for-the-badge
+[issues-url]: https://github.com/DutchVandaline/Pequod/issues
+[license-shield]: https://img.shields.io/github/license/DutchVandaline/Pequod.svg?style=for-the-badge
+[license-url]: https://github.com/DutchVandaline/Pequod/blob/master/LICENSE.txt
 
 [Flutter]: https://img.shields.io/badge/Flutter-0c469c?style=for-the-badge&logo=flutter&logoColor=white
 [Flutter-url]: https://flutter.dev
