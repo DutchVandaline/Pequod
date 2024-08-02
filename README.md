@@ -157,7 +157,7 @@ Don't forget to give the project a star! Thanks again!
 
 Dutch Vanaline - developerha0013@gmail.com
 
-Project Link: [https://github.com/DutchVandaline/Pequod](https://github.com/DutchVandaline/Pequod)
+Project Link: [https://github.com/DutchVandaline?tab=repositories](https://github.com/DutchVandaline?tab=repositories)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
