@@ -89,10 +89,10 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Key Features
-🦊 You can add up to 4 animals. These animals are suffering from plastic garbages.
-🪴 You can add up to 8 habits. When you finish your habit, you can get points and time for your animal.
-☕ You can collect garbage from 'Tragedy Screen'. Garbages are floating on the surface of the sea. You can change 10 items for 1 point.
-🚀 Artificial Intelligence verifies your photo and check whether it matches to the habit or not. You have to take photo right there.
+🦊 You can add up to 4 animals. These animals are suffering from plastic garbages. <br/>
+🪴 You can add up to 8 habits. When you finish your habit, you can get points and time for your animal.<br/>
+☕ You can collect garbage from 'Tragedy Screen'. Garbages are floating on the surface of the sea. You can change 10 items for 1 point.<br/>
+🚀 Artificial Intelligence verifies your photo and check whether it matches to the habit or not. You have to take photo right there.<br/>
 
 <img src="https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd"  width="250" height="250"/>
 <img src="https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427"  width="250" height="250"/>
