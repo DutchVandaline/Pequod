@@ -2,11 +2,7 @@
 
 *Why don't we keep our animals alive?*<br/>
 
-<a href="https://apps.apple.com/kr/app/pequod/id6593668188?l=en-GB">
-    <img src="https://img.shields.io/badge/AppStore-0D96F6?style=flat-square&logo=appstore&logoColor=white"
-        style="height : auto; margin-left : 8px; margin-right : 8px;"/>
-    
-</a>
+
 
   
  PEQUOD | A Legendary Whaler from the novel <Moby Dick>
@@ -26,7 +22,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
@@ -39,11 +34,15 @@
 
   
 
-  <h3 align="center">🐋 PEQUOD</h3>
+  <h3 align="center">PEQUOD</h3>
 
   <p align="center">
     A Game-like Habit tracker for the environment!
     <br />
+    <a href="https://apps.apple.com/kr/app/pequod/id6593668188?l=en-GB">
+    <img src="https://img.shields.io/badge/AppStore-0D96F6?style=flat-square&logo=appstore&logoColor=white"
+        style="height : auto; margin-left : 8px; margin-right : 8px;"/>
+    </a>
     <a href="https://github.com/DutchVandaline/Pequod"><strong>Explore the docs »</strong></a>
     <br />
     <br />
