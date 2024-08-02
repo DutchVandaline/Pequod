@@ -88,6 +88,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 ![PLANTABIT](https://github.com/user-attachments/assets/2fa92337-f49f-4660-ad26-e5365417f6bd)
+![PLANTABIT-2](https://github.com/user-attachments/assets/556a99cc-cf83-49c7-90d1-c87ac5ca3f60)
+
 
 
 🌏 Ah, look at that beautiful boiling 'pale-blue dot'. Glorious age of selective environmentalism, where saving the planet means passionately advocating for the rights of endangered tree frogs while sipping from plastic cups and ignoring the latest wildfire choking out another chunk of the Amazon. Who cares if the oceans are boiling, and polar bears get a few more icebergs to cling to? But hey, at least we're putting stickers on our laptops about saving the sea turtles.
