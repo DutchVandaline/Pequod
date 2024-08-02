@@ -71,7 +71,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-![PLANTABIT-2](https://github.com/user-attachments/assets/556a99cc-cf83-49c7-90d1-c87ac5ca3f60)
+![Pequod](https://github.com/user-attachments/assets/8bf45ee3-1001-459a-8db2-f32632e20dfc)
 
 
 🌏 Ah, look at that beautiful boiling 'pale-blue dot'. Glorious age of selective environmentalism, where saving the planet means passionately advocating for the rights of endangered tree frogs while sipping from plastic cups and ignoring the latest wildfire choking out another chunk of the Amazon. Who cares if the oceans are boiling, and polar bears get a few more icebergs to cling to? But hey, at least we're putting stickers on our laptops about saving the sea turtles.
@@ -94,9 +94,9 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 ☕ You can collect garbage from 'Tragedy Screen'. Garbages are floating on the surface of the sea. You can change 10 items for 1 point.<br/>
 🚀 Artificial Intelligence verifies your photo and check whether it matches to the habit or not. You have to take photo right there.<br/>
 
-<img src="https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd"  width="250" height="250"/>
-<img src="https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427"  width="250" height="250"/>
-<img src="https://github.com/user-attachments/assets/21928403-799d-496a-a75d-555889a275b3"  width="250" height="250"/>
+<img src="https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd"  width="270" height="270"/>
+<img src="https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427"  width="270" height="270"/>
+<img src="https://github.com/user-attachments/assets/ee63f9bc-6e4f-4300-8772-ca883150ca8f"  width="270" height="270"/>
 
 ### Built With
 
