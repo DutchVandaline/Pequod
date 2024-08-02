@@ -90,7 +90,6 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
 <img src="https://github.com/user-attachments/assets/7f15a1f3-65ca-4ae7-912a-4b3ccd8533bd"  width="250" height="250"/>
 <img src="https://github.com/user-attachments/assets/e8c4e3cb-f104-434a-aa85-7c6a830e7427"  width="250" height="250"/>
 <img src="https://github.com/user-attachments/assets/a1c906c5-cb9c-463f-af51-e68f7f57fb1e"  width="250" height="250"/>
-<img src="https://github.com/user-attachments/assets/1725ca46-6a99-4f8c-b599-a27e968b4fb7"  width="250" height="250"/>
 
 ### Built With
 
@@ -112,7 +111,7 @@ Earth is boiling, sea levels are rising, and the end is near. We need to act now
             style="height: auto; margin-left: 8px; margin-right: 8px;"/>
     </a>
 </div>
-![5](https://github.com/user-attachments/assets/1bad7849-bfbe-4c10-9300-29573b0cd46a)
+<img src="https://github.com/user-attachments/assets/1725ca46-6a99-4f8c-b599-a27e968b4fb7"  width="250" height="250"/>
 
 
 You can download Pequod at the AppStore. To see the source code, you can follow the instructions.
