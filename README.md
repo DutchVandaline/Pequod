@@ -37,12 +37,12 @@
   <h3 align="center">PEQUOD</h3>
 
   <p align="center">
+    A Game-like Habit tracker for the environment!
+    <br />
     <a href="https://apps.apple.com/kr/app/pequod/id6593668188?l=en-GB">
     <img src="https://img.shields.io/badge/AppStore-0D96F6?style=flat-square&logo=appstore&logoColor=white"
         style="height : auto; margin-left : 8px; margin-right : 8px;"/>
     </a>
-    <br />
-    A Game-like Habit tracker for the environment!
     <br />
     <a href="https://github.com/DutchVandaline/Pequod"><strong>Explore the docs »</strong></a>
     <br />
