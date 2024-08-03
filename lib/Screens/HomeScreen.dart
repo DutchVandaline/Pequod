@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int rndNumb = 0;
   late Future<List<dynamic>?> animalFuture;
   late bool dead;
-  late DateTime deadline = DateTime.now().add(Duration(days: 2));
+  late DateTime deadline = DateTime.now().add(const Duration(days: 2));
 
   List<double> left = [0.0, 90.0, 190.0, 300.0];
 
@@ -36,6 +36,26 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     animalFuture = ApiServices.getAnimal();
     initializeAnimalId();
+  }
+
+  void checkAnimalDeadlines() async {
+    var animals = await ApiServices.getAnimal();
+    print("check");
+    bool needsUpdate = false;
+
+    if (animals != null) {
+      for (var animal in animals) {
+        DateTime deadline = DateTime.parse(animal['animal_deadline']);
+        if (deadline.isBefore(DateTime.now()) && !animal['dead']) {
+          await ApiServices.patchDead(animal['id']);
+          needsUpdate = true;
+        }
+      }
+    }
+
+    if (needsUpdate) {
+      refreshData();
+    }
   }
 
   Future<void> refreshData() async {
@@ -220,8 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(() {
                           animalId = animal['id'];
                         });
-                        checkAndPatchAnimalDeath(
-                            animal['id'], animal['animal_deadline']);
+                        checkAnimalDeadlines();
                       },
                       child: SizedBox(
                         height: MediaQuery.of(context).size.width * 0.33,
@@ -279,13 +298,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-}
-
-void checkAndPatchAnimalDeath(int animalId, String deadlineStr) {
-  DateTime deadline = DateTime.parse(deadlineStr);
-  if (deadline.isBefore(DateTime.now())) {
-    ApiServices.patchDead(animalId);
   }
 }
 
@@ -365,7 +377,29 @@ class _AnimalWidgetState extends State<AnimalWidget> {
           onTap: () {
             showDeleteDialog(context);
           },
-          child: Image.asset('assets/images/animals/death_screen.png'));
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset('assets/images/animals/death_screen.png'),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: const Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                  child: Text(
+                    "Collect Garbage",
+                    style: TextStyle(
+                        fontFamily: 'FjallaOne',
+                        fontSize: 20.0,
+                        color: Colors.black),
+                  ),
+                ),
+              )
+            ],
+          ));
     } else {
       if (widget.animalType == 0) {
         return TurtleWidget(deadline: widget.deadline);
@@ -438,11 +472,11 @@ class _AnimalWidgetState extends State<AnimalWidget> {
                       decoration: BoxDecoration(
                           color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(20.0)),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Collect',
                           style: TextStyle(
-                              color: Theme.of(context).primaryColorLight,
+                              color: Colors.white,
                               fontFamily: 'FjallaOne',
                               fontSize: 20.0),
                         ),

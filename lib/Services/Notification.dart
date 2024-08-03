@@ -71,8 +71,8 @@ class FlutterLocalNotification {
     await _scheduleNotification(
       _localNotification,
       1,
-      'Your Animal is dying!',
-      'It\'s time to complete a habit for your Animal!',
+      'Let\'s keep our animals alive.',
+      'It\'s time to complete some habits for your Animal!',
       _timeZoneSetting(hour: 9, minute: 0),
     );
 
@@ -90,6 +90,14 @@ class FlutterLocalNotification {
       'Check your Habit!',
       'It\'s time to rest with your animal!',
       _timeZoneSetting(hour: 16, minute: 0),
+    );
+
+    await _scheduleNotification(
+      _localNotification,
+      4,
+      'Your Animal is dying!',
+      'It\'s time to complete a habit before today ends!',
+      _timeZoneSetting(hour: 22, minute: 0),
     );
   }
 

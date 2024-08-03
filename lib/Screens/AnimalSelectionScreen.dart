@@ -5,6 +5,7 @@ import 'package:pequod/InitialScreens/SignUpScreen.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 
 bool displayError = false;
+
 class AnimalSelectionScreen extends StatefulWidget {
   const AnimalSelectionScreen({Key? key}) : super(key: key);
 
@@ -99,7 +100,8 @@ class _AnimalSelectionScreenState extends State<AnimalSelectionScreen> {
                             alignment: Alignment.bottomCenter,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage("assets/images/animals/whale.png"),
+                                image: AssetImage(
+                                    "assets/images/animals/whale.png"),
                               ),
                             ),
                           ),
@@ -121,42 +123,59 @@ class _AnimalSelectionScreenState extends State<AnimalSelectionScreen> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: TextField(
-                      controller: NameController,
-                      maxLength: 9,
-                      onChanged: (text) {
-                        NameController.text = text;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColorLight),
-                            borderRadius: BorderRadius.circular(15.0)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColorLight),
-                            borderRadius: BorderRadius.circular(15.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColorLight),
-                            borderRadius: BorderRadius.circular(15.0)),
-                        hintText: "Enter your Animal Name",
-                        hintStyle: const TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.normal),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          "Once set, the name cannot be changed later.",
+                          style: TextStyle(
+                              fontFamily: 'FjallaOne',
+                              fontSize: 18.0,
+                              color: Theme.of(context).primaryColorLight),
+                        ),
                       ),
-                      cursorColor: Theme.of(context).primaryColorLight,
-                      autofocus: false,
-                    ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(10.0)),
+                        child: TextField(
+                          controller: NameController,
+                          maxLength: 10,
+                          onChanged: (text) {
+                            NameController.text = text;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColorLight),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColorLight),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColorLight),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            hintText: "Enter your Animal Name in English",
+                            hintStyle: const TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.normal),
+                          ),
+                          cursorColor: Theme.of(context).primaryColorLight,
+                          autofocus: false,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20.0,),
+                const SizedBox(
+                  height: 20.0,
+                ),
               ],
             ),
             GestureDetector(
@@ -174,14 +193,17 @@ class _AnimalSelectionScreenState extends State<AnimalSelectionScreen> {
 
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => const MainScreen(initialIndex: 2,)),
-                          (route) => false);
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreen(
+                                initialIndex: 2,
+                              )),
+                      (route) => false);
                   NameController.text = "";
                 }
               },
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 60.0,

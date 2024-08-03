@@ -72,7 +72,7 @@ class _TurtleWidgetState extends State<TurtleWidget> {
         if(isGarbageVisible(1)) GarbageWidget(top: 0.03, left: 0.05, size: 0.04, angle: -0.5, asset: "tribotblood_sky"),
         if(isGarbageVisible(7)) GarbageWidget(top: 0.04, left: 0.3, size: 0.05, angle: -0.4, asset: "tribot_green"),
         if(isGarbageVisible(3)) GarbageWidget(top: 0.12, left: 0.1, size: 0.06, angle: 3.3, asset: "tribotblood_blue"),
-        if(isGarbageVisible(6)) GarbageWidget(top: 0.2, left: 0.56, size: 0.035, angle: 5, asset: "tribotblood_yellow"),
+        if(isGarbageVisible(6)) GarbageWidget(top: 0.17, left: 0.5, size: 0.035, angle: 5, asset: "tribotblood_yellow"),
 
       ]),
     );
