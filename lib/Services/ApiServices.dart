@@ -96,6 +96,22 @@ class ApiServices {
     }
   }
 
+  static Future<void> patchAnimal(int animalId, String changeName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? _userToken = prefs.getString('UserToken');
+    var url = Uri.https('pequod-api-dlyou.run.goorm.site',
+        '/api/animal/animal/$animalId/');
+    var response = await http.patch(url,
+        headers: {'Authorization': 'Token $_userToken'},
+        body: {'dead': 'true'});
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('Error: ${response.statusCode}');
+      print('Error body: ${response.body}');
+    }
+  }
+
 
 
   //User

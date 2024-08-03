@@ -60,20 +60,25 @@ class _PolarBearWidgetState extends State<PolarBearWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Stack(alignment: Alignment.bottomCenter, children: [
-        if(isGarbageVisible(8)) GarbageWidget(top: 0.05, left: 0.32, size: 0.06, angle: 0.5, asset: "tribot_orange"),
-        Image.asset(
-          'assets/images/animals/polar_bear.png',
-          alignment: Alignment.bottomCenter,
-        ),
-        if(isGarbageVisible(0)) GarbageWidget(top: 0.06, left: 0.3, size: 0.05, angle: 0.4, asset: "bottletop_blood"),
-        if(isGarbageVisible(2)) GarbageWidget(top: 0.16, left: 0.03, size: 0.06, angle: 5, asset: "bottlebottom_blood"),
-        if(isGarbageVisible(1)) GarbageWidget(top: 0.1, left: 0.4, size: 0.04, angle: 0, asset: "tribotblood_blue"),
-        if(isGarbageVisible(7)) GarbageWidget(top: 0.17, left: 0.37, size: 0.03, angle: 2, asset: "tribotblood_green"),
-        if(isGarbageVisible(3)) GarbageWidget(top: 0.2, left: 0.5, size: 0.04, angle: 2.6, asset: "bottletop_blood"),
-        if(isGarbageVisible(6)) GarbageWidget(top: 0.11, left: 0.15, size: 0.035, angle: 5, asset: "tribotblood_sky"),
+      child: Center(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.width * 0.6,
+          child: Stack(alignment: Alignment.bottomCenter, children: [
+            if(isGarbageVisible(8)) GarbageWidget(top: 0.05, left: 0.32, size: 0.06, angle: 0.5, asset: "tribot_orange"),
+            Image.asset(
+              'assets/images/animals/polar_bear.png',
+              alignment: Alignment.bottomCenter,
+            ),
+            if(isGarbageVisible(0)) GarbageWidget(top: 0.06, left: 0.3, size: 0.05, angle: 0.4, asset: "bottletop_blood"),
+            if(isGarbageVisible(2)) GarbageWidget(top: 0.16, left: 0.03, size: 0.06, angle: 5, asset: "bottlebottom_blood"),
+            if(isGarbageVisible(1)) GarbageWidget(top: 0.1, left: 0.4, size: 0.04, angle: 0, asset: "tribotblood_blue"),
+            if(isGarbageVisible(7)) GarbageWidget(top: 0.17, left: 0.37, size: 0.03, angle: 2, asset: "tribotblood_green"),
+            if(isGarbageVisible(3)) GarbageWidget(top: 0.2, left: 0.5, size: 0.04, angle: 2.6, asset: "bottletop_blood"),
+            if(isGarbageVisible(6)) GarbageWidget(top: 0.11, left: 0.15, size: 0.035, angle: 5, asset: "tribotblood_sky"),
 
-      ]),
+          ]),
+        ),
+      ),
     );
   }
 }

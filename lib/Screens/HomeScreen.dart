@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:pequod/Screens/AnimalDetailScreen.dart';
 import 'package:pequod/Screens/AnimalSelectionScreen.dart';
 import 'package:pequod/Screens/MainScreen.dart';
 import 'package:pequod/Services/ApiServices.dart';
@@ -174,11 +175,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                           ),
                           Expanded(
-                            child: AnimalWidget(
-                              animalType: animalType,
-                              animalId: snapshot.data['id'],
-                              dead: snapshot.data['dead'],
-                              deadline: deadline,
+                            child: Hero(
+                              tag: "type",
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                      transitionDuration: const Duration(milliseconds: 300),
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation,
+                                          Animation<double>secondaryAnimation) {
+                                        return AnimalDetailScreen(
+                                          animalType: animalType,
+                                          animalId: snapshot.data['id'],
+                                          animalName:
+                                              snapshot.data['animal_name'],
+                                          dead: snapshot.data['dead'],
+                                          deadline: deadline,
+                                        );
+                                      },
+                                      transitionsBuilder: (BuildContext context,
+                                          Animation<double> animation,
+                                          Animation<double> secondaryAnimation,
+                                          Widget child) {
+                                        return Align(
+                                          child: FadeTransition(
+                                            opacity: animation,
+                                            child: child,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: AnimalWidget(
+                                  animalType: animalType,
+                                  animalId: snapshot.data['id'],
+                                  animalName: snapshot.data['animal_name'],
+                                  dead: snapshot.data['dead'],
+                                  deadline: deadline,
+                                ),
+                              ),
                             ),
                           ),
                           Text(
@@ -344,6 +381,7 @@ class AnimalWidget extends StatefulWidget {
   final int animalType;
   final bool dead;
   final int animalId;
+  final String animalName;
   final DateTime deadline;
 
   const AnimalWidget(
@@ -351,6 +389,7 @@ class AnimalWidget extends StatefulWidget {
       required this.animalId,
       required this.animalType,
       required this.dead,
+      required this.animalName,
       required this.deadline});
 
   @override
@@ -367,15 +406,13 @@ class _AnimalWidgetState extends State<AnimalWidget> {
           },
           child: Image.asset('assets/images/animals/death_screen.png'));
     } else {
-      if (widget.animalType == 0) {
-        return TurtleWidget(deadline: widget.deadline);
-      } else if (widget.animalType == 1) {
-        return WhaleWidget(deadline: widget.deadline);
-      } else if (widget.animalType == 2) {
-        return PolarBearWidget(deadline: widget.deadline);
-      } else {
-        return Image.asset('assets/images/animals/death_screen.png');
-      }
+      return widget.animalType == 0
+          ? TurtleWidget(deadline: widget.deadline)
+          : widget.animalType == 1
+              ? WhaleWidget(deadline: widget.deadline)
+              : widget.animalType == 2
+                  ? PolarBearWidget(deadline: widget.deadline)
+                  : Image.asset('assets/images/animals/death_screen.png');
     }
   }
 
