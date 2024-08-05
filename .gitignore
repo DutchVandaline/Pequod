@@ -44,4 +44,4 @@ app.*.map.json
 
 #API keys
 lib/Services/ApiServices.dart
-lib/Constants/Constatns.dart
+lib/Constants/Constants.dart
